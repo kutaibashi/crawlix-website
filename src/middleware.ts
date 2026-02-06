@@ -1,11 +1,71 @@
 /**
  * Security Middleware for Crawlix Website
- * Implements CSP and security headers (2026 best practices)
+ * Implements CSP, security headers, and Keystatic auth (2026 best practices)
  *
  * @see https://owasp.org/www-project-secure-headers/
  */
 
 import { defineMiddleware } from 'astro:middleware';
+
+// ============================================
+// KEYSTATIC ADMIN AUTHENTICATION
+// ============================================
+
+// Admin credentials from environment variables (runtime)
+// Use process.env for runtime access in SSR
+const ADMIN_USERNAME = process.env.KEYSTATIC_ADMIN_USER || 'admin';
+const ADMIN_PASSWORD = process.env.KEYSTATIC_ADMIN_PASSWORD;
+
+// Paths that require authentication
+const PROTECTED_PATHS = ['/keystatic', '/api/keystatic'];
+
+/**
+ * Validate basic auth credentials
+ */
+function validateBasicAuth(authHeader: string | null): boolean {
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return false;
+  }
+
+  // In production, require password to be set
+  const isProd = process.env.NODE_ENV === 'production';
+  if (isProd && !ADMIN_PASSWORD) {
+    console.error('KEYSTATIC_ADMIN_PASSWORD is not set in production!');
+    return false;
+  }
+
+  // In development without password, allow access (for local dev only)
+  if (!ADMIN_PASSWORD && !isProd) {
+    return true;
+  }
+
+  try {
+    const base64Credentials = authHeader.slice(6);
+    const credentials = atob(base64Credentials);
+    const [username, password] = credentials.split(':');
+
+    return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Create 401 Unauthorized response with Basic Auth challenge
+ */
+function createAuthResponse(): Response {
+  return new Response('Unauthorized - Admin access required', {
+    status: 401,
+    headers: {
+      'WWW-Authenticate': 'Basic realm="Crawlix Admin", charset="UTF-8"',
+      'Content-Type': 'text/plain',
+    },
+  });
+}
+
+// ============================================
+// CONTENT SECURITY POLICY
+// ============================================
 
 // Content Security Policy - strict but allows necessary resources
 const CSP_DIRECTIVES = {
@@ -44,15 +104,26 @@ const SECURITY_HEADERS: Record<string, string> = {
   'Cross-Origin-Resource-Policy': 'same-origin',
 };
 
-// Paths that should skip CSP (e.g., Keystatic admin)
-const CSP_SKIP_PATHS = ['/keystatic', '/api/keystatic'];
-
 export const onRequest = defineMiddleware(async (context, next) => {
-  const response = await next();
   const url = new URL(context.request.url);
 
+  // ============================================
+  // KEYSTATIC AUTHENTICATION CHECK
+  // ============================================
+  const isProtectedPath = PROTECTED_PATHS.some((path) => url.pathname.startsWith(path));
+
+  if (isProtectedPath) {
+    const authHeader = context.request.headers.get('Authorization');
+
+    if (!validateBasicAuth(authHeader)) {
+      return createAuthResponse();
+    }
+  }
+
+  const response = await next();
+
   // Skip CSP for Keystatic admin (it needs inline scripts)
-  const skipCSP = CSP_SKIP_PATHS.some((path) => url.pathname.startsWith(path));
+  const skipCSP = PROTECTED_PATHS.some((path) => url.pathname.startsWith(path));
 
   // Add security headers
   for (const [header, value] of Object.entries(SECURITY_HEADERS)) {
@@ -64,7 +135,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   // Add HSTS only in production (requires HTTPS)
-  if (import.meta.env.PROD) {
+  if (process.env.NODE_ENV === 'production') {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   }
 
