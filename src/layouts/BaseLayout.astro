@@ -76,26 +76,21 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fonts - Space Grotesk (brand font) - Non-render-blocking -->
+    <!-- Fonts - Preconnect and preload for minimal reflow -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload critical font weights -->
     <link
       rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mDoQDjQSkFtoMM3T6r8E7mPb54C_k3HqU.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
     />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
 
     <!-- Structured Data (JSON-LD) -->
     <StructuredData type="organization" />
