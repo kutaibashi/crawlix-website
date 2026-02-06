@@ -1,0 +1,129 @@
+---
+import { Menu, X, Download } from '@lucide/astro';
+import { getNavigation } from '../../lib/keystatic';
+import defaultNavigation from '../../data/navigation';
+
+// Fetch navigation from Keystatic with fallback to default
+const keystaticNav = await getNavigation();
+const navigation = {
+  main: keystaticNav?.main || defaultNavigation.main,
+};
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-800 bg-[#091a3d]/80 backdrop-blur-lg">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 text-xl font-bold text-white">
+      <span class="text-2xl">🕷️</span>
+      <span>Crawlix</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden items-center gap-8 md:flex">
+      {navigation.main.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+
+    <!-- CTA Button -->
+    <div class="hidden items-center gap-4 md:flex">
+      <a
+        href="/download"
+        class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-sky-500"
+      >
+        <Download class="h-4 w-4" />
+        Download Free
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      type="button"
+      class="inline-flex items-center justify-center rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white md:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      id="mobile-menu-button"
+    >
+      <span class="sr-only">Open main menu</span>
+      <Menu class="h-6 w-6" id="menu-icon" />
+      <X class="hidden h-6 w-6" id="close-icon" />
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="hidden md:hidden" id="mobile-menu">
+    <div class="space-y-1 px-4 pb-4">
+      {navigation.main.map((item) => (
+        <a
+          href={item.href}
+          class="block rounded-md px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white"
+        >
+          {item.name}
+        </a>
+      ))}
+      <a
+        href="/download"
+        class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-4 py-3 text-sm font-semibold text-white hover:bg-sky-500"
+      >
+        <Download class="h-4 w-4" />
+        Download Free
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const header = document.querySelector('header');
+
+  function closeMenu() {
+    button?.setAttribute('aria-expanded', 'false');
+    menu?.classList.add('hidden');
+    menuIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+  }
+
+  function openMenu() {
+    button?.setAttribute('aria-expanded', 'true');
+    menu?.classList.remove('hidden');
+    menuIcon?.classList.add('hidden');
+    closeIcon?.classList.remove('hidden');
+  }
+
+  button?.addEventListener('click', () => {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (header && !header.contains(target)) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+    }
+  });
+
+  // Close menu when clicking a link
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

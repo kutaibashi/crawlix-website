@@ -1,0 +1,18 @@
+{
+  "id": "security",
+  "name": "Security",
+  "description": "Check security headers and HTTPS implementation",
+  "icon": "Shield",
+  "color": "orange",
+  "checkCount": 10,
+  "features": [
+    { "title": "HTTPS Enforcement", "description": "Verify all pages use secure protocol" },
+    { "title": "Mixed Content Detection", "description": "Find HTTP resources on HTTPS pages" },
+    { "title": "Security Headers", "description": "Check HSTS, X-Frame-Options, CSP headers" },
+    { "title": "Insecure Forms", "description": "Flag forms submitting over HTTP" },
+    { "title": "External Script Analysis", "description": "Audit third-party script sources" },
+    { "title": "Autocomplete Security", "description": "Check sensitive field autocomplete settings" },
+    { "title": "X-Content-Type-Options", "description": "Verify nosniff header presence" },
+    { "title": "Content-Security-Policy", "description": "Check CSP header implementation" }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "performance",
+  "name": "Performance & Core Web Vitals",
+  "description": "Measure speed and user experience metrics",
+  "icon": "Gauge",
+  "color": "cyan",
+  "checkCount": 12,
+  "features": [
+    { "title": "Largest Contentful Paint (LCP)", "description": "Loading performance (target <2.5s)" },
+    { "title": "Cumulative Layout Shift (CLS)", "description": "Visual stability (target <0.1)" },
+    { "title": "Interaction to Next Paint (INP)", "description": "Interactivity (target <200ms)" },
+    { "title": "First Contentful Paint (FCP)", "description": "Initial render time (target <1.8s)" },
+    { "title": "Time to First Byte (TTFB)", "description": "Server response time (target <600ms)" },
+    { "title": "Total Blocking Time (TBT)", "description": "Main thread blocking (target <200ms)" },
+    { "title": "Resource Size Analysis", "description": "Track HTML, CSS, JS, image bytes" },
+    { "title": "Request Count", "description": "Total HTTP requests per page" },
+    { "title": "Compression Check", "description": "Verify gzip/brotli compression" },
+    { "title": "Cache Header Validation", "description": "Check cache-control headers" }
+  ]
+}

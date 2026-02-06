@@ -1,0 +1,284 @@
+---
+import { Download, Play, ArrowRight, Zap, Shield, Bot } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import { siteConfig } from '../../data/config';
+
+const { versionAnnouncement, version } = siteConfig;
+---
+
+<section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-32">
+  <!-- Animated background gradient -->
+  <div class="absolute inset-0 -z-10">
+    <!-- Main gradient blob -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-gradient-to-b from-sky-500/20 via-sky-500/5 to-transparent rounded-full blur-3xl"></div>
+    <!-- Secondary glow -->
+    <div class="absolute top-40 right-1/4 w-[400px] h-[400px] bg-sky-600/10 rounded-full blur-3xl float"></div>
+    <!-- Accent glow -->
+    <div class="absolute top-60 left-1/4 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(46,163,242,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(46,163,242,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <!-- Animated Badge -->
+      <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-4 py-2 text-sm text-sky-400 shimmer">
+        <span class="relative flex h-2 w-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
+        </span>
+        <span class="font-medium">{versionAnnouncement.label}</span>
+        <span class="text-slate-400">|</span>
+        <span>{versionAnnouncement.feature}</span>
+        <ArrowRight class="h-4 w-4" />
+      </div>
+
+      <!-- Headline with gradient text -->
+      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+        <span class="text-white">The SEO Crawler That</span>
+        <br />
+        <span class="gradient-text-blue">Respects Your Privacy</span>
+      </h1>
+
+      <!-- Subheadline with better typography -->
+      <p class="mx-auto mt-8 max-w-2xl text-lg text-slate-400 sm:text-xl leading-relaxed">
+        Audit any website with <span class="text-white font-medium">97+ SEO checks</span>.
+        Your data stays on your machine.
+        <span class="text-sky-400 font-semibold">Forever.</span>
+      </p>
+
+      <!-- Feature pills -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
+          <Zap class="h-4 w-4 text-amber-400" />
+          Lightning fast
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
+          <Shield class="h-4 w-4 text-emerald-400" />
+          Privacy first
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
+          <Bot class="h-4 w-4 text-sky-400" />
+          AI ready
+        </span>
+      </div>
+
+      <!-- CTAs with better hierarchy -->
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button href="/download" size="lg" class="group glow-blue">
+          <Download class="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
+          Download Free
+          <span class="ml-2 text-xs text-sky-200 font-normal">No account needed</span>
+        </Button>
+        <Button href="#demo" variant="ghost" size="lg" class="group">
+          <Play class="h-5 w-5 transition-transform group-hover:scale-110" />
+          Watch 2-min Demo
+        </Button>
+      </div>
+
+      <!-- Trust indicators with icons -->
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-500">
+        <span class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          No account required
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          Works offline
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          Free forever tier
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          Win, Mac, Linux
+        </span>
+      </div>
+    </div>
+
+    <!-- Animated Product Preview -->
+    <div class="mt-20 sm:mt-24 scale-in" id="demo">
+      <div class="relative mx-auto max-w-5xl">
+        <!-- Glow effect behind -->
+        <div class="absolute -inset-4 rounded-3xl bg-gradient-to-r from-sky-500/30 via-sky-400/20 to-sky-500/30 blur-2xl glow-pulse"></div>
+
+        <!-- Browser window -->
+        <div class="relative overflow-hidden rounded-2xl border border-slate-700/50 bg-[#0a1628] shadow-2xl gradient-border">
+          <!-- Window chrome -->
+          <div class="flex items-center justify-between border-b border-slate-700/50 bg-[#0e1f3d] px-4 py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex gap-2">
+                <div class="h-3 w-3 rounded-full bg-red-500/80"></div>
+                <div class="h-3 w-3 rounded-full bg-yellow-500/80"></div>
+                <div class="h-3 w-3 rounded-full bg-green-500/80"></div>
+              </div>
+              <div class="ml-4 flex items-center gap-2 rounded-md bg-slate-800/50 px-3 py-1.5 text-sm text-slate-400">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                crawlix.app/dashboard
+              </div>
+            </div>
+            <div class="text-sm text-slate-500">Crawlix v{version}</div>
+          </div>
+
+          <!-- App preview content -->
+          <div class="aspect-[16/10] bg-[#091a3d] p-4 sm:p-6">
+            <!-- Simulated dashboard -->
+            <div class="grid h-full grid-cols-12 gap-4">
+              <!-- Sidebar -->
+              <div class="col-span-2 rounded-lg bg-[#0e2655]/50 p-3 space-y-3">
+                <div class="h-8 w-full rounded bg-sky-500/20"></div>
+                <div class="h-4 w-3/4 rounded bg-slate-700/50"></div>
+                <div class="h-4 w-full rounded bg-slate-700/50"></div>
+                <div class="h-4 w-2/3 rounded bg-slate-700/50"></div>
+                <div class="mt-6 space-y-2">
+                  <div class="h-3 w-full rounded bg-slate-700/30"></div>
+                  <div class="h-3 w-4/5 rounded bg-slate-700/30"></div>
+                  <div class="h-3 w-full rounded bg-slate-700/30"></div>
+                </div>
+              </div>
+
+              <!-- Main content -->
+              <div class="col-span-10 space-y-4">
+                <!-- Top stats row -->
+                <div class="grid grid-cols-4 gap-4">
+                  <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-3">
+                    <div class="text-xs text-emerald-400 mb-1">Passed</div>
+                    <div class="text-2xl font-bold text-emerald-500 animate-counter" data-target="847">0</div>
+                  </div>
+                  <div class="rounded-lg bg-amber-500/10 border border-amber-500/20 p-3">
+                    <div class="text-xs text-amber-400 mb-1">Warnings</div>
+                    <div class="text-2xl font-bold text-amber-500 animate-counter" data-target="23">0</div>
+                  </div>
+                  <div class="rounded-lg bg-red-500/10 border border-red-500/20 p-3">
+                    <div class="text-xs text-red-400 mb-1">Errors</div>
+                    <div class="text-2xl font-bold text-red-500 animate-counter" data-target="5">0</div>
+                  </div>
+                  <div class="rounded-lg bg-sky-500/10 border border-sky-500/20 p-3">
+                    <div class="text-xs text-sky-400 mb-1">Pages</div>
+                    <div class="text-2xl font-bold text-sky-500 animate-counter" data-target="1247">0</div>
+                  </div>
+                </div>
+
+                <!-- Chart area -->
+                <div class="rounded-lg bg-[#0e2655]/30 border border-slate-700/50 p-4 h-32">
+                  <div class="flex items-end justify-around h-full gap-2">
+                    <div class="w-8 bg-gradient-to-t from-sky-500 to-sky-400 rounded-t animate-bar" style="height: 60%"></div>
+                    <div class="w-8 bg-gradient-to-t from-sky-500 to-sky-400 rounded-t animate-bar" style="height: 80%; animation-delay: 0.1s"></div>
+                    <div class="w-8 bg-gradient-to-t from-sky-500 to-sky-400 rounded-t animate-bar" style="height: 45%; animation-delay: 0.2s"></div>
+                    <div class="w-8 bg-gradient-to-t from-sky-500 to-sky-400 rounded-t animate-bar" style="height: 90%; animation-delay: 0.3s"></div>
+                    <div class="w-8 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t animate-bar" style="height: 100%; animation-delay: 0.4s"></div>
+                    <div class="w-8 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t animate-bar" style="height: 75%; animation-delay: 0.5s"></div>
+                    <div class="w-8 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t animate-bar" style="height: 85%; animation-delay: 0.6s"></div>
+                    <div class="w-8 bg-gradient-to-t from-sky-500 to-sky-400 rounded-t animate-bar" style="height: 55%; animation-delay: 0.7s"></div>
+                  </div>
+                </div>
+
+                <!-- Issues list -->
+                <div class="rounded-lg bg-[#0e2655]/30 border border-slate-700/50 p-4 space-y-2">
+                  <div class="flex items-center gap-3 p-2 rounded bg-red-500/10 border border-red-500/20">
+                    <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                    <span class="text-xs text-slate-300">Missing meta descriptions on 5 pages</span>
+                    <span class="ml-auto text-xs text-red-400">Critical</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2 rounded bg-amber-500/10 border border-amber-500/20">
+                    <div class="h-2 w-2 rounded-full bg-amber-500"></div>
+                    <span class="text-xs text-slate-300">Images without alt text (23 found)</span>
+                    <span class="ml-auto text-xs text-amber-400">Warning</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2 rounded bg-sky-500/10 border border-sky-500/20">
+                    <div class="h-2 w-2 rounded-full bg-sky-500"></div>
+                    <span class="text-xs text-slate-300">llms.txt not found - AI crawlers may miss context</span>
+                    <span class="ml-auto text-xs text-sky-400">AI Ready</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes bar-grow {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .animate-bar {
+    transform-origin: bottom;
+    animation: bar-grow 0.8s ease-out forwards;
+  }
+</style>
+
+<script>
+  // Counter animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.animate-counter');
+
+    const animateCounter = (el: Element) => {
+      const target = parseInt(el.getAttribute('data-target') || '0');
+      const duration = 2000;
+      const start = performance.now();
+
+      const update = (currentTime: number) => {
+        const elapsed = currentTime - start;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeOut * target);
+
+        el.textContent = current.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      };
+
+      requestAnimationFrame(update);
+    };
+
+    // Use IntersectionObserver to trigger animation when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          counters.forEach(counter => animateCounter(counter));
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const demoSection = document.querySelector('#demo');
+    if (demoSection) {
+      observer.observe(demoSection);
+    }
+
+    // Scale-in animation
+    const scaleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scale-in').forEach(el => scaleObserver.observe(el));
+  });
+</script>

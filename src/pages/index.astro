@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/home/Hero.astro';
+import SocialProof from '../components/home/SocialProof.astro';
+import Features from '../components/home/Features.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import Comparison from '../components/home/Comparison.astro';
+import Pricing from '../components/home/Pricing.astro';
+import CTA from '../components/home/CTA.astro';
+import { getPricingTiers } from '../lib/keystatic';
+
+// Prerender this page
+export const prerender = true;
+
+// Fetch pricing data from Keystatic
+const pricingTiers = await getPricingTiers();
+---
+
+<BaseLayout title="Crawlix - The Privacy-First SEO Crawler">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <Header slot="header" />
+
+  <Hero />
+  <SocialProof />
+  <Features />
+  <HowItWorks />
+  <Comparison />
+  <Pricing pricingTiers={pricingTiers} />
+  <CTA />
+
+  <Footer slot="footer" />
+</BaseLayout>

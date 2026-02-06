@@ -1,0 +1,15 @@
+{
+  "id": "google-analytics",
+  "name": "Google Analytics 4",
+  "description": "Import traffic and behavior data from GA4 to correlate with SEO metrics. Identify high-value pages and traffic patterns.",
+  "logo": "BarChart3",
+  "category": "analytics",
+  "status": "available",
+  "tier": "pro",
+  "features": [
+    "Sessions and pageviews per URL",
+    "Bounce rate and engagement",
+    "Traffic sources breakdown",
+    "30-day historical data"
+  ]
+}

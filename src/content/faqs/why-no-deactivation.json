@@ -1,0 +1,7 @@
+{
+  "id": "why-no-deactivation",
+  "question": "Why can't I deactivate my license myself?",
+  "answer": "Self-service deactivation is disabled to prevent license reselling and protect legitimate customers. Without this protection, bad actors could buy a license, use it, deactivate it, and resell it repeatedly. This would drive up prices for everyone and create support headaches for customers who unknowingly purchase invalid licenses. Our policy keeps prices fair and ensures every license you buy is legitimate.",
+  "category": "licensing",
+  "order": 10
+}

@@ -1,0 +1,384 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import {
+  Building2, User, Users, Code, CheckCircle, ArrowRight, Download,
+  FileText, Palette, Clock, BarChart3, Shield, Zap, Globe, Gauge,
+  Search, Bot, Lock, Layers
+} from '@lucide/astro';
+
+// Use cases with real Crawlix features
+const useCases = [
+  {
+    id: 'agencies',
+    title: 'SEO Agencies',
+    subtitle: 'Scale client audits with white-label reports',
+    icon: Building2,
+    color: 'violet',
+    description: 'Deliver professional SEO audits to multiple clients without manual work. White-label reports with your branding, scheduled crawls for ongoing monitoring, and team collaboration.',
+    painPoints: [
+      'Spending hours creating client reports manually',
+      'Need to remove tool branding from deliverables',
+      'Managing audits across dozens of client sites',
+      'Team members need shared access to projects',
+    ],
+    features: [
+      { icon: Palette, title: 'White-Label Reports', description: 'Your logo, colors, and fonts. Remove "Powered by Crawlix" completely.' },
+      { icon: Clock, title: 'Scheduled Crawls', description: 'Set up daily, weekly, or monthly automated audits per client.' },
+      { icon: Users, title: 'Team Seats', description: '5 team members with shared projects and configurations.' },
+      { icon: FileText, title: 'PDF & Excel Export', description: 'Professional reports ready for client presentations.' },
+      { icon: Layers, title: 'Unlimited Projects', description: 'No limit on saved websites. Organize by client.' },
+      { icon: BarChart3, title: 'Google Integrations', description: 'Pull GA4, Search Console, and PageSpeed data into reports.' },
+    ],
+    recommendedTier: 'Agency',
+    tierPrice: '$399/year',
+    cta: 'Start Agency Trial',
+  },
+  {
+    id: 'freelancers',
+    title: 'Freelance Consultants',
+    subtitle: 'Professional audits at freelancer-friendly pricing',
+    icon: User,
+    color: 'sky',
+    description: 'Compete with agencies using the same professional tools. Run comprehensive audits, generate polished reports, and impress clients—without the enterprise price tag.',
+    painPoints: [
+      'Enterprise tools too expensive for solo practice',
+      'Need professional-looking deliverables',
+      'Limited time for manual auditing',
+      'Want to offer ongoing SEO monitoring',
+    ],
+    features: [
+      { icon: Zap, title: '50,000 Pages/Crawl', description: 'Handle even large client sites without limits.' },
+      { icon: FileText, title: 'PDF Reports', description: 'Professional reports (Crawlix branding included).' },
+      { icon: Clock, title: '5 Scheduled Crawls', description: 'Automate recurring audits for retainer clients.' },
+      { icon: BarChart3, title: 'All Google Integrations', description: 'GA4, Search Console, PageSpeed Insights data.' },
+      { icon: Search, title: '97+ SEO Checks', description: 'Same analysis power as enterprise tools.' },
+      { icon: Globe, title: '1 Device Activation', description: 'Personal license bound to your primary workstation.' },
+    ],
+    recommendedTier: 'Pro',
+    tierPrice: '$149/year',
+    cta: 'Start Pro Trial',
+  },
+  {
+    id: 'in-house',
+    title: 'In-House SEO Teams',
+    subtitle: 'Monitor your own sites with full control',
+    icon: Users,
+    color: 'emerald',
+    description: 'Keep your website data on your own machines. Run audits whenever you need, track changes over time, and integrate with your existing Google Analytics and Search Console.',
+    painPoints: [
+      'Data privacy concerns with cloud-based tools',
+      'Need to track SEO progress over time',
+      'Want to integrate with existing analytics',
+      'IT requires local data storage',
+    ],
+    features: [
+      { icon: Lock, title: '100% Local Data', description: 'All crawl data stays on your machine. Nothing uploaded.' },
+      { icon: Shield, title: 'Privacy First', description: 'GDPR/CCPA ready. Your data, your control.' },
+      { icon: Gauge, title: 'Core Web Vitals', description: 'Track LCP, CLS, INP across your entire site.' },
+      { icon: BarChart3, title: 'Crawl Comparison', description: 'Compare audits over time. Track improvements.' },
+      { icon: Bot, title: 'AI Readiness', description: 'Check how AI crawlers (GPTBot, ClaudeBot) access your content.' },
+      { icon: Search, title: 'Orphan Page Detection', description: 'Find pages with traffic but no internal links.' },
+    ],
+    recommendedTier: 'Pro',
+    tierPrice: '$149/year',
+    cta: 'Start Pro Trial',
+  },
+  {
+    id: 'developers',
+    title: 'Web Developers',
+    subtitle: 'Technical SEO checks during development',
+    icon: Code,
+    color: 'amber',
+    description: 'Catch SEO issues before they go live. JavaScript rendering support for SPAs, structured data validation, security header checks, and accessibility audits—all the technical stuff.',
+    painPoints: [
+      'SEO issues discovered after deployment',
+      'JavaScript sites not rendering properly for crawlers',
+      'Need to validate structured data and schema',
+      'Accessibility compliance requirements',
+    ],
+    features: [
+      { icon: Code, title: 'JavaScript Rendering', description: 'Full Puppeteer engine. Crawl React, Vue, Angular sites.' },
+      { icon: Layers, title: 'Structured Data', description: 'JSON-LD validation for Article, Product, FAQ schemas.' },
+      { icon: Shield, title: 'Security Headers', description: 'HSTS, CSP, X-Frame-Options, mixed content checks.' },
+      { icon: CheckCircle, title: 'WCAG Accessibility', description: 'Alt text, form labels, skip links, ARIA compliance.' },
+      { icon: Gauge, title: 'Performance Metrics', description: 'TTFB, FCP, LCP, CLS measurements during crawl.' },
+      { icon: Search, title: 'Custom Extraction', description: 'CSS selectors, XPath, regex to extract any data.' },
+    ],
+    recommendedTier: 'Free',
+    tierPrice: 'Free forever',
+    cta: 'Download Free',
+  },
+];
+
+// Color classes
+const colorClasses: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
+  violet: { bg: 'bg-violet-500/20', text: 'text-violet-400', border: 'border-violet-500/30', gradient: 'from-violet-500/10' },
+  sky: { bg: 'bg-sky-500/20', text: 'text-sky-400', border: 'border-sky-500/30', gradient: 'from-sky-500/10' },
+  emerald: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30', gradient: 'from-emerald-500/10' },
+  amber: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', gradient: 'from-amber-500/10' },
+};
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Use Cases - Crawlix SEO Crawler"
+  description="See how SEO agencies, freelancers, in-house teams, and developers use Crawlix to audit websites. Find the right plan for your needs."
+>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-16 bg-gradient-to-b from-[#091a3d] to-[#0a1d42]">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto animate-on-scroll">
+        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+          Built for <span class="gradient-text-blue">Your Workflow</span>
+        </h1>
+
+        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+          Whether you're an agency managing dozens of clients, a freelancer building your practice,
+          or a developer ensuring technical excellence—Crawlix adapts to how you work.
+        </p>
+
+        <!-- Quick nav -->
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+          {useCases.map((useCase) => {
+            const colors = colorClasses[useCase.color];
+            const Icon = useCase.icon;
+            return (
+              <a
+                href={`#${useCase.id}`}
+                class={`inline-flex items-center gap-2 rounded-full ${colors.bg} border ${colors.border} px-4 py-2 text-sm ${colors.text} hover:bg-opacity-30 transition-colors`}
+              >
+                <Icon class="h-4 w-4" />
+                {useCase.title}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="py-20" id="main-content">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="space-y-32">
+        {useCases.map((useCase, index) => {
+          const colors = colorClasses[useCase.color];
+          const Icon = useCase.icon;
+          const isEven = index % 2 === 0;
+
+          return (
+            <div id={useCase.id} class="scroll-mt-24">
+              <div class={`lg:grid lg:grid-cols-2 lg:gap-16 items-center ${!isEven ? 'lg:grid-flow-dense' : ''}`}>
+                {/* Content */}
+                <div class={!isEven ? 'lg:col-start-2' : ''}>
+                  {/* Badge */}
+                  <div class="flex items-center gap-3 mb-6">
+                    <div class={`flex h-12 w-12 items-center justify-center rounded-xl ${colors.bg} ${colors.text}`}>
+                      <Icon class="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h2 class="text-2xl font-bold text-white">{useCase.title}</h2>
+                      <p class={`text-sm ${colors.text}`}>{useCase.subtitle}</p>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p class="text-lg text-slate-400 mb-8">
+                    {useCase.description}
+                  </p>
+
+                  {/* Pain Points */}
+                  <div class="mb-8">
+                    <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wider mb-4">
+                      Sound familiar?
+                    </h3>
+                    <ul class="space-y-2">
+                      {useCase.painPoints.map((pain) => (
+                        <li class="flex items-start gap-2 text-slate-400">
+                          <span class="text-slate-600 mt-1">•</span>
+                          {pain}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* CTA */}
+                  <div class="flex flex-wrap items-center gap-4">
+                    <a
+                      href="/download"
+                      class={`inline-flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-colors ${
+                        useCase.color === 'violet' ? 'bg-violet-600 hover:bg-violet-500' :
+                        useCase.color === 'sky' ? 'bg-sky-600 hover:bg-sky-500' :
+                        useCase.color === 'emerald' ? 'bg-emerald-600 hover:bg-emerald-500' :
+                        'bg-amber-600 hover:bg-amber-500'
+                      }`}
+                    >
+                      {useCase.cta}
+                      <Download class="h-4 w-4" />
+                    </a>
+                    <div class="text-sm">
+                      <span class="text-slate-500">Recommended:</span>{' '}
+                      <span class={colors.text}>{useCase.recommendedTier}</span>{' '}
+                      <span class="text-slate-600">({useCase.tierPrice})</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Features Card */}
+                <div class={`mt-12 lg:mt-0 ${!isEven ? 'lg:col-start-1' : ''}`}>
+                  <div class={`rounded-2xl border ${colors.border} bg-gradient-to-br ${colors.gradient} to-transparent p-6 lg:p-8`}>
+                    <h3 class="text-lg font-semibold text-white mb-6">
+                      Key features for {useCase.title.toLowerCase()}
+                    </h3>
+
+                    <div class="grid gap-6 sm:grid-cols-2">
+                      {useCase.features.map(({ icon: FeatureIcon, title, description }) => (
+                        <div class="flex gap-3">
+                          <div class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${colors.bg} ${colors.text}`}>
+                            <FeatureIcon class="h-4 w-4" />
+                          </div>
+                          <div>
+                            <h4 class="font-medium text-white text-sm">{title}</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">{description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="py-20 bg-[#0a1d42]/30">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl font-bold text-white">Which tier is right for you?</h2>
+        <p class="mt-2 text-slate-400">Quick comparison by use case</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate-800">
+              <th class="text-left py-4 px-4 text-slate-400 font-medium">Use Case</th>
+              <th class="text-center py-4 px-4 text-emerald-400 font-medium">Free</th>
+              <th class="text-center py-4 px-4 text-violet-400 font-medium">Pro</th>
+              <th class="text-center py-4 px-4 text-amber-400 font-medium">Agency</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            <tr>
+              <td class="py-4 px-4 text-white">Developers (technical audits)</td>
+              <td class="py-4 px-4 text-center"><span class="text-emerald-400">★</span> Best fit</td>
+              <td class="py-4 px-4 text-center text-slate-500">Also works</td>
+              <td class="py-4 px-4 text-center text-slate-500">—</td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 text-white">In-House SEO Teams</td>
+              <td class="py-4 px-4 text-center text-slate-500">Limited</td>
+              <td class="py-4 px-4 text-center"><span class="text-violet-400">★</span> Best fit</td>
+              <td class="py-4 px-4 text-center text-slate-500">For larger teams</td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 text-white">Freelance Consultants</td>
+              <td class="py-4 px-4 text-center text-slate-500">Evaluate</td>
+              <td class="py-4 px-4 text-center"><span class="text-violet-400">★</span> Best fit</td>
+              <td class="py-4 px-4 text-center text-slate-500">—</td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 text-white">SEO Agencies</td>
+              <td class="py-4 px-4 text-center text-slate-500">—</td>
+              <td class="py-4 px-4 text-center text-slate-500">Small agencies</td>
+              <td class="py-4 px-4 text-center"><span class="text-amber-400">★</span> Best fit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a
+          href="/pricing"
+          class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors"
+        >
+          View full pricing comparison
+          <ArrowRight class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-600/10 to-violet-600/10 p-8 md:p-12 text-center">
+        <h2 class="text-2xl font-bold text-white">
+          Not sure which tier? Start free.
+        </h2>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
+          The free tier includes all 97+ SEO checks with no time limit. Upgrade when you need more pages, integrations, or white-label features.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="/download"
+            class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors"
+          >
+            Download Free
+            <Download class="h-4 w-4" />
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+          >
+            Compare all tiers
+            <ArrowRight class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .gradient-text-blue {
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+
+<script>
+  // Initialize scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll, .stagger-children, .scale-in').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

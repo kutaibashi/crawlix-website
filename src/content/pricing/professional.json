@@ -1,0 +1,29 @@
+{
+  "id": "professional",
+  "name": "Pro",
+  "description": "For freelancers and consultants",
+  "priceAnnual": 149,
+  "pricePerpetual": 249,
+  "limits": {
+    "pages": "50,000",
+    "projects": "20",
+    "scheduledCrawls": "5",
+    "extractions": "15",
+    "devices": "1"
+  },
+  "features": [
+    "Everything in Free, plus:",
+    "PDF & Excel exports",
+    "Interactive HTML reports",
+    "Google Analytics integration",
+    "Search Console integration",
+    "PageSpeed Insights data",
+    "Scheduled crawls",
+    "Crawl comparison",
+    "Email support"
+  ],
+  "highlighted": true,
+  "badge": "Most Popular",
+  "cta": "Start Free Trial",
+  "ctaLink": "/download"
+}

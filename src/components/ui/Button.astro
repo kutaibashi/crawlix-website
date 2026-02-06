@@ -1,0 +1,105 @@
+---
+/**
+ * Button Component - 2026 UI/UX Standards
+ *
+ * Features:
+ * - Micro-interactions (press effect, hover states)
+ * - GPU-accelerated transitions
+ * - Enhanced focus states (WCAG 2.2)
+ * - Reduced motion support via CSS
+ */
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  loading = false,
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+// Base styles with GPU-accelerated transitions
+const baseStyles = `
+  inline-flex items-center justify-center font-semibold rounded-lg
+  transition-all duration-200 ease-out
+  transform-gpu will-change-transform
+  focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400
+  focus-visible:ring-offset-2 focus-visible:ring-offset-[#091a3d]
+  active:scale-[0.97]
+  disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+`;
+
+// Variant styles with enhanced hover effects
+const variants = {
+  primary: `
+    bg-sky-600 text-white
+    hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/25
+    active:bg-sky-700
+  `,
+  secondary: `
+    bg-[#192954] text-white border border-slate-700
+    hover:bg-[#0e2655] hover:border-slate-600 hover:shadow-lg hover:shadow-black/20
+    active:bg-[#091a3d]
+  `,
+  ghost: `
+    text-slate-300 bg-transparent
+    hover:text-white hover:bg-white/5
+    active:bg-white/10
+  `,
+  outline: `
+    text-sky-400 bg-transparent border border-sky-500/30
+    hover:bg-sky-500/10 hover:border-sky-500/50 hover:text-sky-300
+    active:bg-sky-500/20
+  `,
+};
+
+// Size variants with responsive padding
+const sizes = {
+  sm: 'px-3 py-1.5 text-sm gap-1.5',
+  md: 'px-5 py-2.5 text-sm gap-2',
+  lg: 'px-7 py-3.5 text-base gap-2.5',
+};
+
+const classes = [
+  baseStyles,
+  variants[variant],
+  sizes[size],
+  loading && 'cursor-wait',
+  className,
+].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+
+const isDisabled = disabled || loading;
+---
+
+{href && !isDisabled ? (
+  <a href={href} class={classes} {...rest}>
+    {loading && (
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    )}
+    <slot />
+  </a>
+) : (
+  <button class={classes} disabled={isDisabled} {...rest}>
+    {loading && (
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    )}
+    <slot />
+  </button>
+)}

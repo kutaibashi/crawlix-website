@@ -1,0 +1,38 @@
+{
+  "version": "1.4.0",
+  "date": "2026-02-01",
+  "title": "Compliance & Enterprise Features",
+  "summary": "EU/USA regulatory compliance, team management, and enterprise-grade licensing.",
+  "type": "major",
+  "highlights": [
+    "GDPR & CCPA compliance ready",
+    "Team management for Agency tier",
+    "Perpetual license option"
+  ],
+  "changes": [
+    {
+      "type": "feature",
+      "title": "EU/USA Regulatory Compliance",
+      "description": "Built-in GDPR and CCPA compliance mechanisms. All data stays local on your machine—nothing is ever uploaded to external servers.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Team Management",
+      "description": "Agency tier now supports up to 5 team seats with configuration sharing across team members.",
+      "badge": "Agency"
+    },
+    {
+      "type": "feature",
+      "title": "Perpetual License Option",
+      "description": "New one-time purchase option: $249 for Pro, $699 for Agency. Includes 1 year of updates.",
+      "badge": ""
+    },
+    {
+      "type": "improvement",
+      "title": "Hardware-Locked Licenses",
+      "description": "Licenses are now tied to machine fingerprint for improved security. Manage activations from your account.",
+      "badge": ""
+    }
+  ]
+}

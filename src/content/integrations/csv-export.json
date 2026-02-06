@@ -1,0 +1,15 @@
+{
+  "id": "csv-export",
+  "name": "CSV Export",
+  "description": "Export crawl data to CSV for use in spreadsheet applications like Excel or Google Sheets.",
+  "logo": "Table",
+  "category": "export",
+  "status": "available",
+  "tier": "free",
+  "features": [
+    "All pages and metrics",
+    "Issues by category",
+    "Link inventory",
+    "Resource list"
+  ]
+}

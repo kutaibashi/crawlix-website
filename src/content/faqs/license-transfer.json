@@ -1,0 +1,7 @@
+{
+  "id": "license-transfer",
+  "question": "Can I transfer my license to a new computer?",
+  "answer": "Yes, but it requires contacting support. Your license is permanently bound to your device to prevent unauthorized reselling. If you buy a new computer, email support@crawlix.app with your license key and proof of purchase. We'll verify your request and transfer your license to the new device. Same-device reactivation (after OS reinstall or format) is automatic and doesn't require support.",
+  "category": "licensing",
+  "order": 9
+}

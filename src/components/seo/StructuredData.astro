@@ -1,0 +1,246 @@
+---
+/**
+ * StructuredData Component - JSON-LD Schemas for SEO
+ *
+ * Implements 2026 SEO best practices with structured data:
+ * - Organization schema for brand identity
+ * - WebSite schema for sitelinks
+ * - SoftwareApplication schema for app stores
+ * - Product schemas for pricing tiers
+ * - FAQ schemas
+ * - BreadcrumbList for navigation
+ */
+
+interface Props {
+  type?: 'organization' | 'website' | 'product' | 'faq' | 'article' | 'breadcrumb' | 'software';
+  data?: Record<string, unknown>;
+}
+
+const { type = 'organization', data = {} } = Astro.props;
+
+const siteUrl = 'https://crawlix.app';
+const logoUrl = `${siteUrl}/images/logo.svg`;
+
+// Organization Schema - Brand identity in search
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: 'Crawlix',
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: logoUrl,
+    width: 512,
+    height: 512,
+  },
+  description: 'Privacy-first SEO crawler with 100+ checks. Desktop app that keeps your data local.',
+  foundingDate: '2024',
+  sameAs: [
+    'https://twitter.com/crawlixapp',
+    'https://github.com/crawlix',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'support@crawlix.app',
+    contactType: 'customer support',
+    availableLanguage: ['English'],
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'US',
+  },
+};
+
+// WebSite Schema - Site search and sitelinks
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  name: 'Crawlix',
+  url: siteUrl,
+  description: 'Privacy-first SEO crawler with 100+ checks.',
+  publisher: {
+    '@id': `${siteUrl}/#organization`,
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/docs?search={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+// Software Application Schema - For app stores and search
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  '@id': `${siteUrl}/#software`,
+  name: 'Crawlix',
+  description: 'Privacy-first desktop SEO crawler with 100+ technical checks, Core Web Vitals analysis, JavaScript rendering, and AI search readiness audits.',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Windows, macOS, Linux',
+  offers: [
+    {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      name: 'Free',
+      description: '100 pages per crawl, 3 projects, all 97+ SEO checks',
+    },
+    {
+      '@type': 'Offer',
+      price: '149',
+      priceCurrency: 'USD',
+      priceValidUntil: '2026-12-31',
+      name: 'Professional',
+      description: '10,000 pages per crawl, unlimited projects, priority support',
+    },
+    {
+      '@type': 'Offer',
+      price: '449',
+      priceCurrency: 'USD',
+      priceValidUntil: '2026-12-31',
+      name: 'Agency',
+      description: '100,000 pages per crawl, team features, white-label exports',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    ratingCount: '127',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  featureList: [
+    '97+ SEO checks',
+    'Core Web Vitals analysis',
+    'JavaScript rendering',
+    'AI search readiness audit',
+    'Accessibility audit (WCAG 2.2)',
+    'Schema validation',
+    'Privacy-first: data stays local',
+    'Offline capable',
+  ],
+  screenshot: `${siteUrl}/images/screenshot.png`,
+  softwareVersion: '1.0.0',
+  author: {
+    '@id': `${siteUrl}/#organization`,
+  },
+  provider: {
+    '@id': `${siteUrl}/#organization`,
+  },
+};
+
+// Product Schema for pricing tiers (passed via data prop)
+function getProductSchema(tierData: Record<string, unknown>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `Crawlix ${tierData.name}`,
+    description: tierData.description,
+    brand: {
+      '@type': 'Brand',
+      name: 'Crawlix',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: tierData.price,
+      priceCurrency: 'USD',
+      priceValidUntil: '2026-12-31',
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/pricing`,
+      seller: {
+        '@id': `${siteUrl}/#organization`,
+      },
+    },
+  };
+}
+
+// FAQ Schema (passed via data prop)
+function getFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+// Article Schema (for blog posts)
+function getArticleSchema(articleData: Record<string, unknown>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: articleData.title,
+    description: articleData.description,
+    image: articleData.image || `${siteUrl}/images/og-image.svg`,
+    datePublished: articleData.datePublished,
+    dateModified: articleData.dateModified || articleData.datePublished,
+    author: {
+      '@type': 'Person',
+      name: articleData.author || 'Crawlix Team',
+    },
+    publisher: {
+      '@id': `${siteUrl}/#organization`,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': articleData.url,
+    },
+  };
+}
+
+// Breadcrumb Schema
+function getBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${siteUrl}${item.url}`,
+    })),
+  };
+}
+
+// Generate schema based on type
+let schema: Record<string, unknown> | Array<Record<string, unknown>>;
+
+switch (type) {
+  case 'organization':
+    schema = organizationSchema;
+    break;
+  case 'website':
+    schema = websiteSchema;
+    break;
+  case 'software':
+    schema = softwareSchema;
+    break;
+  case 'product':
+    schema = getProductSchema(data);
+    break;
+  case 'faq':
+    schema = getFAQSchema(data.faqs as Array<{ question: string; answer: string }>);
+    break;
+  case 'article':
+    schema = getArticleSchema(data);
+    break;
+  case 'breadcrumb':
+    schema = getBreadcrumbSchema(data.items as Array<{ name: string; url: string }>);
+    break;
+  default:
+    schema = organizationSchema;
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

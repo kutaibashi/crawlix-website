@@ -1,0 +1,7 @@
+{
+  "id": "eu-withdrawal",
+  "question": "What about EU consumer rights and the 14-day withdrawal period?",
+  "answer": "EU consumers have a 14-day withdrawal right for online purchases. However, for digital content that is accessed immediately, this right can be waived with explicit consent. When you activate your Crawlix license, you'll be asked to acknowledge that you're requesting immediate access and waiving your withdrawal right. This is standard practice for downloadable software and complies with EU Consumer Rights Directive.",
+  "category": "licensing",
+  "order": 11
+}

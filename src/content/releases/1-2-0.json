@@ -1,0 +1,50 @@
+{
+  "version": "1.2.0",
+  "date": "2025-12-20",
+  "title": "Google Integrations & AI Analysis",
+  "summary": "Connect Google Analytics, Search Console, and PageSpeed Insights. Plus AI search readiness checks.",
+  "type": "major",
+  "highlights": [
+    "Google Analytics 4 integration",
+    "Search Console integration",
+    "AI crawler analysis for 13 bots"
+  ],
+  "changes": [
+    {
+      "type": "feature",
+      "title": "Google Analytics 4 Integration",
+      "description": "OAuth connection to GA4. Sync sessions, pageviews, bounce rates, engagement metrics, and traffic sources for the last 30 days.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "Google Search Console Integration",
+      "description": "Sync search performance data: impressions, clicks, CTR, average position, and top queries per page.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "PageSpeed Insights Integration",
+      "description": "Batch fetch Core Web Vitals, performance scores, and optimization opportunities from Google PSI API.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "AI Search Readiness Analysis",
+      "description": "Analyze robots.txt for 13 AI crawlers: GPTBot, Google-Extended, ClaudeBot, Bytespider, and more. Get optimization recommendations.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Crawl Comparison",
+      "description": "Side-by-side comparison of crawl results. Track improvements and regressions over time.",
+      "badge": "Pro"
+    },
+    {
+      "type": "improvement",
+      "title": "Command Palette",
+      "description": "Press Cmd/Ctrl+K to quickly navigate views, run crawl commands, and search across the app.",
+      "badge": ""
+    }
+  ]
+}

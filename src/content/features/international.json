@@ -1,0 +1,15 @@
+{
+  "id": "international",
+  "name": "International SEO",
+  "description": "Validate hreflang and language targeting",
+  "icon": "Globe",
+  "color": "teal",
+  "checkCount": 5,
+  "features": [
+    { "title": "Hreflang Validation", "description": "Check hreflang tag implementation" },
+    { "title": "x-default Presence", "description": "Verify x-default hreflang exists" },
+    { "title": "Self-Referencing Hreflang", "description": "Ensure pages reference themselves" },
+    { "title": "Language Code Format", "description": "Validate BCP 47 language codes" },
+    { "title": "Content-Language Header", "description": "Check header and meta consistency" }
+  ]
+}

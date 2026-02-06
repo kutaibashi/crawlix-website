@@ -1,0 +1,15 @@
+{
+  "id": "pagespeed",
+  "name": "PageSpeed Insights",
+  "description": "Fetch Core Web Vitals field data and Lighthouse performance scores directly from Google's PageSpeed Insights API.",
+  "logo": "Zap",
+  "category": "performance",
+  "status": "available",
+  "tier": "pro",
+  "features": [
+    "Core Web Vitals (LCP, CLS, INP)",
+    "Lighthouse performance score",
+    "Optimization opportunities",
+    "Field vs lab data"
+  ]
+}

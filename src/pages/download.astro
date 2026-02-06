@@ -1,0 +1,308 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import { Download, Monitor, Apple, Check, Shield, AlertTriangle } from '@lucide/astro';
+
+// FAQ data for structured data
+const downloadFaqs = [
+  { question: 'Is Crawlix really free?', answer: 'Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. You can use it forever without paying anything.' },
+  { question: 'Do I need to create an account?', answer: 'No account is required to use the Free tier. You only need to provide an email when purchasing a Pro or Agency license.' },
+  { question: 'Does Crawlix require an internet connection?', answer: 'You need an internet connection to crawl websites, but all data is stored locally. You can view and analyze previous crawls offline.' },
+  { question: 'Is the macOS version notarized?', answer: "Yes, the macOS version is code-signed and notarized by Apple, so you won't see security warnings when installing." },
+  { question: 'How do device activations work?', answer: 'Each license is permanently bound to your device. Free and Pro licenses allow 1 device, Agency allows 5 devices. If you reinstall your OS or format your drive, reactivation on the same hardware is automatic. To transfer to a new device, contact support@crawlix.app.' },
+  { question: 'Where should I buy a license?', answer: 'Only purchase licenses through our official website (crawlix.app) or our Lemon Squeezy checkout. We do not authorize any third-party resellers.' },
+];
+
+const platforms = [
+  {
+    name: 'Windows',
+    icon: 'windows',
+    version: '1.2.0',
+    requirements: 'Windows 10 or later (64-bit)',
+    downloads: [
+      { label: 'Download .exe', url: '#', primary: true },
+      { label: 'Download .msi', url: '#', primary: false },
+    ],
+  },
+  {
+    name: 'macOS',
+    icon: 'apple',
+    version: '1.2.0',
+    requirements: 'macOS 11 Big Sur or later',
+    downloads: [
+      { label: 'Download for Apple Silicon', url: '#', primary: true },
+      { label: 'Download for Intel', url: '#', primary: false },
+    ],
+  },
+  {
+    name: 'Linux',
+    icon: 'linux',
+    version: '1.2.0',
+    requirements: 'Ubuntu 20.04+, Fedora 35+, or equivalent',
+    downloads: [
+      { label: 'Download .AppImage', url: '#', primary: true },
+      { label: 'Download .deb', url: '#', primary: false },
+      { label: 'Download .rpm', url: '#', primary: false },
+    ],
+  },
+];
+
+const steps = [
+  'Download Crawlix for your operating system',
+  'Run the installer and follow the prompts',
+  'Launch Crawlix and enter a URL to start crawling',
+  'Review the audit results and export your report',
+];
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Download"
+  description="Download Crawlix for Windows, macOS, or Linux. Free forever with no account required."
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Download', url: '/download' },
+  ]}
+>
+  <!-- FAQ Structured Data -->
+  <StructuredData type="faq" data={{ faqs: downloadFaqs }} />
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        Download Crawlix
+      </h1>
+      <p class="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+        Get started in minutes. No account required. Works offline.
+      </p>
+
+      {/* Official Store Warning */}
+      <div class="mt-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 max-w-2xl mx-auto">
+        <div class="flex items-start gap-3 text-left">
+          <AlertTriangle class="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <p class="text-sm font-medium text-amber-300">Official Download Only</p>
+            <p class="mt-1 text-sm text-slate-400">
+              Only download Crawlix from this official website (crawlix.app). Downloads from third-party sites may contain malware or modified software that could compromise your system.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform Cards -->
+  <section class="pb-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-3">
+        {platforms.map((platform) => (
+          <div class="rounded-2xl border border-slate-800 bg-[#0e2655]/50 p-8 text-center">
+            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-slate-800 mx-auto mb-6">
+              {platform.icon === 'windows' && (
+                <Monitor class="h-8 w-8 text-sky-400" />
+              )}
+              {platform.icon === 'apple' && (
+                <Apple class="h-8 w-8 text-sky-400" />
+              )}
+              {platform.icon === 'linux' && (
+                <svg class="h-8 w-8 text-sky-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/>
+                </svg>
+              )}
+            </div>
+
+            <h2 class="text-xl font-semibold text-white">{platform.name}</h2>
+            <p class="mt-1 text-sm text-slate-400">Version {platform.version}</p>
+            <p class="mt-4 text-sm text-slate-500">{platform.requirements}</p>
+
+            <div class="mt-6 space-y-3">
+              {platform.downloads.map((download) => (
+                <Button
+                  href={download.url}
+                  variant={download.primary ? 'primary' : 'secondary'}
+                  class="w-full"
+                >
+                  {download.primary && <Download class="h-4 w-4" />}
+                  {download.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started -->
+  <section class="py-20 bg-[#0e2655]/50">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-white text-center mb-12">
+        Get Started in Minutes
+      </h2>
+
+      <div class="space-y-6">
+        {steps.map((step, index) => (
+          <div class="flex gap-4">
+            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-500 text-sm font-bold text-white">
+              {index + 1}
+            </div>
+            <div class="pt-1">
+              <p class="text-slate-300">{step}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="/docs/getting-started" class="text-sky-400 hover:text-sky-300">
+          Read the full getting started guide &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Requirements -->
+  <section class="py-20">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-white text-center mb-12">
+        System Requirements
+      </h2>
+
+      <div class="rounded-xl border border-slate-800 bg-[#0e2655]/50 overflow-hidden">
+        <table class="w-full">
+          <tbody class="divide-y divide-slate-800">
+            <tr>
+              <td class="px-6 py-4 text-sm font-medium text-white">Operating System</td>
+              <td class="px-6 py-4 text-sm text-slate-400">Windows 10+, macOS 11+, Ubuntu 20.04+</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm font-medium text-white">Processor</td>
+              <td class="px-6 py-4 text-sm text-slate-400">64-bit processor (Intel, AMD, or Apple Silicon)</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm font-medium text-white">Memory</td>
+              <td class="px-6 py-4 text-sm text-slate-400">4 GB RAM minimum, 8 GB recommended</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm font-medium text-white">Storage</td>
+              <td class="px-6 py-4 text-sm text-slate-400">500 MB for installation + space for crawl data</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 text-sm font-medium text-white">Network</td>
+              <td class="px-6 py-4 text-sm text-slate-400">Internet connection for crawling (not required for offline analysis)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 bg-[#0e2655]/50">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-white text-center mb-12">
+        Download FAQ
+      </h2>
+
+      <div class="space-y-4">
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            Is Crawlix really free?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. You can use it forever without paying anything.
+          </div>
+        </details>
+
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            Do I need to create an account?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            No account is required to use the Free tier. You only need to provide an email when purchasing a Pro or Agency license.
+          </div>
+        </details>
+
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            Does Crawlix require an internet connection?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            You need an internet connection to crawl websites, but all data is stored locally. You can view and analyze previous crawls offline.
+          </div>
+        </details>
+
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            Is the macOS version notarized?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            Yes, the macOS version is code-signed and notarized by Apple, so you won't see security warnings when installing.
+          </div>
+        </details>
+
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            How do device activations work?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            Each license is permanently bound to your device. Free and Pro licenses allow 1 device, Agency allows 5 devices.
+            If you reinstall your OS or format your drive, reactivation on the same hardware is automatic.
+            To transfer to a new device, contact support@crawlix.app.
+          </div>
+        </details>
+
+        <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
+          <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
+            Where should I buy a license?
+            <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-slate-400">
+            Only purchase licenses through our official website (crawlix.app) or our Lemon Squeezy checkout.
+            We do not authorize any third-party resellers. Licenses purchased elsewhere may be invalid, stolen, or subject to revocation without refund.
+            Visit our <a href="/pricing" class="text-sky-400 hover:text-sky-300">pricing page</a> to purchase.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

@@ -1,0 +1,7 @@
+{
+  "id": "discounts",
+  "question": "Do you offer discounts for students or nonprofits?",
+  "answer": "Yes! Contact us at support@crawlix.app with proof of student status or nonprofit registration for special pricing.",
+  "category": "pricing",
+  "order": 8
+}

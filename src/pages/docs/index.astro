@@ -1,0 +1,574 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import {
+  Rocket, Settings, Search, Code, Gauge, FileCode, Plug, Download,
+  Palette, Clock, Bot, Key, Database, LifeBuoy, Play, FileText,
+  BarChart, ChevronRight, ArrowRight, BookOpen, Zap, ExternalLink
+} from '@lucide/astro';
+import {
+  docSections,
+  quickStartSteps,
+  popularTopics,
+  docsFaqs,
+  crawlerDefaults,
+  dashboardViews
+} from '../../data/docs';
+
+// Icon mapping for dynamic rendering
+const iconMap: Record<string, any> = {
+  Rocket, Settings, Search, Code, Gauge, FileCode, Plug, Download,
+  Palette, Clock, Bot, Key, Database, LifeBuoy, Play, FileText, BarChart
+};
+
+// Badge styles
+const badgeStyles = {
+  new: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  updated: 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+  pro: 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+  agency: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+};
+
+// Section colors for visual variety
+const sectionColors = [
+  { bg: 'bg-sky-500/10', text: 'text-sky-400', border: 'border-sky-500/30' },
+  { bg: 'bg-violet-500/10', text: 'text-violet-400', border: 'border-violet-500/30' },
+  { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30' },
+  { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30' },
+  { bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/30' },
+  { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30' },
+];
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Documentation - Crawlix SEO Crawler"
+  description="Learn how to use Crawlix with comprehensive documentation. Quick start guides, feature tutorials, configuration options, and troubleshooting."
+>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Hero Section with Search -->
+  <section class="pt-32 pb-16 bg-gradient-to-b from-[#091a3d] to-[#0a1d42]">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto animate-on-scroll">
+        <div class="inline-flex items-center gap-2 rounded-full bg-sky-500/10 border border-sky-500/30 px-4 py-1.5 text-sm text-sky-400 mb-6">
+          <BookOpen class="h-4 w-4" />
+          <span>Documentation</span>
+        </div>
+
+        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+          Learn <span class="gradient-text-blue">Crawlix</span>
+        </h1>
+
+        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+          Everything you need to master website auditing. From your first crawl to advanced automation and integrations.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="mt-10 max-w-xl mx-auto">
+          <div class="relative group">
+            <Search class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-sky-400 transition-colors" />
+            <input
+              type="text"
+              id="docs-search"
+              placeholder="Search documentation..."
+              class="w-full rounded-xl border border-slate-700 bg-[#0e2655]/80 py-4 pl-12 pr-4 text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 transition-all"
+            />
+            <kbd class="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:inline-flex items-center gap-1 rounded border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-slate-500">
+              <span class="text-xs">⌘</span>K
+            </kbd>
+          </div>
+          <!-- Search Results Dropdown (hidden by default) -->
+          <div id="search-results" class="hidden absolute z-50 w-full max-w-xl mt-2 rounded-xl border border-slate-700 bg-[#0e2655] shadow-xl overflow-hidden">
+            <div class="p-2 text-sm text-slate-400">Type to search...</div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="mt-10 flex flex-wrap justify-center gap-6 text-sm">
+          <div class="flex items-center gap-2 text-slate-400">
+            <span class="text-white font-semibold">{docSections.reduce((acc, s) => acc + s.articles.length, 0)}+</span> articles
+          </div>
+          <div class="flex items-center gap-2 text-slate-400">
+            <span class="text-white font-semibold">{docSections.length}</span> topics
+          </div>
+          <div class="flex items-center gap-2 text-slate-400">
+            <span class="text-white font-semibold">97+</span> SEO checks documented
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start Section -->
+  <section class="py-16 border-b border-slate-800/50" id="main-content">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-10">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Quick Start</h2>
+          <p class="mt-1 text-slate-400">Get up and running in under 5 minutes</p>
+        </div>
+        <a href="/download" class="hidden sm:inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors">
+          Download Crawlix
+          <Download class="h-4 w-4" />
+        </a>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {quickStartSteps.map((step, index) => (
+          <div class="relative group">
+            {/* Connector line */}
+            {index < quickStartSteps.length - 1 && (
+              <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-slate-700 to-transparent z-0"></div>
+            )}
+
+            <div class="relative rounded-xl border border-slate-800 bg-[#0e2655]/50 p-5 hover:border-sky-500/50 hover:bg-[#0e2655] transition-all h-full">
+              {/* Step number */}
+              <div class="flex items-center gap-3 mb-3">
+                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/20 text-sky-400 font-bold text-sm">
+                  {step.step}
+                </div>
+                <h3 class="font-semibold text-white">{step.title}</h3>
+              </div>
+
+              <p class="text-sm text-slate-400 leading-relaxed">{step.description}</p>
+
+              {step.link && (
+                <a href={step.link} class="mt-3 inline-flex items-center gap-1 text-sm text-sky-400 hover:text-sky-300">
+                  Get started <ChevronRight class="h-3 w-3" />
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Topics -->
+  <section class="py-12 bg-[#0a1d42]/30">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-lg font-semibold text-white mb-6">Popular Topics</h2>
+
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        {popularTopics.map((topic) => (
+          <a
+            href={`/docs/${topic.slug}`}
+            class="flex items-center gap-3 rounded-lg border border-slate-800 bg-[#0e2655]/30 px-4 py-3 hover:border-sky-500/50 hover:bg-[#0e2655]/60 transition-all group"
+          >
+            <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 group-hover:bg-sky-500/20 transition-colors">
+              {topic.icon === 'Play' && <Play class="h-4 w-4" />}
+              {topic.icon === 'Code' && <Code class="h-4 w-4" />}
+              {topic.icon === 'Gauge' && <Gauge class="h-4 w-4" />}
+              {topic.icon === 'FileText' && <FileText class="h-4 w-4" />}
+              {topic.icon === 'FileCode' && <FileCode class="h-4 w-4" />}
+              {topic.icon === 'BarChart' && <BarChart class="h-4 w-4" />}
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-sm font-medium text-white truncate block">{topic.title}</span>
+            </div>
+            {topic.badge && (
+              <span class={`shrink-0 text-[10px] font-medium uppercase px-1.5 py-0.5 rounded border ${badgeStyles[topic.badge]}`}>
+                {topic.badge}
+              </span>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentation Sections Grid -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 animate-on-scroll">
+        <h2 class="text-3xl font-bold text-white">Browse by Topic</h2>
+        <p class="mt-3 text-slate-400">Explore all {docSections.length} documentation categories</p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+        {docSections.map((section, sectionIndex) => {
+          const colors = sectionColors[sectionIndex % sectionColors.length];
+          const Icon = iconMap[section.icon] || BookOpen;
+
+          return (
+            <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 overflow-hidden hover:border-slate-700 transition-all group">
+              {/* Section Header */}
+              <div class={`p-6 border-b border-slate-800/50 ${colors.bg}`}>
+                <div class="flex items-start gap-4">
+                  <div class={`flex h-12 w-12 items-center justify-center rounded-xl ${colors.bg} ${colors.text} ${colors.border} border`}>
+                    <Icon class="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-white group-hover:text-sky-400 transition-colors">
+                      {section.title}
+                    </h3>
+                    <p class="mt-1 text-sm text-slate-400">{section.description}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Articles List */}
+              <div class="p-4">
+                <ul class="space-y-1">
+                  {section.articles.slice(0, 5).map((article) => (
+                    <li>
+                      <a
+                        href={`/docs/${article.slug}`}
+                        class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-800/50 hover:text-white transition-colors"
+                      >
+                        <span class="truncate">{article.title}</span>
+                        <div class="flex items-center gap-2 shrink-0">
+                          {article.badge && (
+                            <span class={`text-[10px] font-medium uppercase px-1.5 py-0.5 rounded border ${badgeStyles[article.badge]}`}>
+                              {article.badge}
+                            </span>
+                          )}
+                          <ChevronRight class="h-4 w-4 text-slate-600" />
+                        </div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                {section.articles.length > 5 && (
+                  <a
+                    href={`/docs/${section.id}`}
+                    class="mt-3 flex items-center justify-center gap-1 rounded-lg border border-slate-800 px-3 py-2 text-sm text-slate-400 hover:border-sky-500/50 hover:text-sky-400 transition-colors"
+                  >
+                    View all {section.articles.length} articles
+                    <ArrowRight class="h-3 w-3" />
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Crawler Defaults Reference -->
+  <section class="py-16 bg-gradient-to-b from-transparent via-[#0a1d42]/50 to-transparent">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl border border-slate-800 bg-[#0e2655]/50 overflow-hidden">
+        <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">Quick Reference: Default Settings</h2>
+            <p class="mt-1 text-sm text-slate-400">Crawlix default configuration values</p>
+          </div>
+          <Settings class="h-6 w-6 text-slate-600" />
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-800">
+          <div class="p-6">
+            <h3 class="text-sm font-medium text-slate-400 mb-4">Page Limits</h3>
+            <dl class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Free tier</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.maxPages.free}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Pro tier</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.maxPages.pro.toLocaleString()}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Agency tier</dt>
+                <dd class="font-mono text-sky-400">{crawlerDefaults.maxPages.agency}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-sm font-medium text-slate-400 mb-4">Crawl Settings</h3>
+            <dl class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Max depth</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.maxDepth}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Workers</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.concurrentWorkers}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Crawl delay</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.crawlDelay}ms</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-sm font-medium text-slate-400 mb-4">Performance</h3>
+            <dl class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Timeout</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.timeout / 1000}s</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Batch size</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.batchSize}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Max memory</dt>
+                <dd class="font-mono text-white">{crawlerDefaults.maxMemoryMB}MB</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-sm font-medium text-slate-400 mb-4">User Agent</h3>
+            <code class="block text-xs text-slate-300 bg-slate-900/50 rounded p-2 break-all">
+              {crawlerDefaults.userAgent}
+            </code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Views Reference -->
+  <section class="py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-xl font-bold text-white">30+ Analysis Views</h2>
+        <p class="mt-2 text-slate-400">Every view available in the Crawlix dashboard</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2">
+        {dashboardViews.map((view) => (
+          <span class="inline-flex items-center rounded-full border border-slate-800 bg-[#0e2655]/30 px-3 py-1.5 text-xs text-slate-400">
+            {view}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 bg-[#0a1d42]/30">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <h2 class="text-3xl font-bold text-white">Frequently Asked Questions</h2>
+        <p class="mt-3 text-slate-400">Quick answers to common questions</p>
+      </div>
+
+      <div class="space-y-4 stagger-children">
+        {docsFaqs.map((faq, index) => (
+          <details class="group rounded-xl border border-slate-800 bg-[#0e2655]/50 overflow-hidden">
+            <summary class="flex items-center justify-between cursor-pointer p-6 text-white font-medium hover:bg-[#0e2655] transition-colors">
+              <span class="flex items-center gap-3">
+                <span class="flex h-6 w-6 items-center justify-center rounded bg-sky-500/20 text-sky-400 text-xs font-bold">
+                  {index + 1}
+                </span>
+                {faq.question}
+              </span>
+              <ChevronRight class="h-5 w-5 text-slate-500 transition-transform group-open:rotate-90" />
+            </summary>
+            <div class="px-6 pb-6 pt-0">
+              <p class="text-slate-400 leading-relaxed pl-9">{faq.answer}</p>
+              <span class="inline-flex items-center mt-3 ml-9 rounded-full bg-slate-800/50 px-2 py-0.5 text-xs text-slate-500">
+                {faq.category}
+              </span>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Help CTA -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl bg-gradient-to-r from-sky-600/20 via-violet-600/20 to-sky-600/20 border border-sky-500/30 p-8 md:p-12 text-center animate-on-scroll">
+        <Zap class="h-12 w-12 text-sky-400 mx-auto mb-6" />
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+          Can't find what you're looking for?
+        </h2>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
+          Our support team is here to help. Reach out and we'll get you sorted.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="/contact"
+            class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors"
+          >
+            Contact Support
+            <ExternalLink class="h-4 w-4" />
+          </a>
+          <a
+            href="/download"
+            class="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/50 px-6 py-3 font-semibold text-white hover:border-sky-500/50 hover:bg-slate-800 transition-colors"
+          >
+            Download Crawlix
+            <Download class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* Gradient text */
+  .gradient-text-blue {
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* FAQ accordion animation */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] summary {
+    border-bottom: 1px solid rgb(30 41 59 / 0.5);
+  }
+
+  /* Search focus state */
+  #docs-search:focus + kbd {
+    display: none;
+  }
+</style>
+
+<script>
+  // Initialize scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll, .stagger-children').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Keyboard shortcut for search (Cmd/Ctrl + K)
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const searchInput = document.getElementById('docs-search') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+        }
+      }
+    });
+
+    // Simple search functionality (client-side)
+    const searchInput = document.getElementById('docs-search') as HTMLInputElement;
+    const searchResults = document.getElementById('search-results');
+
+    if (searchInput && searchResults) {
+      // Import docs data for search (simplified version)
+      const searchableItems = [
+        { title: 'Your First Crawl', slug: 'getting-started/first-crawl', section: 'Getting Started' },
+        { title: 'Installation Guide', slug: 'getting-started/installation', section: 'Getting Started' },
+        { title: 'System Requirements', slug: 'getting-started/system-requirements', section: 'Getting Started' },
+        { title: 'JavaScript Rendering', slug: 'js-rendering/enable', section: 'JavaScript Rendering' },
+        { title: 'Core Web Vitals', slug: 'core-web-vitals/overview', section: 'Core Web Vitals' },
+        { title: 'Technical SEO Checks', slug: 'seo-checks/technical', section: 'SEO Checks' },
+        { title: 'On-Page SEO', slug: 'seo-checks/on-page', section: 'SEO Checks' },
+        { title: 'Content Quality', slug: 'seo-checks/content', section: 'SEO Checks' },
+        { title: 'Custom Extraction', slug: 'extraction/methods', section: 'Custom Extraction' },
+        { title: 'Google Analytics Integration', slug: 'integrations/google-analytics', section: 'Integrations' },
+        { title: 'Search Console Integration', slug: 'integrations/search-console', section: 'Integrations' },
+        { title: 'PDF Reports', slug: 'exports/pdf', section: 'Exports' },
+        { title: 'White-Label Branding', slug: 'white-label/setup', section: 'White-Label' },
+        { title: 'Scheduled Crawls', slug: 'scheduling/create', section: 'Scheduled Crawls' },
+        { title: 'AI Crawler Analysis', slug: 'ai-readiness/analysis', section: 'AI Readiness' },
+        { title: 'License Activation', slug: 'licensing/activation', section: 'Licensing' },
+        { title: 'Troubleshooting Errors', slug: 'troubleshooting/crawl-errors', section: 'Troubleshooting' },
+      ];
+
+      searchInput.addEventListener('input', (e) => {
+        const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+
+        if (query.length < 2) {
+          searchResults.classList.add('hidden');
+          return;
+        }
+
+        const matches = searchableItems.filter(item =>
+          item.title.toLowerCase().includes(query) ||
+          item.section.toLowerCase().includes(query)
+        ).slice(0, 6);
+
+        // SECURITY: Use DOM API instead of innerHTML to prevent XSS
+        searchResults.replaceChildren(); // Clear safely
+
+        if (matches.length > 0) {
+          matches.forEach(item => {
+            const link = document.createElement('a');
+            link.href = `/docs/${encodeURIComponent(item.slug)}`;
+            link.className = 'flex items-center justify-between p-3 hover:bg-slate-800/50 transition-colors';
+
+            const textDiv = document.createElement('div');
+
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'text-white text-sm font-medium';
+            titleDiv.textContent = item.title; // Safe: textContent escapes HTML
+
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'text-xs text-slate-500';
+            sectionDiv.textContent = item.section; // Safe: textContent escapes HTML
+
+            textDiv.appendChild(titleDiv);
+            textDiv.appendChild(sectionDiv);
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('class', 'h-4 w-4 text-slate-600');
+            svg.setAttribute('fill', 'none');
+            svg.setAttribute('viewBox', '0 0 24 24');
+            svg.setAttribute('stroke', 'currentColor');
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('stroke-linecap', 'round');
+            path.setAttribute('stroke-linejoin', 'round');
+            path.setAttribute('stroke-width', '2');
+            path.setAttribute('d', 'M9 5l7 7-7 7');
+            svg.appendChild(path);
+
+            link.appendChild(textDiv);
+            link.appendChild(svg);
+            searchResults.appendChild(link);
+          });
+          searchResults.classList.remove('hidden');
+        } else {
+          const noResults = document.createElement('div');
+          noResults.className = 'p-3 text-sm text-slate-400';
+          noResults.textContent = 'No results found';
+          searchResults.appendChild(noResults);
+          searchResults.classList.remove('hidden');
+        }
+      });
+
+      // Hide results when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target as Node) && !searchResults.contains(e.target as Node)) {
+          searchResults.classList.add('hidden');
+        }
+      });
+
+      // Hide results on escape
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchResults.classList.add('hidden');
+          searchInput.blur();
+        }
+      });
+    }
+  });
+</script>

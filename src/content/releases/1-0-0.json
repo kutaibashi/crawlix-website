@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "date": "2025-10-01",
+  "title": "Initial Release",
+  "summary": "Crawlix launches with 134+ SEO checks, high-performance crawling, and privacy-first architecture.",
+  "type": "major",
+  "highlights": [
+    "134+ automated SEO checks",
+    "10x faster than v1 engine",
+    "100% local data storage"
+  ],
+  "changes": [
+    {
+      "type": "feature",
+      "title": "High-Performance Crawler Engine",
+      "description": "CrawlerV2 with HTTP/2 multiplexing, connection pooling, Bloom filter deduplication, and batch database writes. 10x throughput improvement.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "134+ SEO Checks",
+      "description": "Comprehensive analysis across 11 categories: Technical SEO, On-Page, Content Quality, Links, Images, Structured Data, Security, Accessibility, and International SEO.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Technical SEO Analysis",
+      "description": "20+ checks: status codes, soft 404 detection, canonicals, redirect chains, HTTPS, URL structure, and crawl depth.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Local SQLite Database",
+      "description": "All crawl data stored locally in SQLite. Your data never leaves your machine. Export anytime.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "CSV & JSON Export",
+      "description": "Export pages, issues, links, and resources to CSV or JSON for further analysis.",
+      "badge": ""
+    },
+    {
+      "type": "improvement",
+      "title": "Memory-Efficient Streaming",
+      "description": "URL frontier with configurable size (default 100K URLs). Bloom filter prevents duplicate crawling with O(1) lookups.",
+      "badge": ""
+    }
+  ]
+}

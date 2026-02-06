@@ -1,0 +1,619 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import {
+  Calendar, Clock, ArrowLeft, ArrowRight, User, Tag,
+  Twitter, Linkedin, Link2, ChevronRight, BookOpen
+} from '@lucide/astro';
+import {
+  blogPosts,
+  getAuthor,
+  getCategory,
+  getCategoryColor,
+  formatDate,
+  getRelatedPosts
+} from '../data/blog';
+
+interface Props {
+  title: string;
+  description: string;
+  publishedAt: string;
+  updatedAt?: string;
+  author: string;
+  category: string;
+  tags: string[];
+  readingTime: number;
+  slug: string;
+}
+
+const {
+  title,
+  description,
+  publishedAt,
+  updatedAt,
+  author: authorId,
+  category: categoryId,
+  tags,
+  readingTime,
+  slug
+} = Astro.props;
+
+const author = getAuthor(authorId);
+const category = getCategory(categoryId);
+const categoryColor = category ? getCategoryColor(category.color) : getCategoryColor('sky');
+const relatedPosts = getRelatedPosts(slug, 3);
+
+// Get previous and next posts for navigation
+const currentIndex = blogPosts.findIndex(p => p.slug === slug);
+const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+---
+
+<BaseLayout
+  title={`${title} - Crawlix Blog`}
+  description={description}
+  article={{
+    title,
+    description,
+    datePublished: publishedAt,
+    dateModified: updatedAt,
+    author: author?.name,
+    image: `/images/blog/${slug}-og.png`,
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: category?.name || categoryId, url: `/blog/category/${categoryId}` },
+    { name: title, url: `/blog/${slug}` },
+  ]}
+>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Article Header -->
+  <header class="pt-32 pb-12 bg-gradient-to-b from-[#091a3d] to-[#0a1d42]">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm text-slate-500 mb-8">
+        <a href="/blog" class="hover:text-sky-400 transition-colors">Blog</a>
+        <ChevronRight class="h-4 w-4" />
+        <span class={categoryColor.text}>{category?.name || categoryId}</span>
+      </nav>
+
+      <!-- Category Badge -->
+      <span class={`inline-flex items-center rounded-full ${categoryColor.bg} ${categoryColor.text} border ${categoryColor.border} px-3 py-1 text-xs font-medium`}>
+        {category?.name || categoryId}
+      </span>
+
+      <!-- Title -->
+      <h1 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        {title}
+      </h1>
+
+      <!-- Description -->
+      <p class="mt-6 text-xl text-slate-400 leading-relaxed">
+        {description}
+      </p>
+
+      <!-- Meta Row -->
+      <div class="mt-8 flex flex-wrap items-center gap-6 text-sm">
+        <!-- Author -->
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full bg-sky-500/20 flex items-center justify-center">
+            <User class="h-5 w-5 text-sky-400" />
+          </div>
+          <div>
+            <p class="font-medium text-white">{author?.name || 'Crawlix Team'}</p>
+            <p class="text-slate-500 text-xs">{author?.role || 'Product Team'}</p>
+          </div>
+        </div>
+
+        <div class="h-8 w-px bg-slate-700 hidden sm:block"></div>
+
+        <!-- Date -->
+        <div class="flex items-center gap-2 text-slate-400">
+          <Calendar class="h-4 w-4" />
+          <span>{formatDate(publishedAt)}</span>
+        </div>
+
+        <!-- Reading Time -->
+        <div class="flex items-center gap-2 text-slate-400">
+          <Clock class="h-4 w-4" />
+          <span>{readingTime} min read</span>
+        </div>
+
+        {updatedAt && (
+          <div class="text-slate-500 text-xs">
+            Updated {formatDate(updatedAt)}
+          </div>
+        )}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="py-12" id="main-content">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+        <!-- Table of Contents Sidebar (Desktop) -->
+        <aside class="hidden lg:block lg:col-span-3">
+          <div class="sticky top-24">
+            <nav class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5" id="toc-nav">
+              <h2 class="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                <BookOpen class="h-4 w-4 text-sky-400" />
+                On this page
+              </h2>
+              <ul class="space-y-2 text-sm" id="toc-list">
+                <!-- Populated by JavaScript -->
+              </ul>
+            </nav>
+
+            <!-- Share Buttons -->
+            <div class="mt-6 rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5">
+              <h2 class="text-sm font-semibold text-white mb-4">Share</h2>
+              <div class="flex gap-2">
+                <button
+                  id="share-twitter"
+                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-800/50 text-slate-400 hover:bg-sky-500/20 hover:text-sky-400 transition-colors"
+                  aria-label="Share on Twitter"
+                >
+                  <Twitter class="h-4 w-4" />
+                </button>
+                <button
+                  id="share-linkedin"
+                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-800/50 text-slate-400 hover:bg-sky-500/20 hover:text-sky-400 transition-colors"
+                  aria-label="Share on LinkedIn"
+                >
+                  <Linkedin class="h-4 w-4" />
+                </button>
+                <button
+                  id="copy-link"
+                  class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-800/50 text-slate-400 hover:bg-sky-500/20 hover:text-sky-400 transition-colors"
+                  aria-label="Copy link"
+                >
+                  <Link2 class="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Article Content -->
+        <article class="lg:col-span-6 prose-article">
+          <slot />
+        </article>
+
+        <!-- Right Sidebar -->
+        <aside class="hidden lg:block lg:col-span-3 mt-12 lg:mt-0">
+          <div class="sticky top-24 space-y-6">
+            <!-- Tags -->
+            {tags.length > 0 && (
+              <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5">
+                <h2 class="text-sm font-semibold text-white mb-4">Tags</h2>
+                <div class="flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <span class="inline-flex items-center rounded-full border border-slate-700 bg-slate-800/30 px-3 py-1 text-xs text-slate-400">
+                      <Tag class="h-3 w-3 mr-1" />
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <!-- CTA Card -->
+            <div class="rounded-xl border border-sky-500/30 bg-gradient-to-br from-sky-600/10 to-violet-600/10 p-5">
+              <h3 class="font-semibold text-white">Try Crawlix Free</h3>
+              <p class="mt-2 text-sm text-slate-400">
+                Run 97+ SEO checks on any website. No account required.
+              </p>
+              <a
+                href="/download"
+                class="mt-4 inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-500 transition-colors"
+              >
+                Download Now
+                <ArrowRight class="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="py-16 bg-[#0a1d42]/30 border-t border-slate-800/50">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold text-white mb-8">Related Articles</h2>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {relatedPosts.map((post) => {
+            const cat = getCategory(post.category);
+            const colors = cat ? getCategoryColor(cat.color) : getCategoryColor('sky');
+
+            return (
+              <a href={`/blog/${post.slug}`} class="group">
+                <article class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5 hover:border-slate-700 hover:bg-[#0e2655]/50 transition-all h-full">
+                  <span class={`inline-flex items-center rounded-full ${colors.bg} ${colors.text} border ${colors.border} px-2 py-0.5 text-[10px] font-medium`}>
+                    {cat?.name || post.category}
+                  </span>
+
+                  <h3 class="mt-3 font-semibold text-white group-hover:text-sky-400 transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+
+                  <p class="mt-2 text-sm text-slate-500">
+                    {post.readingTime} min read
+                  </p>
+                </article>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Post Navigation -->
+  <section class="py-12 border-t border-slate-800/50">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row justify-between gap-6">
+        {prevPost ? (
+          <a href={`/blog/${prevPost.slug}`} class="group flex-1">
+            <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5 hover:border-slate-700 transition-colors">
+              <span class="flex items-center gap-1 text-sm text-slate-500 group-hover:text-sky-400 transition-colors">
+                <ArrowLeft class="h-4 w-4" />
+                Previous
+              </span>
+              <p class="mt-2 font-medium text-white line-clamp-1">{prevPost.title}</p>
+            </div>
+          </a>
+        ) : <div class="flex-1"></div>}
+
+        {nextPost ? (
+          <a href={`/blog/${nextPost.slug}`} class="group flex-1 text-right">
+            <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-5 hover:border-slate-700 transition-colors">
+              <span class="flex items-center justify-end gap-1 text-sm text-slate-500 group-hover:text-sky-400 transition-colors">
+                Next
+                <ArrowRight class="h-4 w-4" />
+              </span>
+              <p class="mt-2 font-medium text-white line-clamp-1">{nextPost.title}</p>
+            </div>
+          </a>
+        ) : <div class="flex-1"></div>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Blog CTA -->
+  <section class="py-12">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors"
+      >
+        <ArrowLeft class="h-4 w-4" />
+        Back to all articles
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style is:global>
+  /* Article Typography - Using standard CSS for Tailwind v4 compatibility */
+  .prose-article {
+    color: rgb(203 213 225); /* slate-300 */
+  }
+
+  .prose-article h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+
+  .prose-article a {
+    color: rgb(56 189 248); /* sky-400 */
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+  }
+
+  .prose-article a:hover {
+    color: rgb(125 211 252); /* sky-300 */
+  }
+
+  .prose-article strong {
+    font-weight: 600;
+    color: white;
+  }
+
+  .prose-article ul,
+  .prose-article ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose-article ul {
+    list-style-type: disc;
+  }
+
+  .prose-article ol {
+    list-style-type: decimal;
+  }
+
+  .prose-article li {
+    line-height: 1.75;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-article li::marker {
+    color: rgb(56 189 248); /* sky-400 */
+  }
+
+  .prose-article blockquote {
+    border-left: 4px solid rgb(14 165 233); /* sky-500 */
+    padding-left: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: rgb(148 163 184); /* slate-400 */
+    background: rgb(30 41 59 / 0.3); /* slate-800/30 */
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+
+  .prose-article code:not(pre code) {
+    background: rgb(30 41 59); /* slate-800 */
+    color: rgb(125 211 252); /* sky-300 */
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .prose-article pre {
+    background: rgb(15 23 42); /* slate-900 */
+    border: 1px solid rgb(30 41 59); /* slate-800 */
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .prose-article pre code {
+    font-size: 0.875rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: rgb(203 213 225); /* slate-300 */
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose-article hr {
+    border-color: rgb(30 41 59); /* slate-800 */
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .prose-article table {
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .prose-article th {
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem;
+    background: rgb(30 41 59 / 0.5); /* slate-800/50 */
+    border-bottom: 1px solid rgb(51 65 85); /* slate-700 */
+  }
+
+  .prose-article td {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgb(30 41 59); /* slate-800 */
+  }
+
+  .prose-article img {
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Callout boxes */
+  .prose-article .callout {
+    border-radius: 0.75rem;
+    border-width: 1px;
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-article .callout-info {
+    background: rgb(14 165 233 / 0.1); /* sky-500/10 */
+    border-color: rgb(14 165 233 / 0.3); /* sky-500/30 */
+    color: rgb(224 242 254); /* sky-100 */
+  }
+
+  .prose-article .callout-warning {
+    background: rgb(245 158 11 / 0.1); /* amber-500/10 */
+    border-color: rgb(245 158 11 / 0.3); /* amber-500/30 */
+    color: rgb(254 243 199); /* amber-100 */
+  }
+
+  .prose-article .callout-tip {
+    background: rgb(16 185 129 / 0.1); /* emerald-500/10 */
+    border-color: rgb(16 185 129 / 0.3); /* emerald-500/30 */
+    color: rgb(209 250 229); /* emerald-100 */
+  }
+
+  /* Table of Contents active state */
+  #toc-list a {
+    display: block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.5rem;
+    color: rgb(148 163 184); /* slate-400 */
+    transition: all 0.2s;
+  }
+
+  #toc-list a:hover {
+    color: white;
+    background: rgb(30 41 59 / 0.5); /* slate-800/50 */
+  }
+
+  #toc-list a.active {
+    color: rgb(56 189 248); /* sky-400 */
+    background: rgb(14 165 233 / 0.1); /* sky-500/10 */
+  }
+
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+
+<script define:vars={{ title, slug }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Generate Table of Contents
+    const article = document.querySelector('.prose-article');
+    const tocList = document.getElementById('toc-list');
+
+    if (article && tocList) {
+      const headings = article.querySelectorAll('h2, h3');
+      const tocItems = [];
+
+      headings.forEach((heading, index) => {
+        // Add ID to heading if it doesn't have one
+        if (!heading.id) {
+          heading.id = `heading-${index}`;
+        }
+
+        const level = heading.tagName === 'H2' ? 0 : 1;
+        const li = document.createElement('li');
+        li.style.paddingLeft = level ? '12px' : '0';
+
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.dataset.headingId = heading.id;
+
+        li.appendChild(a);
+        tocList.appendChild(li);
+        tocItems.push({ el: heading, link: a });
+      });
+
+      // Highlight active heading on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              tocItems.forEach(({ el, link }) => {
+                if (el === entry.target) {
+                  link.classList.add('active');
+                } else {
+                  link.classList.remove('active');
+                }
+              });
+            }
+          });
+        },
+        { rootMargin: '-80px 0px -80% 0px' }
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+    }
+
+    // Share buttons with URL validation (SECURITY: prevent open redirect)
+    const currentUrl = window.location.href;
+    const shareTitle = title || 'Crawlix Blog';
+
+    // Validate URL is same-origin before sharing
+    function isValidShareUrl(url: string): boolean {
+      try {
+        const parsed = new URL(url);
+        // Only allow sharing URLs from crawlix.app domain
+        return parsed.hostname === 'crawlix.app' ||
+               parsed.hostname.endsWith('.crawlix.app') ||
+               parsed.hostname === 'localhost';
+      } catch {
+        return false;
+      }
+    }
+
+    if (!isValidShareUrl(currentUrl)) {
+      console.warn('Share blocked: Invalid URL origin');
+    } else {
+      document.getElementById('share-twitter')?.addEventListener('click', () => {
+        // Build URL safely using URL API
+        const twitterUrl = new URL('https://twitter.com/intent/tweet');
+        twitterUrl.searchParams.set('text', shareTitle);
+        twitterUrl.searchParams.set('url', currentUrl);
+        window.open(twitterUrl.toString(), '_blank', 'width=550,height=420,noopener,noreferrer');
+      });
+
+      document.getElementById('share-linkedin')?.addEventListener('click', () => {
+        // Build URL safely using URL API
+        const linkedinUrl = new URL('https://www.linkedin.com/sharing/share-offsite/');
+        linkedinUrl.searchParams.set('url', currentUrl);
+        window.open(linkedinUrl.toString(), '_blank', 'width=550,height=420,noopener,noreferrer');
+      });
+
+      document.getElementById('copy-link')?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(currentUrl);
+          const btn = document.getElementById('copy-link');
+          if (btn) {
+            btn.classList.add('bg-emerald-500/20', 'text-emerald-400');
+            setTimeout(() => {
+              btn.classList.remove('bg-emerald-500/20', 'text-emerald-400');
+            }, 2000);
+          }
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,449 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+const frontmatter = {
+  title: "The Complete Guide to Crawlix's 97+ SEO Checks",
+  description: "A comprehensive breakdown of every SEO check Crawlix performs, organized by category with actionable fix recommendations.",
+  publishedAt: "2026-02-03",
+  author: "crawlix-team",
+  category: "tutorials",
+  tags: ["seo-checks", "technical-seo", "content-analysis", "accessibility"],
+  readingTime: 15,
+  slug: "complete-guide-to-97-seo-checks"
+};
+---
+
+<BlogLayout {...frontmatter}>
+  <p>
+    Crawlix runs <strong>97+ automated SEO checks</strong> on every page it crawls. This guide breaks down every check by category, explains what each one means, and provides actionable recommendations for fixing issues.
+  </p>
+
+  <p>
+    Whether you're new to technical SEO or an experienced practitioner, this reference will help you understand exactly what Crawlix analyzes and how to interpret the results.
+  </p>
+
+  <h2 id="technical-seo">Technical SEO Checks (20+)</h2>
+
+  <p>
+    Technical SEO forms the foundation of your site's crawlability and indexability. These checks ensure search engines can access and understand your content.
+  </p>
+
+  <h3 id="status-codes">Status Code Validation</h3>
+
+  <p>Crawlix categorizes HTTP status codes and flags issues:</p>
+
+  <ul>
+    <li><strong>4xx errors</strong> (404, 403, 410) - Pages that return client errors indicate broken links or access issues</li>
+    <li><strong>5xx errors</strong> (500, 502, 503) - Server errors that prevent crawling</li>
+    <li><strong>Soft 404 detection</strong> - Pages returning 200 OK but containing "not found" content (sneaky!)</li>
+  </ul>
+
+  <div class="callout callout-tip">
+    <strong>Pro tip:</strong> Soft 404s are particularly problematic because search engines may index these error pages. Crawlix detects them by analyzing page content for error indicators.
+  </div>
+
+  <h3 id="canonicals">Canonical Tag Analysis</h3>
+
+  <p>Crawlix validates canonical tags with these checks:</p>
+
+  <ul>
+    <li><strong>Missing canonical</strong> - No canonical tag present (risk of duplicate content)</li>
+    <li><strong>Multiple canonicals</strong> - More than one canonical tag (confuses search engines)</li>
+    <li><strong>Invalid canonical URL</strong> - Malformed or non-resolving canonical target</li>
+    <li><strong>Self-referencing canonical</strong> - Points to itself (usually correct, but flagged for review)</li>
+    <li><strong>Canonical chain</strong> - Canonical points to a page with a different canonical</li>
+  </ul>
+
+  <h3 id="redirects">Redirect Chain Analysis</h3>
+
+  <p>Redirect chains waste crawl budget and dilute link equity:</p>
+
+  <ul>
+    <li><strong>Redirect chains</strong> - More than 2 hops in a redirect sequence</li>
+    <li><strong>Excessive redirects</strong> - Chains with 3+ hops (recommended max: 3)</li>
+    <li><strong>Redirect loops</strong> - Infinite redirect cycles</li>
+    <li><strong>Mixed redirect types</strong> - Chains combining 301, 302, and meta refreshes</li>
+  </ul>
+
+  <h3 id="url-structure">URL Structure Analysis</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Check</th>
+        <th>Threshold</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>URL length</td>
+        <td>Max 115 characters</td>
+        <td>Long URLs may be truncated in SERPs</td>
+      </tr>
+      <tr>
+        <td>Uppercase characters</td>
+        <td>Should be lowercase</td>
+        <td>Can cause duplicate content issues</td>
+      </tr>
+      <tr>
+        <td>Underscores</td>
+        <td>Use hyphens instead</td>
+        <td>Hyphens are word separators; underscores aren't</td>
+      </tr>
+      <tr>
+        <td>Non-ASCII characters</td>
+        <td>Avoid special characters</td>
+        <td>May cause encoding issues</td>
+      </tr>
+      <tr>
+        <td>Directory depth</td>
+        <td>Max 3-4 levels</td>
+        <td>Deep URLs may be deprioritized</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="other-technical">Other Technical Checks</h3>
+
+  <ul>
+    <li><strong>HTTPS enforcement</strong> - Detects non-HTTPS pages</li>
+    <li><strong>Mobile viewport meta tag</strong> - Required for mobile-friendly pages</li>
+    <li><strong>Charset declaration</strong> - Proper character encoding</li>
+    <li><strong>DOCTYPE declaration</strong> - Valid HTML5 doctype</li>
+    <li><strong>Language attribute</strong> - <code>lang</code> attribute on HTML element</li>
+    <li><strong>Page load time</strong> - TTFB >600ms warning, >1s error</li>
+    <li><strong>Crawl depth</strong> - Pages >3 clicks from homepage flagged</li>
+  </ul>
+
+  <h2 id="on-page-seo">On-Page SEO Checks (25+)</h2>
+
+  <p>
+    On-page SEO checks analyze the content and meta elements that directly influence how search engines understand and rank your pages.
+  </p>
+
+  <h3 id="title-tags">Title Tag Validation</h3>
+
+  <ul>
+    <li><strong>Missing title</strong> - No title tag present</li>
+    <li><strong>Too short</strong> - Less than 30 characters (not descriptive enough)</li>
+    <li><strong>Too long</strong> - More than 60 characters (may be truncated)</li>
+    <li><strong>Generic title</strong> - Contains placeholder text like "Home" or "Untitled"</li>
+    <li><strong>Multiple titles</strong> - More than one title tag</li>
+    <li><strong>Duplicate titles</strong> - Same title used across multiple pages</li>
+  </ul>
+
+  <h3 id="meta-descriptions">Meta Description Validation</h3>
+
+  <ul>
+    <li><strong>Missing description</strong> - No meta description tag</li>
+    <li><strong>Too short</strong> - Less than 70 characters</li>
+    <li><strong>Too long</strong> - More than 160 characters</li>
+    <li><strong>Multiple descriptions</strong> - More than one meta description</li>
+    <li><strong>Duplicate descriptions</strong> - Same description across pages</li>
+  </ul>
+
+  <h3 id="heading-hierarchy">Heading Hierarchy</h3>
+
+  <p>Proper heading structure helps both users and search engines understand content organization:</p>
+
+  <ul>
+    <li><strong>Missing H1</strong> - Every page should have exactly one H1</li>
+    <li><strong>Multiple H1s</strong> - More than one H1 tag</li>
+    <li><strong>H1 too short/long</strong> - Should be descriptive but concise</li>
+    <li><strong>H1 matches title</strong> - Exact duplicate (missed optimization opportunity)</li>
+    <li><strong>Missing H2</strong> - Content-rich pages should use subheadings</li>
+    <li><strong>Skipped heading levels</strong> - H3 without H2, H4 without H3</li>
+    <li><strong>Empty headings</strong> - Heading tags with no text content</li>
+  </ul>
+
+  <h3 id="open-graph">Open Graph & Social Tags</h3>
+
+  <ul>
+    <li><strong>Missing OG title</strong> - No <code>og:title</code> tag</li>
+    <li><strong>Missing OG description</strong> - No <code>og:description</code> tag</li>
+    <li><strong>Missing OG image</strong> - No <code>og:image</code> tag (critical for social sharing)</li>
+    <li><strong>Missing Twitter Card</strong> - No Twitter-specific meta tags</li>
+    <li><strong>Incomplete OG tags</strong> - Partial Open Graph implementation</li>
+  </ul>
+
+  <h2 id="content-quality">Content Quality Checks (15+)</h2>
+
+  <p>
+    Content quality directly impacts user engagement and search rankings. These checks help identify thin, duplicate, or poorly structured content.
+  </p>
+
+  <h3 id="word-count">Word Count Analysis</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Classification</th>
+        <th>Word Count</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Thin content</td>
+        <td>&lt;100 words</td>
+        <td>Expand or consolidate</td>
+      </tr>
+      <tr>
+        <td>Short content</td>
+        <td>&lt;300 words</td>
+        <td>Consider expanding</td>
+      </tr>
+      <tr>
+        <td>Normal content</td>
+        <td>300-2000 words</td>
+        <td>Varies by intent</td>
+      </tr>
+      <tr>
+        <td>Long-form</td>
+        <td>&gt;2000 words</td>
+        <td>Ensure quality maintained</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="readability">Readability Scoring</h3>
+
+  <p>Crawlix calculates readability using language-appropriate formulas:</p>
+
+  <ul>
+    <li><strong>Flesch Reading Ease</strong> (English) - Score 0-100, higher is easier to read</li>
+    <li><strong>Arabic Readability Index</strong> - For Arabic content analysis</li>
+  </ul>
+
+  <p>Readability is calculated based on word length, syllable count, and sentence structure.</p>
+
+  <h3 id="content-issues">Content Issues</h3>
+
+  <ul>
+    <li><strong>Lorem Ipsum detection</strong> - Placeholder text left in production</li>
+    <li><strong>Keyword stuffing</strong> - Single word appears >5% of content</li>
+    <li><strong>Hidden text</strong> - Text using CSS to hide from users</li>
+    <li><strong>Low text-to-HTML ratio</strong> - Too much code, too little content</li>
+    <li><strong>Excessive bold/strong tags</strong> - Over-optimization signal</li>
+  </ul>
+
+  <h2 id="link-analysis">Link Analysis Checks (15+)</h2>
+
+  <h3 id="internal-links">Internal Link Issues</h3>
+
+  <ul>
+    <li><strong>No internal links</strong> - Orphan pages with no internal links pointing to them</li>
+    <li><strong>Too many links</strong> - Pages with >100 links (dilutes PageRank)</li>
+    <li><strong>Nofollow on internal links</strong> - Internal links shouldn't typically be nofollowed</li>
+  </ul>
+
+  <h3 id="anchor-text">Anchor Text Quality</h3>
+
+  <ul>
+    <li><strong>Empty anchor text</strong> - Links with no visible text</li>
+    <li><strong>Generic anchors</strong> - "Click here", "Read more", "Learn more"</li>
+    <li><strong>Excessive same-anchor links</strong> - Many links with identical text</li>
+  </ul>
+
+  <h3 id="external-links">External Link Issues</h3>
+
+  <ul>
+    <li><strong>Missing rel="noopener"</strong> - Security risk for <code>target="_blank"</code> links</li>
+    <li><strong>Broken external links</strong> - Links to non-existent pages</li>
+    <li><strong>Excessive nofollow</strong> - Too many nofollowed links may look unnatural</li>
+  </ul>
+
+  <h2 id="image-optimization">Image Optimization Checks (10+)</h2>
+
+  <ul>
+    <li><strong>Missing alt text</strong> - Images without <code>alt</code> attribute</li>
+    <li><strong>Empty alt attribute</strong> - <code>alt=""</code> (valid for decorative images only)</li>
+    <li><strong>Alt text too long</strong> - More than 125 characters</li>
+    <li><strong>Missing dimensions</strong> - No <code>width</code>/<code>height</code> attributes (causes CLS)</li>
+    <li><strong>Generic filenames</strong> - image1.jpg, photo.png, etc.</li>
+    <li><strong>Missing lazy loading</strong> - Below-fold images without <code>loading="lazy"</code></li>
+  </ul>
+
+  <h2 id="structured-data">Structured Data Checks (10+)</h2>
+
+  <ul>
+    <li><strong>No structured data</strong> - Page lacks any JSON-LD schema</li>
+    <li><strong>Invalid JSON-LD</strong> - Malformed JSON syntax</li>
+    <li><strong>Missing @context</strong> - Required schema.org context missing</li>
+    <li><strong>Missing recommended schema</strong> - Article pages without Article schema, etc.</li>
+    <li><strong>Breadcrumb validation</strong> - Checks breadcrumb schema accuracy</li>
+  </ul>
+
+  <p>Crawlix extracts and validates these schema types:</p>
+  <ul>
+    <li>Article, BlogPosting, NewsArticle</li>
+    <li>Product, Offer, Review</li>
+    <li>Organization, LocalBusiness</li>
+    <li>BreadcrumbList, FAQPage, HowTo</li>
+  </ul>
+
+  <h2 id="security-checks">Security Checks (10+)</h2>
+
+  <p>Security issues can harm user trust and may trigger browser warnings:</p>
+
+  <ul>
+    <li><strong>Mixed content</strong> - HTTP resources loaded on HTTPS pages</li>
+    <li><strong>HTTP links on HTTPS</strong> - Internal links using HTTP protocol</li>
+    <li><strong>Form over HTTP</strong> - Form submissions not secured</li>
+    <li><strong>Autocomplete on sensitive fields</strong> - Password/credit card fields</li>
+  </ul>
+
+  <h3 id="security-headers">Security Header Checks</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Header</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Strict-Transport-Security</td>
+        <td>Enforces HTTPS connections</td>
+      </tr>
+      <tr>
+        <td>X-Content-Type-Options</td>
+        <td>Prevents MIME type sniffing</td>
+      </tr>
+      <tr>
+        <td>X-Frame-Options</td>
+        <td>Prevents clickjacking</td>
+      </tr>
+      <tr>
+        <td>Content-Security-Policy</td>
+        <td>Controls resource loading</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="accessibility">Accessibility Checks (WCAG Compliance)</h2>
+
+  <p>
+    Accessibility isn't just good practice—it's increasingly important for SEO and may be legally required. Crawlix performs 10+ WCAG-aligned checks:
+  </p>
+
+  <ul>
+    <li><strong>Images without alt text</strong> (WCAG 1.1.1) - Non-decorative images need descriptions</li>
+    <li><strong>Form inputs without labels</strong> (WCAG 1.3.1, 4.1.2) - Every input needs an associated label</li>
+    <li><strong>Buttons without accessible names</strong> (WCAG 4.1.2) - Buttons need text or aria-label</li>
+    <li><strong>Links without accessible names</strong> (WCAG 2.4.4) - Links need descriptive text</li>
+    <li><strong>Missing language attribute</strong> (WCAG 3.1.1) - <code>lang</code> required on HTML element</li>
+    <li><strong>Missing skip-to-content link</strong> (WCAG 2.4.1) - Helps keyboard navigation</li>
+    <li><strong>Duplicate IDs</strong> (WCAG 4.1.1) - IDs must be unique</li>
+    <li><strong>Positive tabindex</strong> - Disrupts natural tab order</li>
+    <li><strong>Auto-playing media</strong> (WCAG 1.4.2) - Audio/video shouldn't autoplay</li>
+    <li><strong>Tables without headers</strong> - Data tables need <code>&lt;th&gt;</code> elements</li>
+  </ul>
+
+  <h2 id="international-seo">International SEO Checks</h2>
+
+  <p>For multilingual and multi-regional sites:</p>
+
+  <ul>
+    <li><strong>Missing hreflang</strong> - No language/region annotations</li>
+    <li><strong>Invalid hreflang codes</strong> - Incorrect language or country codes</li>
+    <li><strong>Missing x-default</strong> - No default/fallback version specified</li>
+    <li><strong>Self-referencing hreflang missing</strong> - Page should reference itself</li>
+    <li><strong>Content-Language mismatch</strong> - Header doesn't match hreflang</li>
+  </ul>
+
+  <h2 id="ai-readiness">AI Search Readiness Analysis</h2>
+
+  <p>
+    Crawlix analyzes your robots.txt for <strong>13 AI crawlers</strong> to help you understand and control AI model access to your content:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Crawler</th>
+        <th>Company</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GPTBot</td>
+        <td>OpenAI</td>
+        <td>ChatGPT training/browsing</td>
+      </tr>
+      <tr>
+        <td>Google-Extended</td>
+        <td>Google</td>
+        <td>Gemini/Bard training</td>
+      </tr>
+      <tr>
+        <td>ClaudeBot</td>
+        <td>Anthropic</td>
+        <td>Claude training</td>
+      </tr>
+      <tr>
+        <td>anthropic-ai</td>
+        <td>Anthropic</td>
+        <td>Anthropic services</td>
+      </tr>
+      <tr>
+        <td>CCBot</td>
+        <td>Common Crawl</td>
+        <td>Open dataset</td>
+      </tr>
+      <tr>
+        <td>Bytespider</td>
+        <td>ByteDance</td>
+        <td>TikTok/AI services</td>
+      </tr>
+      <tr>
+        <td>FacebookBot</td>
+        <td>Meta</td>
+        <td>AI training</td>
+      </tr>
+      <tr>
+        <td>Amazonbot</td>
+        <td>Amazon</td>
+        <td>Alexa/AI services</td>
+      </tr>
+      <tr>
+        <td>PerplexityBot</td>
+        <td>Perplexity AI</td>
+        <td>AI search</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <strong>Note:</strong> The AI readiness view shows which bots are blocked in your robots.txt and provides recommendations for managing AI crawler access based on your content strategy.
+  </div>
+
+  <h2 id="using-results">Using Your Crawl Results</h2>
+
+  <p>After running a crawl, use these strategies to prioritize fixes:</p>
+
+  <ol>
+    <li><strong>Start with errors over warnings</strong> - Errors indicate definite problems; warnings are recommendations</li>
+    <li><strong>Focus on high-traffic pages first</strong> - Use Google Analytics integration to identify your most important pages</li>
+    <li><strong>Fix systemic issues</strong> - If 500 pages have the same issue, fix the template rather than individual pages</li>
+    <li><strong>Use the Export feature</strong> - Create CSV/Excel reports to share with developers or clients</li>
+    <li><strong>Compare crawls over time</strong> - Use scheduled crawls to track progress and catch regressions</li>
+  </ol>
+
+  <h2 id="conclusion">Conclusion</h2>
+
+  <p>
+    Crawlix's 97+ SEO checks cover the full spectrum of technical SEO, from basic status codes to advanced accessibility compliance. By systematically addressing issues in each category, you can build a solid technical foundation for your SEO strategy.
+  </p>
+
+  <p>
+    Remember: not every issue requires immediate attention. Use the severity levels (error, warning, notice) and page importance to prioritize your efforts effectively.
+  </p>
+
+  <p>
+    <a href="/download">Download Crawlix</a> to start auditing your website with all 97+ checks—the free tier includes full analysis capabilities for up to 100 pages per crawl.
+  </p>
+</BlogLayout>

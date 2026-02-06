@@ -1,0 +1,7 @@
+{
+  "id": "license-expiry",
+  "question": "What happens when my annual license expires?",
+  "answer": "If you don't renew, you'll be downgraded to the Free tier. You won't lose any data, but feature limits will apply (100 pages/crawl, no PDF export, etc.). You can renew anytime to regain full access.",
+  "category": "licensing",
+  "order": 5
+}

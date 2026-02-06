@@ -1,0 +1,16 @@
+{
+  "id": "ai",
+  "name": "AI Search Readiness",
+  "description": "Prepare for AI crawlers and LLM search",
+  "icon": "Bot",
+  "color": "purple",
+  "checkCount": 6,
+  "features": [
+    { "title": "GPTBot Access", "description": "Check if GPTBot is blocked in robots.txt" },
+    { "title": "Claude-Bot Access", "description": "Check if Claude-Bot (Anthropic) is blocked" },
+    { "title": "Google-Extended Access", "description": "Check Google AI crawler access" },
+    { "title": "llms.txt Validation", "description": "Verify llms.txt file presence and format" },
+    { "title": "AI Summary Readiness", "description": "Analyze content structure for AI extraction" },
+    { "title": "Semantic HTML Usage", "description": "Check semantic markup for AI understanding" }
+  ]
+}

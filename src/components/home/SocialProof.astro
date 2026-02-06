@@ -1,0 +1,53 @@
+---
+// Product capabilities section - highlights real features for new product launch
+import { Shield, Zap, Globe, Lock } from '@lucide/astro';
+
+const highlights = [
+  {
+    icon: Shield,
+    stat: "97+",
+    label: "SEO checks",
+    description: "Technical, content & performance audits"
+  },
+  {
+    icon: Zap,
+    stat: "Parallel",
+    label: "crawling",
+    description: "Configurable threads for speed"
+  },
+  {
+    icon: Globe,
+    stat: "3",
+    label: "platforms",
+    description: "Windows, macOS & Linux"
+  },
+  {
+    icon: Lock,
+    stat: "100%",
+    label: "local",
+    description: "Your data never leaves your machine"
+  },
+];
+---
+
+<section class="py-16 border-y border-slate-800/50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-sm font-medium text-slate-500 uppercase tracking-wider mb-10">
+      Built for SEO professionals who value privacy
+    </p>
+
+    <!-- Capability highlights -->
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      {highlights.map(({ icon: Icon, stat, label, description }) => (
+        <div class="text-center group">
+          <div class="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-sky-500/10 text-sky-400 mb-4 group-hover:scale-110 transition-transform">
+            <Icon class="h-6 w-6" />
+          </div>
+          <div class="text-3xl font-bold text-white">{stat}</div>
+          <div class="text-sm font-medium text-sky-400">{label}</div>
+          <div class="mt-1 text-xs text-slate-500">{description}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

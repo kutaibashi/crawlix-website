@@ -1,0 +1,20 @@
+{
+  "id": "content",
+  "name": "Content Quality",
+  "description": "Analyze content for users and search engines",
+  "icon": "BookOpen",
+  "color": "emerald",
+  "checkCount": 15,
+  "features": [
+    { "title": "Word Count Analysis", "description": "Detect thin content (<100 words) and short pages" },
+    { "title": "Duplicate Content Detection", "description": "Find duplicate pages via content hashing" },
+    { "title": "Readability Scoring", "description": "Flesch Reading Ease for English content" },
+    { "title": "Keyword Stuffing Detection", "description": "Flag excessive keyword usage (>5%)" },
+    { "title": "Placeholder Text Detection", "description": "Find Lorem Ipsum and test content" },
+    { "title": "Text-to-HTML Ratio", "description": "Identify pages with low content ratio (<10%)" },
+    { "title": "Hidden Text Detection", "description": "Find display:none and visibility:hidden text" },
+    { "title": "Paragraph Structure", "description": "Analyze paragraph usage and length" },
+    { "title": "Bold Tag Overuse", "description": "Flag excessive <strong> tag usage (>20)" },
+    { "title": "Content Language Detection", "description": "Auto-detect page language" }
+  ]
+}

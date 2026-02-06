@@ -1,0 +1,15 @@
+{
+  "id": "slack",
+  "name": "Slack Notifications",
+  "description": "Get notified in Slack when crawls complete or when critical issues are detected.",
+  "logo": "MessageSquare",
+  "category": "coming-soon",
+  "status": "coming-soon",
+  "tier": "pro",
+  "features": [
+    "Crawl completion alerts",
+    "Critical issue notifications",
+    "Scheduled report delivery",
+    "Custom webhook support"
+  ]
+}

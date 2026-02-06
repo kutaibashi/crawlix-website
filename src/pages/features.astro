@@ -1,0 +1,397 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import { getFeatureCategories, getHomepage, getTotalSeoChecks } from '../lib/keystatic';
+// Keep export formats and integrations from TypeScript (static data)
+import { exportFormats, integrations } from '../data/features';
+import {
+  Download, Search, Gauge, Code, Shield, FileText, Monitor,
+  Wrench, BookOpen, Link, Image, Globe, Bot, Accessibility,
+  ChevronDown, Check, ArrowRight, Zap, BarChart3, Table, Braces
+} from '@lucide/astro';
+
+// Prerender this page
+export const prerender = true;
+
+// Fetch data from Keystatic
+const featureCategories = await getFeatureCategories();
+const homepage = await getHomepage();
+const totalSeoChecks = await getTotalSeoChecks();
+
+// Get key capabilities from homepage singleton
+const keyCapabilities = homepage?.keyCapabilities || [];
+
+// Icon mapping
+const iconMap = {
+  Search, Gauge, Code, Shield, FileText, Monitor, Wrench, BookOpen,
+  Link, Image, Globe, Bot, Accessibility, Zap, BarChart3, Table, Braces
+};
+
+// Color classes for categories
+const colorClasses = {
+  sky: { bg: 'bg-sky-500/10', text: 'text-sky-400', border: 'border-sky-500/30', accent: 'bg-sky-500' },
+  violet: { bg: 'bg-violet-500/10', text: 'text-violet-400', border: 'border-violet-500/30', accent: 'bg-violet-500' },
+  emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', accent: 'bg-emerald-500' },
+  amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30', accent: 'bg-amber-500' },
+  rose: { bg: 'bg-rose-500/10', text: 'text-rose-400', border: 'border-rose-500/30', accent: 'bg-rose-500' },
+  cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30', accent: 'bg-cyan-500' },
+  indigo: { bg: 'bg-indigo-500/10', text: 'text-indigo-400', border: 'border-indigo-500/30', accent: 'bg-indigo-500' },
+  orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/30', accent: 'bg-orange-500' },
+  pink: { bg: 'bg-pink-500/10', text: 'text-pink-400', border: 'border-pink-500/30', accent: 'bg-pink-500' },
+  teal: { bg: 'bg-teal-500/10', text: 'text-teal-400', border: 'border-teal-500/30', accent: 'bg-teal-500' },
+  purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/30', accent: 'bg-purple-500' },
+};
+---
+
+<BaseLayout
+  title="Features"
+  description={`Explore Crawlix features: ${totalSeoChecks}+ SEO checks across 11 categories, Core Web Vitals, JavaScript rendering, and more.`}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Features', url: '/features' },
+  ]}
+>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-sky-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center animate-on-scroll">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          Features
+        </span>
+        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <span class="gradient-text-blue">{totalSeoChecks}+ SEO Checks</span>
+          <br />
+          <span class="text-white">Across 11 Categories</span>
+        </h1>
+        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+          Comprehensive SEO audits with Core Web Vitals, JavaScript rendering,
+          accessibility checks, and AI search readiness - all running locally on your machine.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button href="/download" size="lg" class="glow-blue">
+            <Download class="h-5 w-5" />
+            Download Free
+          </Button>
+          <Button href="#categories" variant="ghost" size="lg">
+            Explore All Features
+            <ChevronDown class="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Capabilities Grid -->
+  <section class="py-20 border-y border-slate-800/50">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 stagger-children">
+        {keyCapabilities.map(({ title, description, icon, stat, statLabel }) => {
+          const IconComponent = iconMap[icon as keyof typeof iconMap] || Search;
+          return (
+            <div class="group relative rounded-2xl border border-slate-800 bg-[#0e2655]/30 p-6 hover-lift glass-card">
+              <div class="flex items-start justify-between">
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 group-hover:scale-110 transition-transform">
+                  <IconComponent class="h-6 w-6" />
+                </div>
+                <div class="text-right">
+                  <div class="text-2xl font-bold text-white">{stat}</div>
+                  <div class="text-xs text-slate-500">{statLabel}</div>
+                </div>
+              </div>
+              <h3 class="mt-4 text-lg font-semibold text-white">{title}</h3>
+              <p class="mt-2 text-sm text-slate-400">{description}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Categories Navigation -->
+  <section class="py-12 bg-[#0a1628] sticky top-16 z-40 border-b border-slate-800/50" id="categories">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        {featureCategories.map((category) => {
+          const colors = colorClasses[category.color as keyof typeof colorClasses];
+          return (
+            <a
+              href={`#${category.id}`}
+              class={`shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border ${colors.border} ${colors.bg} ${colors.text} hover:opacity-80 transition-opacity`}
+            >
+              {category.name}
+              <span class="text-xs opacity-60">{category.checkCount}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Categories Detail -->
+  {featureCategories.map((category, idx) => {
+    const colors = colorClasses[category.color as keyof typeof colorClasses];
+    const IconComponent = iconMap[category.icon as keyof typeof iconMap] || Search;
+
+    return (
+      <section
+        id={category.id}
+        class={`py-20 ${idx % 2 === 0 ? '' : 'bg-[#0a1628]'}`}
+      >
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <!-- Category Header -->
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 animate-on-scroll">
+            <div class="flex items-start gap-4">
+              <div class={`flex h-14 w-14 items-center justify-center rounded-2xl ${colors.bg} ${colors.text}`}>
+                <IconComponent class="h-7 w-7" />
+              </div>
+              <div>
+                <div class="flex items-center gap-3">
+                  <h2 class="text-2xl font-bold text-white">{category.name}</h2>
+                  <span class={`inline-flex items-center rounded-full ${colors.bg} ${colors.text} px-2.5 py-0.5 text-xs font-medium`}>
+                    {category.checkCount} checks
+                  </span>
+                </div>
+                <p class="mt-1 text-slate-400">{category.description}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 stagger-children">
+            {category.features.map((feature) => (
+              <div class="group flex gap-3 rounded-xl border border-slate-800 bg-[#0e2655]/30 p-4 hover:border-slate-700 transition-colors">
+                <div class={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${colors.bg}`}>
+                  <Check class={`h-4 w-4 ${colors.text}`} />
+                </div>
+                <div>
+                  <h3 class="font-medium text-white text-sm">{feature.title}</h3>
+                  <p class="mt-1 text-xs text-slate-500">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <!-- Export Formats -->
+  <section class="py-20 bg-[#0a1628]">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          Export Options
+        </span>
+        <h2 class="text-3xl font-bold text-white">
+          Export in 5 Formats
+        </h2>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
+          Get your data out in the format you need. White-label PDF reports available on Agency tier.
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5 stagger-children">
+        {exportFormats.map(({ name, description, icon }) => {
+          const IconComponent = iconMap[icon as keyof typeof iconMap] || FileText;
+          return (
+            <div class="group text-center p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/30 hover:border-sky-500/30 transition-colors">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 mb-4 group-hover:scale-110 transition-transform">
+                <IconComponent class="h-6 w-6" />
+              </div>
+              <h3 class="font-semibold text-white">{name}</h3>
+              <p class="mt-1 text-xs text-slate-500">{description}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          Integrations
+        </span>
+        <h2 class="text-3xl font-bold text-white">
+          Connect Your Data Sources
+        </h2>
+        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
+          Import data from Google Analytics, Search Console, and PageSpeed Insights.
+          <span class="text-slate-500">(Pro and Agency tiers)</span>
+        </p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-3 max-w-3xl mx-auto stagger-children">
+        {integrations.map(({ name, description, icon }) => {
+          const IconComponent = iconMap[icon as keyof typeof iconMap] || Search;
+          return (
+            <div class="group text-center p-8 rounded-2xl border border-slate-800 bg-[#0e2655]/30 hover:border-emerald-500/30 transition-colors">
+              <div class="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
+                <IconComponent class="h-7 w-7" />
+              </div>
+              <h3 class="font-semibold text-white">{name}</h3>
+              <p class="mt-2 text-sm text-slate-400">{description}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Desktop App Features -->
+  <section class="py-20 bg-[#0a1628]">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-12 lg:grid-cols-2 items-center">
+        <div class="animate-on-scroll">
+          <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+            Desktop Application
+          </span>
+          <h2 class="text-3xl font-bold text-white">
+            Native Performance, Complete Privacy
+          </h2>
+          <p class="mt-4 text-slate-400">
+            Crawlix runs entirely on your machine. Your crawl data is stored locally in SQLite,
+            never uploaded to any server. Work offline, maintain complete data ownership.
+          </p>
+
+          <ul class="mt-8 space-y-4">
+            {[
+              'Local SQLite database - your data stays on your machine',
+              'Works completely offline after installation',
+              'System tray integration with progress notifications',
+              'Pause, resume, and schedule crawls',
+              'Memory-efficient with configurable limits',
+              'Checkpoint/resume for interrupted crawls',
+            ].map((feature) => (
+              <li class="flex items-start gap-3">
+                <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
+                  <Check class="h-4 w-4 text-emerald-400" />
+                </div>
+                <span class="text-slate-300">{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-8">
+            <Button href="/download">
+              <Download class="h-5 w-5" />
+              Download for Your Platform
+            </Button>
+          </div>
+        </div>
+
+        <!-- Platform Cards -->
+        <div class="grid gap-4 sm:grid-cols-3 scale-in">
+          {[
+            { name: 'Windows', icon: Monitor, version: '10, 11' },
+            { name: 'macOS', icon: Monitor, version: '12+' },
+            { name: 'Linux', icon: Monitor, version: 'Ubuntu, Fedora, Debian' },
+          ].map(({ name, version }) => (
+            <div class="text-center p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/50 hover:border-sky-500/30 transition-colors">
+              <Monitor class="h-10 w-10 text-sky-400 mx-auto mb-4" />
+              <h3 class="font-semibold text-white">{name}</h3>
+              <p class="mt-1 text-xs text-slate-500">{version}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative overflow-hidden rounded-3xl">
+        <div class="absolute inset-0 bg-gradient-to-br from-sky-600 via-sky-700 to-indigo-800"></div>
+        <div class="absolute inset-0 opacity-30">
+          <div class="absolute top-0 left-0 w-96 h-96 bg-white/20 rounded-full blur-3xl float"></div>
+        </div>
+
+        <div class="relative px-8 py-16 sm:px-16 sm:py-20 text-center">
+          <h2 class="text-3xl font-bold text-white sm:text-4xl">
+            Ready to Audit Your Website?
+          </h2>
+          <p class="mt-4 text-sky-100 max-w-xl mx-auto">
+            Download Crawlix and run {totalSeoChecks}+ SEO checks on your site.
+            Free tier includes 100 pages per crawl.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-semibold text-sky-700 shadow-lg hover:bg-sky-50 transition-all">
+              <Download class="h-5 w-5" />
+              Download Free
+              <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a href="/pricing" class="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-8 py-4 font-semibold text-white hover:bg-white/20 transition-colors">
+              View Pricing
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  // Initialize scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll, .stagger-children, .scale-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for category navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 150; // Account for sticky nav
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

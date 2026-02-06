@@ -1,0 +1,139 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+
+export const prerender = true;
+---
+
+<LegalLayout
+  title="Cookie Policy"
+  lastUpdated="February 2026"
+  description="Crawlix Cookie Policy - Learn about how we use cookies on our website."
+>
+  <h2>What Are Cookies?</h2>
+  <p>
+    Cookies are small text files that are placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners.
+  </p>
+
+  <h2>Our Approach to Cookies</h2>
+  <p>
+    We believe in minimal data collection. Our website uses very few cookies, and we've chosen privacy-respecting alternatives where possible.
+  </p>
+
+  <h2>Cookies We Use</h2>
+
+  <h3>Essential Cookies</h3>
+  <p>
+    These cookies are strictly necessary for the website to function. They cannot be disabled.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Cookie Name</th>
+        <th>Purpose</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>session_id</code></td>
+        <td>Maintains user session for checkout process</td>
+        <td>Session</td>
+      </tr>
+      <tr>
+        <td><code>csrf_token</code></td>
+        <td>Security token for form submissions</td>
+        <td>Session</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Functional Cookies (Optional)</h3>
+  <p>
+    These cookies enable enhanced functionality and personalization.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Cookie Name</th>
+        <th>Purpose</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>theme_preference</code></td>
+        <td>Remembers your dark/light mode preference</td>
+        <td>1 year</td>
+      </tr>
+      <tr>
+        <td><code>cookie_consent</code></td>
+        <td>Stores your cookie preferences</td>
+        <td>1 year</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Analytics Cookies (Optional)</h3>
+  <p>
+    We use privacy-friendly analytics to understand how visitors use our website. We use Plausible Analytics, which:
+  </p>
+  <ul>
+    <li>Does not use cookies</li>
+    <li>Does not track users across websites</li>
+    <li>Is GDPR, CCPA, and PECR compliant</li>
+    <li>Does not collect personal data</li>
+  </ul>
+  <p>
+    <strong>Note:</strong> Because Plausible is cookie-free, no analytics cookies are set on your device.
+  </p>
+
+  <h2>Third-Party Cookies</h2>
+
+  <h3>Payment Processing (Lemon Squeezy)</h3>
+  <p>
+    When you make a purchase, Lemon Squeezy (our payment processor) may set cookies necessary for secure payment processing. These cookies are governed by <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener">Lemon Squeezy's Privacy Policy</a>.
+  </p>
+
+  <h2>Global Privacy Control (GPC)</h2>
+  <p>
+    We respect the Global Privacy Control signal. If your browser sends a GPC signal, we will:
+  </p>
+  <ul>
+    <li>Treat it as a valid opt-out request</li>
+    <li>Disable all optional cookies</li>
+    <li>Not attempt to load third-party analytics</li>
+  </ul>
+
+  <h2>Managing Cookies</h2>
+
+  <h3>Cookie Consent Banner</h3>
+  <p>
+    When you first visit our website, you'll see a cookie consent banner that allows you to accept or customize your cookie preferences.
+  </p>
+
+  <h3>Browser Settings</h3>
+  <p>
+    You can also manage cookies through your browser settings. Here are links to instructions for common browsers:
+  </p>
+  <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+    <li><a href="https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener">Microsoft Edge</a></li>
+  </ul>
+
+  <h2>Do Not Track</h2>
+  <p>
+    We honor Do Not Track (DNT) signals sent by your browser. When DNT is enabled, we disable optional cookies and tracking.
+  </p>
+
+  <h2>Changes to This Policy</h2>
+  <p>
+    We may update this Cookie Policy from time to time. Changes will be posted on this page with an updated "Last updated" date.
+  </p>
+
+  <h2>Contact Us</h2>
+  <p>
+    If you have questions about our use of cookies, please contact us at <a href="mailto:privacy@crawlix.app">privacy@crawlix.app</a>.
+  </p>
+</LegalLayout>

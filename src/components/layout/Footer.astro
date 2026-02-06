@@ -1,0 +1,112 @@
+---
+import { Github, Twitter } from '@lucide/astro';
+import { getNavigation } from '../../lib/keystatic';
+import defaultNavigation from '../../data/navigation';
+
+// Fetch navigation from Keystatic with fallback to default
+const keystaticNav = await getNavigation();
+const navigation = {
+  footer: {
+    product: keystaticNav?.footerProduct || defaultNavigation.footer.product,
+    resources: keystaticNav?.footerResources || defaultNavigation.footer.resources,
+    company: keystaticNav?.footerCompany || defaultNavigation.footer.company,
+    legal: keystaticNav?.footerLegal || defaultNavigation.footer.legal,
+  },
+};
+---
+
+<footer class="border-t border-slate-800 bg-[#091a3d]">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
+      <!-- Brand Column -->
+      <div class="col-span-2 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2 text-xl font-bold text-white">
+          <span class="text-2xl">🕷️</span>
+          <span>Crawlix</span>
+        </a>
+        <p class="mt-4 text-sm text-slate-400">
+          The privacy-first SEO crawler. Your data stays on your machine. Forever.
+        </p>
+        <div class="mt-4 flex gap-4">
+          <a href="https://github.com/crawlix" class="text-slate-400 hover:text-white" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
+            <Github class="h-5 w-5" />
+          </a>
+          <a href="https://twitter.com/crawlix" class="text-slate-400 hover:text-white" aria-label="Twitter" rel="noopener noreferrer" target="_blank">
+            <Twitter class="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Product -->
+      <div>
+        <h3 class="text-sm font-semibold text-white">Product</h3>
+        <ul class="mt-4 space-y-3">
+          {navigation.footer.product.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="text-sm font-semibold text-white">Resources</h3>
+        <ul class="mt-4 space-y-3">
+          {navigation.footer.resources.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h3 class="text-sm font-semibold text-white">Company</h3>
+        <ul class="mt-4 space-y-3">
+          {navigation.footer.company.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h3 class="text-sm font-semibold text-white">Legal</h3>
+        <ul class="mt-4 space-y-3">
+          {navigation.footer.legal.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-4 border-t border-slate-800 pt-8">
+      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">GDPR Compliant</span>
+      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">CCPA Compliant</span>
+      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">WCAG 2.1 AA</span>
+      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">ISO 29147</span>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-8 border-t border-slate-800 pt-8 text-center">
+      <p class="text-sm text-slate-400">
+        &copy; {new Date().getFullYear()} Crawlix. Made for SEO professionals.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,20 @@
+{
+  "id": "links",
+  "name": "Link Analysis",
+  "description": "Audit internal and external link structure",
+  "icon": "Link",
+  "color": "amber",
+  "checkCount": 15,
+  "features": [
+    { "title": "Broken Link Detection", "description": "Find internal and external broken links" },
+    { "title": "Internal Link Count", "description": "Flag pages with too few (<3) or too many (>100) links" },
+    { "title": "Anchor Text Analysis", "description": "Detect empty and generic anchor text" },
+    { "title": "Noopener/Noreferrer", "description": "Check external links for security attributes" },
+    { "title": "Nofollow Usage", "description": "Analyze nofollow distribution on internal links" },
+    { "title": "Orphan Page Detection", "description": "Find pages not linked from other pages" },
+    { "title": "Link Depth Analysis", "description": "Measure clicks from homepage to each page" },
+    { "title": "External Link Inventory", "description": "List all outbound links by domain" },
+    { "title": "JavaScript Link Detection", "description": "Find links using javascript:void" },
+    { "title": "Empty Href Detection", "description": "Flag links with empty or # href values" }
+  ]
+}

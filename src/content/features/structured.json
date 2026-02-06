@@ -1,0 +1,16 @@
+{
+  "id": "structured",
+  "name": "Structured Data",
+  "description": "Validate Schema.org markup and rich results",
+  "icon": "Code",
+  "color": "indigo",
+  "checkCount": 6,
+  "features": [
+    { "title": "JSON-LD Detection", "description": "Find and parse Schema.org JSON-LD" },
+    { "title": "Schema Validation", "description": "Check for valid @context and @type" },
+    { "title": "Required Schema Types", "description": "Recommend Article, BlogPosting schemas" },
+    { "title": "Breadcrumb Schema", "description": "Validate breadcrumb markup" },
+    { "title": "FAQ Schema", "description": "Check FAQ page structured data" },
+    { "title": "Schema Type Inventory", "description": "List all schema types found on site" }
+  ]
+}

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import { Mail, MessageSquare, Shield, Book } from '@lucide/astro';
+
+export const prerender = true;
+---
+
+<BaseLayout title="Contact" description="Get in touch with the Crawlix team for support, feedback, or questions.">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <section class="pt-32 pb-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl font-bold text-white">Contact Us</h1>
+        <p class="mt-4 text-lg text-slate-400">
+          We're here to help. Choose the best way to reach us.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/50 p-6 text-center">
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 mx-auto">
+            <Mail class="h-6 w-6" />
+          </div>
+          <h2 class="mt-4 font-semibold text-white">General Inquiries</h2>
+          <p class="mt-2 text-sm text-slate-400">For questions about Crawlix</p>
+          <a href="mailto:hello@crawlix.app" class="mt-4 inline-block text-sky-400 hover:text-sky-300">
+            hello@crawlix.app
+          </a>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/50 p-6 text-center">
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 mx-auto">
+            <MessageSquare class="h-6 w-6" />
+          </div>
+          <h2 class="mt-4 font-semibold text-white">Support</h2>
+          <p class="mt-2 text-sm text-slate-400">Technical help and bug reports</p>
+          <a href="mailto:support@crawlix.app" class="mt-4 inline-block text-sky-400 hover:text-sky-300">
+            support@crawlix.app
+          </a>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/50 p-6 text-center">
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 mx-auto">
+            <Shield class="h-6 w-6" />
+          </div>
+          <h2 class="mt-4 font-semibold text-white">Security</h2>
+          <p class="mt-2 text-sm text-slate-400">Report vulnerabilities</p>
+          <a href="mailto:security@crawlix.app" class="mt-4 inline-block text-sky-400 hover:text-sky-300">
+            security@crawlix.app
+          </a>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/50 p-6 text-center">
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 mx-auto">
+            <Book class="h-6 w-6" />
+          </div>
+          <h2 class="mt-4 font-semibold text-white">Documentation</h2>
+          <p class="mt-2 text-sm text-slate-400">Guides and tutorials</p>
+          <a href="/docs" class="mt-4 inline-block text-sky-400 hover:text-sky-300">
+            Browse Docs
+          </a>
+        </div>
+      </div>
+
+      <!-- Response Times -->
+      <div class="mt-16 rounded-xl border border-slate-800 bg-[#0e2655]/50 p-8">
+        <h2 class="text-xl font-semibold text-white mb-6">Expected Response Times</h2>
+        <div class="grid gap-4 md:grid-cols-3">
+          <div>
+            <p class="font-medium text-white">Free Users</p>
+            <p class="text-sm text-slate-400">Community forums and documentation</p>
+          </div>
+          <div>
+            <p class="font-medium text-white">Pro Users</p>
+            <p class="text-sm text-slate-400">48-hour email response</p>
+          </div>
+          <div>
+            <p class="font-medium text-white">Agency Users</p>
+            <p class="text-sm text-slate-400">24-hour priority email response</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

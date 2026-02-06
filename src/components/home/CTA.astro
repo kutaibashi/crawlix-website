@@ -1,0 +1,108 @@
+---
+import { Download, Apple, Monitor, ArrowRight } from '@lucide/astro';
+---
+
+<section class="py-20 sm:py-32 relative overflow-hidden">
+  <!-- Background effects -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-3xl">
+      <!-- Gradient background -->
+      <div class="absolute inset-0 bg-gradient-to-br from-sky-600 via-sky-700 to-indigo-800"></div>
+
+      <!-- Animated mesh gradient overlay -->
+      <div class="absolute inset-0 opacity-30">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-white/20 rounded-full blur-3xl float"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl float" style="animation-delay: -3s"></div>
+      </div>
+
+      <!-- Grid pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="cta-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#cta-grid)" />
+        </svg>
+      </div>
+
+      <!-- Content -->
+      <div class="relative px-6 py-16 sm:px-16 sm:py-24 text-center">
+        <!-- Badge -->
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 text-sm text-white/90">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
+          </span>
+          Now available for Windows, macOS & Linux
+        </div>
+
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+          Ready to Audit Your First Website?
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg text-sky-100 leading-relaxed">
+          Download Crawlix and find SEO issues in minutes.
+          <br />
+          <span class="font-semibold text-white">No account. No credit card. No data uploaded.</span>
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-semibold text-sky-700 shadow-lg hover:bg-sky-50 transition-all hover:shadow-xl hover:scale-105">
+            <Download class="h-5 w-5" />
+            Download for Free
+            <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </a>
+          <a href="/features" class="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 backdrop-blur-sm px-8 py-4 font-semibold text-white hover:bg-white/20 transition-colors">
+            See All Features
+          </a>
+        </div>
+
+        <!-- Platform icons -->
+        <div class="mt-10 flex items-center justify-center gap-8 text-white/80">
+          <div class="flex items-center gap-2 text-sm">
+            <Monitor class="h-5 w-5" />
+            <span>Windows</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <Apple class="h-5 w-5" />
+            <span>macOS</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/>
+            </svg>
+            <span>Linux</span>
+          </div>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
+          <span class="flex items-center gap-1.5">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            No signup required
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Works offline
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            GDPR compliant
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

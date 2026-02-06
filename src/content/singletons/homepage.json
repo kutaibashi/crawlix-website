@@ -1,0 +1,72 @@
+{
+  "heroTitle": "The Privacy-First SEO Crawler",
+  "heroSubtitle": "134+ SEO checks. Core Web Vitals. JavaScript rendering. All data stays on your machine. Free forever for small sites.",
+  "heroCta": "Download Free",
+  "heroCtaLink": "/download",
+  "keyCapabilities": [
+    {
+      "title": "134+ SEO Checks",
+      "description": "Comprehensive audits across 11 categories: technical, content, performance, and more.",
+      "icon": "Search",
+      "stat": "134+",
+      "statLabel": "checks"
+    },
+    {
+      "title": "Core Web Vitals",
+      "description": "Measure LCP, CLS, INP, FCP, TTFB and other performance metrics per page.",
+      "icon": "Gauge",
+      "stat": "10",
+      "statLabel": "metrics"
+    },
+    {
+      "title": "JavaScript Rendering",
+      "description": "Full Chromium-based rendering for JavaScript-heavy sites and SPAs.",
+      "icon": "Code",
+      "stat": "100%",
+      "statLabel": "JS support"
+    },
+    {
+      "title": "100% Local",
+      "description": "All data stays on your machine. No cloud uploads, no tracking, no data risks.",
+      "icon": "Shield",
+      "stat": "0",
+      "statLabel": "data uploaded"
+    },
+    {
+      "title": "White-Label Reports",
+      "description": "Branded PDF reports with your logo, colors, and contact information.",
+      "icon": "FileText",
+      "stat": "5",
+      "statLabel": "export formats"
+    },
+    {
+      "title": "Cross-Platform",
+      "description": "Native apps for Windows, macOS, and Linux. Works offline.",
+      "icon": "Monitor",
+      "stat": "3",
+      "statLabel": "platforms"
+    }
+  ],
+  "workflowSteps": [
+    {
+      "step": 1,
+      "title": "Enter URL",
+      "description": "Paste any website URL. Crawlix maps the entire site structure automatically."
+    },
+    {
+      "step": 2,
+      "title": "Crawl & Analyze",
+      "description": "Our engine crawls every page, running 134+ SEO checks in parallel."
+    },
+    {
+      "step": 3,
+      "title": "Review Issues",
+      "description": "See issues organized by priority. Filter by type, page, or severity."
+    },
+    {
+      "step": 4,
+      "title": "Export Reports",
+      "description": "Generate PDF reports with your branding. Share with clients or stakeholders."
+    }
+  ]
+}

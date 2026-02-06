@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+import StructuredData from '../components/seo/StructuredData.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
+  article?: {
+    title: string;
+    description: string;
+    datePublished: string;
+    dateModified?: string;
+    author?: string;
+    image?: string;
+  };
+  breadcrumbs?: Array<{ name: string; url: string }>;
+}
+
+const {
+  title,
+  description = 'Crawlix - The privacy-first SEO crawler with 100+ checks. Your data stays on your machine. Forever.',
+  image = '/images/og-image.svg',
+  canonicalURL = Astro.url.href,
+  noindex = false,
+  article,
+  breadcrumbs,
+} = Astro.props;
+
+const siteName = 'Crawlix';
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+
+    <!-- Robots -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Google Site Verification (replace with actual verification code) -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:site_name" content={siteName} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@crawlixapp" />
+    <meta name="twitter:creator" content="@crawlixapp" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:image:alt" content={`${fullTitle} - Crawlix SEO Crawler`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Fonts - Space Grotesk (brand font) - Non-render-blocking -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Structured Data (JSON-LD) -->
+    <StructuredData type="organization" />
+    <StructuredData type="website" />
+    <StructuredData type="software" />
+    {article && (
+      <StructuredData
+        type="article"
+        data={{
+          title: article.title,
+          description: article.description,
+          datePublished: article.datePublished,
+          dateModified: article.dateModified,
+          author: article.author,
+          image: article.image,
+          url: canonicalURL,
+        }}
+      />
+    )}
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <StructuredData type="breadcrumb" data={{ items: breadcrumbs }} />
+    )}
+  </head>
+  <body class="min-h-screen bg-[#091a3d] text-slate-100 antialiased font-sans">
+    <slot name="header" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

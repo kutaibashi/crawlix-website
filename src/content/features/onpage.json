@@ -1,0 +1,20 @@
+{
+  "id": "onpage",
+  "name": "On-Page SEO",
+  "description": "Optimize page elements for search engines",
+  "icon": "FileText",
+  "color": "violet",
+  "checkCount": 25,
+  "features": [
+    { "title": "Title Tag Optimization", "description": "Validate presence, length (50-60 chars), uniqueness" },
+    { "title": "Meta Description Audit", "description": "Check length (120-160 chars) and duplicates" },
+    { "title": "H1 Tag Validation", "description": "Ensure single, optimized H1 per page" },
+    { "title": "Heading Hierarchy", "description": "Analyze H2-H6 structure and sequence" },
+    { "title": "Open Graph Tags", "description": "Validate og:title, og:description, og:image" },
+    { "title": "Twitter Card Tags", "description": "Check Twitter meta tag implementation" },
+    { "title": "Favicon Detection", "description": "Verify favicon is present and accessible" },
+    { "title": "Multiple Title Detection", "description": "Flag pages with duplicate title tags" },
+    { "title": "Generic Title Detection", "description": "Find \"Untitled\", \"Home\", placeholder titles" },
+    { "title": "H1 vs Title Comparison", "description": "Compare heading and title tag alignment" }
+  ]
+}

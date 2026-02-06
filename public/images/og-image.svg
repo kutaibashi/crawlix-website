@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#091a3d"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#gradient)" fill-opacity="0.3"/>
+
+  <!-- Logo spider emoji placeholder -->
+  <text x="600" y="250" text-anchor="middle" font-size="80" fill="white">Crawlix</text>
+
+  <!-- Tagline -->
+  <text x="600" y="340" text-anchor="middle" font-size="32" fill="#94a3b8" font-family="system-ui, sans-serif">
+    The Privacy-First SEO Crawler
+  </text>
+
+  <!-- Feature badges -->
+  <text x="600" y="420" text-anchor="middle" font-size="24" fill="#2ea3f2" font-family="system-ui, sans-serif">
+    97+ SEO Checks | Works Offline | Your Data Stays Local
+  </text>
+
+  <!-- URL -->
+  <text x="600" y="580" text-anchor="middle" font-size="20" fill="#64748b" font-family="system-ui, sans-serif">
+    crawlix.app
+  </text>
+
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2ea3f2"/>
+      <stop offset="100%" stop-color="#0e2655"/>
+    </linearGradient>
+  </defs>
+</svg>

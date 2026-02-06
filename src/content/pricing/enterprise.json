@@ -1,0 +1,28 @@
+{
+  "id": "enterprise",
+  "name": "Agency",
+  "description": "For agencies and teams",
+  "priceAnnual": 399,
+  "pricePerpetual": 699,
+  "limits": {
+    "pages": "Unlimited",
+    "projects": "Unlimited",
+    "scheduledCrawls": "Unlimited",
+    "extractions": "Unlimited",
+    "devices": "5"
+  },
+  "features": [
+    "Everything in Pro, plus:",
+    "White-label PDF reports",
+    "Custom logo & colors",
+    "Remove \"Powered by\" branding",
+    "5 team seats",
+    "Config sharing",
+    "Priority support",
+    "Onboarding call"
+  ],
+  "highlighted": false,
+  "badge": "",
+  "cta": "Start Free Trial",
+  "ctaLink": "/download"
+}

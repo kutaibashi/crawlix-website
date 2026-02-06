@@ -1,0 +1,8 @@
+---
+import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import { sitebulbComparison } from '../../data/comparisons';
+
+export const prerender = true;
+---
+
+<ComparisonLayout data={sitebulbComparison} />

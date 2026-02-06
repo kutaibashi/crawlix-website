@@ -1,0 +1,15 @@
+{
+  "id": "looker-studio",
+  "name": "Looker Studio",
+  "description": "Connect Crawlix data to Google Looker Studio for custom dashboards and reporting.",
+  "logo": "BarChart3",
+  "category": "coming-soon",
+  "status": "coming-soon",
+  "tier": "pro",
+  "features": [
+    "Custom dashboards",
+    "Automated reporting",
+    "Data blending",
+    "Scheduled exports"
+  ]
+}

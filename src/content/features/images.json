@@ -1,0 +1,18 @@
+{
+  "id": "images",
+  "name": "Image Optimization",
+  "description": "Ensure images are optimized for SEO and performance",
+  "icon": "Image",
+  "color": "rose",
+  "checkCount": 10,
+  "features": [
+    { "title": "Missing Alt Text", "description": "Find images without alt attributes" },
+    { "title": "Alt Text Length", "description": "Flag overly long alt text (>125 chars)" },
+    { "title": "Missing Dimensions", "description": "Detect images without width/height (CLS impact)" },
+    { "title": "Generic Filenames", "description": "Find img1.jpg, image_001.png patterns" },
+    { "title": "Lazy Loading", "description": "Check for loading=\"lazy\" on below-fold images" },
+    { "title": "Image File Size", "description": "Identify oversized images affecting performance" },
+    { "title": "Image Format Analysis", "description": "Recommend modern formats (WebP, AVIF)" },
+    { "title": "Decorative Image Check", "description": "Validate empty alt on decorative images" }
+  ]
+}

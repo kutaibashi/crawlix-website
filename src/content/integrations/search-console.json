@@ -1,0 +1,15 @@
+{
+  "id": "search-console",
+  "name": "Google Search Console",
+  "description": "Sync search performance data including impressions, clicks, CTR, and average position for each page.",
+  "logo": "Search",
+  "category": "search",
+  "status": "available",
+  "tier": "pro",
+  "features": [
+    "Impressions and clicks",
+    "Click-through rate (CTR)",
+    "Average position",
+    "Top queries per page"
+  ]
+}

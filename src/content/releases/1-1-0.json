@@ -1,0 +1,50 @@
+{
+  "version": "1.1.0",
+  "date": "2025-11-15",
+  "title": "JavaScript Rendering & Core Web Vitals",
+  "summary": "Full JavaScript rendering support, Core Web Vitals measurement, and mobile-first crawling.",
+  "type": "major",
+  "highlights": [
+    "JavaScript rendering engine",
+    "Core Web Vitals (LCP, CLS, INP)",
+    "Custom data extraction"
+  ],
+  "changes": [
+    {
+      "type": "feature",
+      "title": "JavaScript Rendering Engine",
+      "description": "Puppeteer-based rendering with configurable wait strategies: load, DOMContentLoaded, networkidle0/2, and custom selectors.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Core Web Vitals Measurement",
+      "description": "Measure LCP, CLS, INP, FCP, TTFB, TBT, TTI, and Speed Index using Chrome DevTools Protocol. Includes pass/fail ratings per Google thresholds.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Mobile-First Crawling",
+      "description": "Mobile device emulation with 7+ pre-configured devices. Touch target analysis, viewport validation, and mobile usability scoring.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Custom Data Extraction",
+      "description": "Extract any data using CSS selectors, XPath, regex, JSON-LD, or meta tags. Apply transforms (trim, regex replace, etc.) and validation rules.",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "Screenshot Capture",
+      "description": "Capture viewport or full-page screenshots during crawl. Useful for visual regression and documentation.",
+      "badge": ""
+    },
+    {
+      "type": "improvement",
+      "title": "Site Structure Visualization",
+      "description": "Force graph, hierarchy tree, sunburst chart, and directory treemap visualizations for site structure analysis.",
+      "badge": ""
+    }
+  ]
+}

@@ -1,0 +1,634 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import { Check, X, HelpCircle, Download, ArrowRight, Shield, CreditCard, RefreshCw, Sparkles, AlertTriangle } from '@lucide/astro';
+import { getPricingTiers, getFAQs } from '../lib/keystatic';
+// Keep feature comparison from TypeScript for complex table data
+import { featureComparison, featureCategories, lemonSqueezyConfig } from '../data/pricing';
+
+// Prerender this page (static generation)
+export const prerender = true;
+
+// Fetch data from Keystatic
+const pricingTiersData = await getPricingTiers();
+const pricingFaqsData = await getFAQs('pricing');
+
+// Sort pricing tiers by price (Free first)
+const pricingTiers = pricingTiersData.sort((a, b) => a.priceAnnual - b.priceAnnual);
+
+// Combine pricing FAQs with licensing FAQs
+const licensingFaqs = await getFAQs('licensing');
+const pricingFaqs = [...pricingFaqsData, ...licensingFaqs].sort((a, b) => a.order - b.order);
+
+// Lemon Squeezy variant IDs for checkout
+const variantIds = {
+  professional: {
+    monthly: lemonSqueezyConfig.variants.proMonthly,
+    yearly: lemonSqueezyConfig.variants.proYearly,
+    perpetual: lemonSqueezyConfig.variants.proPerpetual,
+  },
+  enterprise: {
+    monthly: lemonSqueezyConfig.variants.agencyMonthly,
+    yearly: lemonSqueezyConfig.variants.agencyYearly,
+    perpetual: lemonSqueezyConfig.variants.agencyPerpetual,
+  },
+};
+
+// Monthly prices (Pro: $15/mo, Agency: $45/mo)
+const monthlyPrices = {
+  professional: 15,
+  enterprise: 45,
+};
+---
+
+<BaseLayout
+  title="Pricing"
+  description="Simple, honest pricing for Crawlix. Free tier with full analysis power. Pro from $149/year. Perpetual license option available."
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Pricing', url: '/pricing' },
+  ]}
+>
+  <!-- FAQ Structured Data -->
+  {pricingFaqs.length > 0 && (
+    <StructuredData
+      type="faq"
+      data={{ faqs: pricingFaqs }}
+    />
+  )}
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-16 overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-sky-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+        Pricing
+      </span>
+      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+        Simple, <span class="gradient-text-blue">Honest</span> Pricing
+      </h1>
+      <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
+        Full analysis power on the Free tier. Upgrade for more pages, exports, and integrations.
+        <span class="text-white font-medium">Pay once, own forever</span> option available.
+      </p>
+
+      <!-- Billing Toggle -->
+      <div class="mt-10 inline-flex items-center gap-2 p-2 rounded-full bg-[#0e2655]/50 border border-slate-800">
+        <button
+          type="button"
+          class="billing-btn px-5 py-2 rounded-full text-sm font-medium transition-colors text-slate-400 hover:text-white"
+          data-billing="monthly"
+        >
+          Monthly
+        </button>
+        <button
+          type="button"
+          class="billing-btn px-5 py-2 rounded-full text-sm font-medium transition-colors bg-sky-600 text-white"
+          data-billing="annual"
+        >
+          Annual
+          <span class="ml-1.5 inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-400">
+            Save 17%
+          </span>
+        </button>
+        <button
+          type="button"
+          class="billing-btn px-5 py-2 rounded-full text-sm font-medium transition-colors text-slate-400 hover:text-white"
+          data-billing="perpetual"
+        >
+          Perpetual
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section class="pb-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-3">
+        {pricingTiers.map((tier) => (
+          <div
+            class={`relative rounded-3xl p-8 transition-all duration-300 hover-lift ${
+              tier.highlighted
+                ? 'border-2 border-sky-500 bg-gradient-to-b from-sky-500/10 to-transparent shadow-xl shadow-sky-500/10'
+                : 'border border-slate-800 bg-[#0e2655]/30 glass-card'
+            }`}
+          >
+            {/* Badge */}
+            {tier.badge && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-sky-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg shadow-sky-500/30">
+                  <Sparkles class="h-4 w-4" />
+                  {tier.badge}
+                </span>
+              </div>
+            )}
+
+            <div>
+              <h3 class="text-xl font-semibold text-white">{tier.name}</h3>
+              <p class="mt-1 text-sm text-slate-400">{tier.description}</p>
+
+              {/* Price */}
+              <div class="mt-6 h-20" data-tier={tier.id}>
+                {tier.priceAnnual === 0 ? (
+                  <div>
+                    <span class="text-5xl font-bold text-white">$0</span>
+                    <span class="text-slate-400 ml-2">forever</span>
+                  </div>
+                ) : (
+                  <>
+                    <div class="price-monthly hidden">
+                      <span class="text-5xl font-bold text-white">${monthlyPrices[tier.id as keyof typeof monthlyPrices] || 0}</span>
+                      <span class="text-slate-400 ml-2">/month</span>
+                      <div class="mt-1 text-sm text-slate-500">
+                        Billed monthly, cancel anytime
+                      </div>
+                    </div>
+                    <div class="price-annual">
+                      <span class="text-5xl font-bold text-white">${tier.priceAnnual}</span>
+                      <span class="text-slate-400 ml-2">/year</span>
+                      <div class="mt-1 text-sm text-emerald-400">
+                        Save ${(monthlyPrices[tier.id as keyof typeof monthlyPrices] || 0) * 12 - tier.priceAnnual}/year
+                      </div>
+                    </div>
+                    <div class="price-perpetual hidden">
+                      <span class="text-5xl font-bold text-white">${tier.pricePerpetual}</span>
+                      <span class="text-slate-400 ml-2">one-time</span>
+                      <div class="mt-1 text-sm text-emerald-400">
+                        Own forever + 1 year updates
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Key Limits */}
+              <div class="mt-6 grid grid-cols-2 gap-3 p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                <div class="text-center">
+                  <div class="text-lg font-bold text-white">{tier.limits.pages}</div>
+                  <div class="text-xs text-slate-500">pages/crawl</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-lg font-bold text-white">{tier.limits.projects}</div>
+                  <div class="text-xs text-slate-500">projects</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Features */}
+            <ul class="mt-8 space-y-3">
+              {tier.features.map((feature, idx) => (
+                <li class="flex items-start gap-3">
+                  {idx === 0 && feature.includes('Everything') ? (
+                    <>
+                      <ArrowRight class="h-5 w-5 shrink-0 text-slate-500 mt-0.5" />
+                      <span class="text-sm text-slate-500 font-medium">{feature}</span>
+                    </>
+                  ) : (
+                    <>
+                      <div class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${tier.highlighted ? 'bg-sky-500/20' : 'bg-slate-800'}`}>
+                        <Check class={`h-3 w-3 ${tier.highlighted ? 'text-sky-400' : 'text-slate-400'}`} />
+                      </div>
+                      <span class="text-sm text-slate-300">{feature}</span>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <div class="mt-8">
+              {tier.priceAnnual === 0 ? (
+                <Button
+                  href="/download"
+                  variant="secondary"
+                  class="w-full"
+                >
+                  <Download class="h-5 w-5" />
+                  {tier.cta}
+                </Button>
+              ) : (
+                <a
+                  href="#"
+                  class={`checkout-btn w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all duration-200 ${
+                    tier.highlighted
+                      ? 'bg-gradient-to-r from-sky-500 to-sky-600 text-white hover:from-sky-400 hover:to-sky-500 shadow-lg shadow-sky-500/30 glow-blue'
+                      : 'border border-slate-700 bg-slate-800/50 text-white hover:bg-slate-700/50 hover:border-slate-600'
+                  }`}
+                  data-tier={tier.id}
+                  data-variant-monthly={variantIds[tier.id as keyof typeof variantIds]?.monthly || ''}
+                  data-variant-yearly={variantIds[tier.id as keyof typeof variantIds]?.yearly || ''}
+                  data-variant-perpetual={variantIds[tier.id as keyof typeof variantIds]?.perpetual || ''}
+                >
+                  {tier.cta}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Trust badges */}
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-500">
+        <div class="flex items-center gap-2">
+          <Shield class="h-5 w-5 text-emerald-500" />
+          14-day money-back guarantee
+        </div>
+        <div class="flex items-center gap-2">
+          <CreditCard class="h-5 w-5 text-emerald-500" />
+          Secure payment via Lemon Squeezy
+        </div>
+        <div class="flex items-center gap-2">
+          <RefreshCw class="h-5 w-5 text-emerald-500" />
+          Cancel anytime
+        </div>
+      </div>
+
+      {/* Official Store Warning */}
+      <div class="mt-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 max-w-2xl mx-auto">
+        <div class="flex items-start gap-3">
+          <Shield class="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <p class="text-sm font-medium text-amber-300">Buy from Official Sources Only</p>
+            <p class="mt-1 text-sm text-slate-400">
+              Crawlix licenses are only sold through our official website (crawlix.app) and our Lemon Squeezy checkout.
+              We do not authorize any third-party resellers. Licenses purchased elsewhere may be invalid, stolen, or revoked without refund.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Comparison Table -->
+  <section class="py-20 bg-[#0a1628]" id="compare">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          Compare Plans
+        </span>
+        <h2 class="text-3xl font-bold text-white">
+          Full Feature Comparison
+        </h2>
+        <p class="mt-4 text-slate-400">
+          All tiers include the full 97+ SEO checks. Upgrade for more pages, exports, and integrations.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-[#0e2655]/30">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-slate-800 bg-[#0a1628]">
+              <th class="py-5 px-6 text-left text-sm font-semibold text-white sticky left-0 bg-[#0a1628]">Feature</th>
+              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400 min-w-[120px]">Free</th>
+              <th class="py-5 px-6 text-center text-sm font-semibold text-sky-400 min-w-[120px] bg-sky-500/5">Pro</th>
+              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400 min-w-[120px]">Agency</th>
+            </tr>
+          </thead>
+          <tbody>
+            {featureCategories.map((category, catIdx) => {
+              const categoryFeatures = featureComparison.filter(f => f.category === category);
+              return (
+                <>
+                  {/* Category Header */}
+                  <tr class="border-b border-slate-800/50 bg-slate-900/30">
+                    <td colspan="4" class="py-3 px-6 text-xs font-semibold text-sky-400 uppercase tracking-wider">
+                      {category}
+                    </td>
+                  </tr>
+                  {/* Features */}
+                  {categoryFeatures.map((row, rowIdx) => (
+                    <tr class={`border-b border-slate-800/30 ${rowIdx % 2 === 0 ? '' : 'bg-slate-900/20'} hover:bg-slate-800/30 transition-colors`}>
+                      <td class="py-4 px-6 text-sm text-slate-300 sticky left-0 bg-inherit">{row.feature}</td>
+                      <td class="py-4 px-6 text-center">
+                        {typeof row.free === 'boolean' ? (
+                          row.free ? (
+                            <Check class="h-5 w-5 mx-auto text-emerald-500" />
+                          ) : (
+                            <X class="h-5 w-5 mx-auto text-slate-700" />
+                          )
+                        ) : (
+                          <span class="text-sm text-slate-400">{row.free}</span>
+                        )}
+                      </td>
+                      <td class="py-4 px-6 text-center bg-sky-500/5">
+                        {typeof row.pro === 'boolean' ? (
+                          row.pro ? (
+                            <Check class="h-5 w-5 mx-auto text-emerald-500" />
+                          ) : (
+                            <X class="h-5 w-5 mx-auto text-slate-700" />
+                          )
+                        ) : (
+                          <span class="text-sm text-white font-medium">{row.pro}</span>
+                        )}
+                      </td>
+                      <td class="py-4 px-6 text-center">
+                        {typeof row.agency === 'boolean' ? (
+                          row.agency ? (
+                            <Check class="h-5 w-5 mx-auto text-emerald-500" />
+                          ) : (
+                            <X class="h-5 w-5 mx-auto text-slate-700" />
+                          )
+                        ) : (
+                          <span class="text-sm text-slate-400">{row.agency}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Free Tier Highlight -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl border border-emerald-500/30 bg-emerald-500/5 p-8 md:p-12">
+        <div class="grid gap-8 md:grid-cols-2 items-center">
+          <div>
+            <span class="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-400 mb-4">
+              Free forever
+            </span>
+            <h2 class="text-2xl font-bold text-white md:text-3xl">
+              Full Analysis Power on Free
+            </h2>
+            <p class="mt-4 text-slate-400">
+              Unlike competitors who limit checks on free tiers, Crawlix gives you access to all 97+ SEO checks,
+              Core Web Vitals, JavaScript rendering, and AI readiness audits - completely free.
+            </p>
+            <p class="mt-4 text-slate-400">
+              The only limits are page count (100/crawl) and export formats. Upgrade when you need more scale.
+            </p>
+            <div class="mt-8">
+              <Button href="/download" variant="primary">
+                <Download class="h-5 w-5" />
+                Download Free
+              </Button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            {[
+              { label: '97+ SEO checks', included: true },
+              { label: 'Core Web Vitals', included: true },
+              { label: 'JavaScript rendering', included: true },
+              { label: 'AI search readiness', included: true },
+              { label: 'Accessibility audit', included: true },
+              { label: 'Schema validation', included: true },
+            ].map(({ label, included }) => (
+              <div class="flex items-center gap-2">
+                <Check class="h-5 w-5 text-emerald-500 shrink-0" />
+                <span class="text-sm text-slate-300">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Licensing Info Section -->
+  <section class="py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          Licensing
+        </span>
+        <h2 class="text-3xl font-bold text-white">
+          How Licensing Works
+        </h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {/* Device Activations */}
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/30">
+          <h3 class="text-lg font-semibold text-white mb-3">Device Activations</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li class="flex items-start gap-2">
+              <Check class="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+              <span><strong class="text-white">Free & Pro:</strong> 1 device per license</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <Check class="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+              <span><strong class="text-white">Agency:</strong> 5 devices per license (team use)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <Check class="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+              <span>Licenses are permanently bound to your device</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* License Transfer */}
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/30">
+          <h3 class="text-lg font-semibold text-white mb-3">License Transfer</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li class="flex items-start gap-2">
+              <Check class="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+              <span><strong class="text-white">Same device:</strong> Reinstall/format? Reactivation is automatic</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <Check class="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+              <span><strong class="text-white">New device:</strong> Contact support for transfer approval</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <X class="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+              <span>No self-service deactivation (anti-reselling protection)</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Why This Policy */}
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/30">
+          <h3 class="text-lg font-semibold text-white mb-3">Why This Policy?</h3>
+          <p class="text-sm text-slate-400">
+            Our strict licensing policy protects legitimate customers and keeps prices fair.
+            By preventing unauthorized reselling and license sharing, we can offer competitive pricing
+            and invest in continuous product improvements.
+          </p>
+        </div>
+
+        {/* Legitimate Transfers */}
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0e2655]/30">
+          <h3 class="text-lg font-semibold text-white mb-3">Need to Transfer?</h3>
+          <p class="text-sm text-slate-400">
+            Bought a new computer? No problem! Contact us at{' '}
+            <a href="mailto:support@crawlix.app" class="text-sky-400 hover:text-sky-300">support@crawlix.app</a>
+            {' '}with proof of purchase and we'll help you transfer your license.
+            Legitimate requests are typically processed within 24 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-20 bg-[#0a1628]" id="faq">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+          FAQ
+        </span>
+        <h2 class="text-3xl font-bold text-white">
+          Frequently Asked Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {pricingFaqs.map((faq, index) => (
+          <details class="group rounded-2xl border border-slate-800 bg-[#0e2655]/30 overflow-hidden">
+            <summary class="flex cursor-pointer items-center justify-between p-5 text-white font-medium hover:bg-slate-800/30 transition-colors">
+              <span class="pr-4">{faq.question}</span>
+              <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="px-5 pb-5 text-slate-400 border-t border-slate-800/50 pt-4">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative overflow-hidden rounded-3xl">
+        <div class="absolute inset-0 bg-gradient-to-br from-sky-600 via-sky-700 to-indigo-800"></div>
+        <div class="absolute inset-0 opacity-30">
+          <div class="absolute top-0 left-0 w-96 h-96 bg-white/20 rounded-full blur-3xl float"></div>
+        </div>
+
+        <div class="relative px-8 py-16 sm:px-16 sm:py-20 text-center">
+          <h2 class="text-3xl font-bold text-white sm:text-4xl">
+            Start Auditing Websites Today
+          </h2>
+          <p class="mt-4 text-sky-100 max-w-xl mx-auto">
+            Download the Free tier and run 97+ SEO checks on your first site.
+            No credit card required. No account needed.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-semibold text-sky-700 shadow-lg hover:bg-sky-50 transition-all">
+              <Download class="h-5 w-5" />
+              Download Free
+              <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a href="#compare" class="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 px-8 py-4 font-semibold text-white hover:bg-white/20 transition-colors">
+              Compare Plans
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  details[open] summary {
+    background-color: rgba(30, 41, 59, 0.3);
+  }
+</style>
+
+<script>
+  // Lemon Squeezy store URL
+  const LEMON_SQUEEZY_STORE = 'https://crawlix.lemonsqueezy.com';
+
+  // Current billing period
+  let currentBilling = 'annual';
+
+  // Generate checkout URL
+  function getCheckoutUrl(variantId: string): string {
+    const params = new URLSearchParams();
+    params.set('embed', '0');
+    params.set('dark', '1');
+    return `${LEMON_SQUEEZY_STORE}/checkout/buy/${variantId}?${params.toString()}`;
+  }
+
+  // Update checkout links based on billing period
+  function updateCheckoutLinks() {
+    const checkoutBtns = document.querySelectorAll('.checkout-btn');
+    checkoutBtns.forEach(btn => {
+      const variantKey = `data-variant-${currentBilling === 'annual' ? 'yearly' : currentBilling}`;
+      const variantId = btn.getAttribute(variantKey);
+      if (variantId) {
+        btn.setAttribute('href', getCheckoutUrl(variantId));
+      }
+    });
+  }
+
+  // Billing toggle functionality
+  const billingBtns = document.querySelectorAll('.billing-btn');
+  const monthlyPrices = document.querySelectorAll('.price-monthly');
+  const annualPrices = document.querySelectorAll('.price-annual');
+  const perpetualPrices = document.querySelectorAll('.price-perpetual');
+
+  billingBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const billing = btn.getAttribute('data-billing');
+      if (!billing) return;
+
+      currentBilling = billing;
+
+      // Update button styles
+      billingBtns.forEach(b => {
+        if (b.getAttribute('data-billing') === billing) {
+          b.classList.add('bg-sky-600', 'text-white');
+          b.classList.remove('text-slate-400', 'hover:text-white');
+        } else {
+          b.classList.remove('bg-sky-600', 'text-white');
+          b.classList.add('text-slate-400', 'hover:text-white');
+        }
+      });
+
+      // Toggle prices
+      monthlyPrices.forEach(el => el.classList.toggle('hidden', billing !== 'monthly'));
+      annualPrices.forEach(el => el.classList.toggle('hidden', billing !== 'annual'));
+      perpetualPrices.forEach(el => el.classList.toggle('hidden', billing !== 'perpetual'));
+
+      // Update checkout links
+      updateCheckoutLinks();
+    });
+  });
+
+  // Initialize checkout links on page load
+  updateCheckoutLinks();
+
+  // Initialize scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

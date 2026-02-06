@@ -1,0 +1,7 @@
+{
+  "id": "html-page-count",
+  "question": "What counts as an \"HTML page\"?",
+  "answer": "Only pages with content-type text/html count toward your limit. CSS files, JavaScript files, images, PDFs, and other resources don't count. A 100-page site with 500 total resources only uses 100 of your page quota.",
+  "category": "technical",
+  "order": 3
+}

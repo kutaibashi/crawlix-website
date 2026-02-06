@@ -1,0 +1,18 @@
+{
+  "id": "accessibility",
+  "name": "Accessibility",
+  "description": "WCAG 2.1 AA compliance checks",
+  "icon": "Accessibility",
+  "color": "pink",
+  "checkCount": 10,
+  "features": [
+    { "title": "Skip Navigation Links", "description": "Check for skip-to-content links" },
+    { "title": "Form Label Validation", "description": "Ensure all inputs have associated labels" },
+    { "title": "Button Accessible Names", "description": "Verify buttons have accessible text" },
+    { "title": "ARIA Landmark Roles", "description": "Check for duplicate landmark roles" },
+    { "title": "Tabindex Validation", "description": "Flag tabindex values greater than 0" },
+    { "title": "New Window Warning", "description": "Check links opening in new tabs" },
+    { "title": "Color Contrast", "description": "Validate text contrast ratios" },
+    { "title": "Keyboard Navigation", "description": "Ensure all interactive elements are focusable" }
+  ]
+}

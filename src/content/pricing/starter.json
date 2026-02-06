@@ -1,0 +1,28 @@
+{
+  "id": "starter",
+  "name": "Free",
+  "description": "Full analysis power to evaluate Crawlix",
+  "priceAnnual": 0,
+  "pricePerpetual": null,
+  "limits": {
+    "pages": "100",
+    "projects": "1",
+    "scheduledCrawls": "0",
+    "extractions": "5",
+    "devices": "1"
+  },
+  "features": [
+    "134+ SEO checks",
+    "Core Web Vitals analysis",
+    "JavaScript rendering",
+    "AI search readiness checks",
+    "Accessibility audit",
+    "Schema validation",
+    "Duplicate detection",
+    "CSV export"
+  ],
+  "highlighted": false,
+  "badge": "",
+  "cta": "Download Free",
+  "ctaLink": "/download"
+}

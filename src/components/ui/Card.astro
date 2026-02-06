@@ -1,0 +1,15 @@
+---
+interface Props {
+  class?: string;
+  hover?: boolean;
+}
+
+const { class: className = '', hover = false } = Astro.props;
+
+const baseStyles = 'rounded-xl border border-slate-800 bg-[#0e2655]/50 p-6';
+const hoverStyles = hover ? 'transition-colors hover:border-slate-700 hover:bg-slate-900' : '';
+---
+
+<div class={`${baseStyles} ${hoverStyles} ${className}`}>
+  <slot />
+</div>

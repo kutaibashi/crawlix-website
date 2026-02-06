@@ -1,0 +1,7 @@
+{
+  "id": "device-activations",
+  "question": "How do device activations work?",
+  "answer": "Each license is permanently bound to your device using secure hardware fingerprinting. Free and Pro licenses allow 1 device. Agency licenses allow 5 devices for team use. If you reinstall your OS or format your drive, you can reactivate on the same device automatically. To transfer to a new device, contact support@crawlix.app with proof of purchase.",
+  "category": "licensing",
+  "order": 7
+}

@@ -1,0 +1,7 @@
+{
+  "id": "data-storage",
+  "question": "Is my data stored in the cloud?",
+  "answer": "No. Crawlix is a desktop application that stores all data locally on your machine in a SQLite database. Your crawl data is never uploaded to any server. You maintain complete data ownership and privacy.",
+  "category": "technical",
+  "order": 4
+}

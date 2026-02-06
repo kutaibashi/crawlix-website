@@ -1,0 +1,56 @@
+{
+  "version": "1.3.0",
+  "date": "2026-01-15",
+  "title": "Desktop App & White-Label Reports",
+  "summary": "Native desktop application with professional PDF/Excel exports and white-label branding.",
+  "type": "major",
+  "highlights": [
+    "Native Windows, macOS, Linux apps",
+    "White-label PDF reports",
+    "Scheduled crawls automation"
+  ],
+  "changes": [
+    {
+      "type": "feature",
+      "title": "Native Desktop Application",
+      "description": "Electron-based desktop app for Windows (64-bit), macOS (Intel & Apple Silicon), and Linux (.deb, .AppImage).",
+      "badge": ""
+    },
+    {
+      "type": "feature",
+      "title": "PDF Export with White-Label",
+      "description": "Generate professional PDF reports with your logo, colors, and branding. Remove \"Powered by Crawlix\" on Agency tier.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "Excel Export",
+      "description": "Formatted .xlsx spreadsheets with multiple sheets, styling, and white-label support.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "Interactive HTML Reports",
+      "description": "Shareable HTML reports with filtering, sorting, and data visualization.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "Scheduled Crawls",
+      "description": "Automate crawls on daily, weekly, or monthly schedules. Configure specific times and custom settings per schedule.",
+      "badge": "Pro"
+    },
+    {
+      "type": "feature",
+      "title": "White-Label Branding",
+      "description": "Custom company name, logo (Base64), primary/secondary/accent colors, and custom fonts for reports.",
+      "badge": "Agency"
+    },
+    {
+      "type": "improvement",
+      "title": "Dark/Light Theme",
+      "description": "System theme detection with manual override. Theme persists across sessions.",
+      "badge": ""
+    }
+  ]
+}

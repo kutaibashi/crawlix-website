@@ -1,0 +1,20 @@
+{
+  "id": "technical",
+  "name": "Technical SEO",
+  "description": "Find and fix technical issues that hurt rankings",
+  "icon": "Wrench",
+  "color": "sky",
+  "checkCount": 20,
+  "features": [
+    { "title": "HTTP Status Validation", "description": "Detect 4xx, 5xx errors and track response codes" },
+    { "title": "Redirect Chain Detection", "description": "Find redirect loops and chains over 3 hops" },
+    { "title": "Canonical Tag Validation", "description": "Check for missing, multiple, or invalid canonicals" },
+    { "title": "Meta Robots Analysis", "description": "Audit noindex, nofollow, and X-Robots-Tag headers" },
+    { "title": "URL Structure Checks", "description": "Validate path length, uppercase, underscores, encoding" },
+    { "title": "HTTPS Enforcement", "description": "Verify secure protocol usage across all pages" },
+    { "title": "Pagination Validation", "description": "Check rel=next/prev implementation" },
+    { "title": "DOCTYPE & Charset", "description": "Validate HTML document structure" },
+    { "title": "Viewport Meta Tag", "description": "Ensure mobile responsiveness is enabled" },
+    { "title": "Crawl Depth Analysis", "description": "Identify pages too deep in site structure" }
+  ]
+}

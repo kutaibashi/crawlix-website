@@ -1,0 +1,9 @@
+# Crawlix Security Contact
+# This file follows RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116)
+
+Contact: mailto:security@crawlix.app
+Expires: 2027-02-03T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://crawlix.app/.well-known/security.txt
+Policy: https://crawlix.app/security/vulnerability-disclosure
+Acknowledgments: https://crawlix.app/security/hall-of-fame
