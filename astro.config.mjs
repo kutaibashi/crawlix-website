@@ -15,12 +15,20 @@ export default defineConfig({
   site: 'https://crawlix.app',
   output: 'server',
   adapter: node({ mode: 'standalone' }),
+
+  // Performance: Inline CSS to eliminate render-blocking requests
+  build: {
+    inlineStylesheets: 'always',
+  },
+
   vite: {
     plugins: [tailwindcss()],
     build: {
       // Keystatic admin is large (~2.7MB) but only loaded for /keystatic routes
       // This is expected and doesn't affect public page performance
       chunkSizeWarningLimit: 3000,
+      // Minify CSS for smaller inline size
+      cssMinify: 'lightningcss',
     },
   },
   integrations: [
