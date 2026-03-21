@@ -1,0 +1,176 @@
+---
+import { Gauge } from '@lucide/astro';
+
+const tier1 = {
+  tag: 'AI Search Readiness',
+  tagColor: '#a78bfa',
+  title: 'Is your site visible to AI?',
+  description: 'See how ChatGPT, Claude, Gemini, and 10+ other AI crawlers see your site. Get an AI visibility score and generate optimized llms.txt files.',
+  bullets: [
+    'AI visibility score with per-crawler status',
+    'Check 13+ AI crawler directives at once',
+    'Generate llms.txt and robots.txt templates',
+  ],
+  image: '/images/screenshot-ai-readiness.png',
+  imageAlt: 'AI Readiness Analysis showing visibility score and crawler status',
+};
+
+const tier2 = [
+  {
+    tag: 'JavaScript Rendering',
+    tagColor: '#22d3ee',
+    title: 'See what Google sees',
+    description: 'Full Chromium-based rendering for SPAs and JavaScript-heavy sites. Compare static HTML vs rendered DOM.',
+    bullets: ['React, Vue, Angular support', 'Rendered vs static comparison', 'JavaScript error detection'],
+    image: '/images/screenshot-dashboard.png',
+    imageAlt: 'JavaScript rendering comparison showing static vs rendered DOM',
+  },
+  {
+    tag: 'Accessibility',
+    tagColor: '#f472b6',
+    title: 'WCAG 2.1 AA compliance',
+    description: '10 automated checks covering skip links, form labels, ARIA roles, color contrast, and keyboard navigation.',
+    bullets: ['Color contrast validation', 'Form label & ARIA checks', 'Keyboard navigation audit'],
+    image: '/images/screenshot-issues.png',
+    imageAlt: 'Accessibility audit results showing WCAG compliance checks',
+  },
+];
+
+const tier3 = [
+  {
+    tag: 'Arabic & RTL',
+    tagColor: '#fbbf24',
+    icon: '\u0639',
+    title: 'Built for Arabic from day one',
+    description: 'Full Arabic UI + RTL-aware content analysis. Readability scoring, content quality checks, and reports — all direction-aware.',
+    tags: ['Arabic UI', 'RTL Analysis', 'RTL Reports'],
+  },
+  {
+    tag: 'Core Web Vitals',
+    tagColor: '#22d3ee',
+    title: 'LCP, CLS, INP — per page',
+    description: 'Measure all 3 Core Web Vitals plus FCP, TTFB, and TBT for every page. Track resource sizes and request counts.',
+    tags: ['LCP <2.5s', 'CLS <0.1', 'INP <200ms'],
+  },
+];
+---
+
+<section class="py-24 sm:py-32 relative overflow-hidden" style="background:#091a3d;">
+  <div class="absolute inset-0 dot-grid opacity-30"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <!-- Section header -->
+    <div class="section-header-bar mb-16 max-w-lg animate-on-scroll">
+      <span class="text-sm font-semibold text-[#22d3ee] uppercase tracking-widest">What Sets Crawlix Apart</span>
+      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl mt-2">
+        Five features you won't find anywhere else
+      </h2>
+    </div>
+
+    <!-- Tier 1: Full-width hero feature -->
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-0 mb-6 rounded-2xl overflow-hidden animate-on-scroll"
+         style="background:rgba(14,38,85,0.4);border:1px solid rgba(34,211,238,0.12);backdrop-filter:blur(16px);">
+      <div class="flex-1 p-8 lg:p-10">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-1.5 h-1.5 rounded-full" style={`background:${tier1.tagColor};box-shadow:0 0 8px ${tier1.tagColor}80;`}></span>
+          <span class="text-xs font-bold uppercase tracking-widest" style={`color:${tier1.tagColor};`}>{tier1.tag}</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">{tier1.title}</h3>
+        <p class="text-slate-400 text-sm leading-relaxed mb-5">{tier1.description}</p>
+        <ul class="space-y-2.5">
+          {tier1.bullets.map(bullet => (
+            <li class="flex items-start gap-2.5 text-sm text-slate-300">
+              <span class="mt-1.5 w-[5px] h-[5px] rounded-full flex-shrink-0" style={`background:${tier1.tagColor};opacity:0.7;`}></span>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="flex-[1.2] relative bg-[#1e293b]/20">
+        <div class="absolute -inset-2 bg-[#22d3ee]/3 blur-xl"></div>
+        <div class="relative overflow-hidden">
+          <img src={tier1.image} alt={tier1.imageAlt} width="800" height="500" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Network connector -->
+    <div class="flex justify-center py-2">
+      <div class="flex flex-col items-center">
+        <div class="network-line-solid h-10"></div>
+        <span class="node-dot-ring"></span>
+        <div class="network-line-solid h-10"></div>
+      </div>
+    </div>
+
+    <!-- Tier 2: Two medium cards -->
+    <div class="grid gap-4 lg:grid-cols-2 mb-4 stagger-children">
+      {tier2.map(feature => (
+        <div class="rounded-2xl overflow-hidden" style="background:rgba(14,38,85,0.4);border:1px solid rgba(30,41,59,0.8);backdrop-filter:blur(16px);">
+          <div class="bg-[#1e293b]/20 p-4 flex items-center justify-center min-h-[160px]">
+            <div class="relative overflow-hidden rounded-lg border border-slate-800/60 max-w-md w-full">
+              <img src={feature.image} alt={feature.imageAlt} width="600" height="375" class="w-full h-auto" loading="lazy" />
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-[5px] h-[5px] rounded-full" style={`background:${feature.tagColor};box-shadow:0 0 6px ${feature.tagColor}60;`}></span>
+              <span class="text-[10px] font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">{feature.title}</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4">{feature.description}</p>
+            <ul class="space-y-1.5">
+              {feature.bullets.map(bullet => (
+                <li class="flex items-center gap-2 text-xs text-slate-300">
+                  <span class="w-1 h-1 rounded-full flex-shrink-0" style={`background:${feature.tagColor};opacity:0.7;`}></span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Smaller network connector -->
+    <div class="flex justify-center py-2">
+      <div class="flex flex-col items-center">
+        <div class="network-line-solid h-6"></div>
+        <span class="node-dot-ring" style="width:8px;height:8px;border-width:1.5px;"></span>
+        <div class="network-line-solid h-6"></div>
+      </div>
+    </div>
+
+    <!-- Tier 3: Two compact cards -->
+    <div class="grid gap-4 lg:grid-cols-2 stagger-children">
+      {tier3.map(feature => (
+        <div class="rounded-2xl p-6 flex gap-4 items-start" style="background:rgba(14,38,85,0.4);border:1px solid rgba(30,41,59,0.8);backdrop-filter:blur(16px);">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+               style={`background:${feature.tagColor}15;border:1px solid ${feature.tagColor}25;`}>
+            {feature.icon ? (
+              <span class="text-xl font-bold" style={`color:${feature.tagColor};`}>{feature.icon}</span>
+            ) : (
+              <Gauge class="h-5 w-5" style={`color:${feature.tagColor};`} />
+            )}
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-[5px] h-[5px] rounded-full" style={`background:${feature.tagColor};box-shadow:0 0 6px ${feature.tagColor}60;`}></span>
+              <span class="text-[10px] font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
+            </div>
+            <h3 class="text-[15px] font-bold text-white mb-1">{feature.title}</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">{feature.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {feature.tags.map(tag => (
+                <span class="text-[9px] px-2 py-0.5 rounded-md"
+                      style={`color:${feature.tagColor};background:${feature.tagColor}12;border:1px solid ${feature.tagColor}25;`}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
