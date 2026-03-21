@@ -69,41 +69,37 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
     </div>
     <p class="text-slate-500 text-base mb-10 pl-5 animate-on-scroll">Click any category to see every check.</p>
 
-    <!-- Top 6: Full cards -->
-    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4 stagger-children" id="category-grid">
-      {fullCategories.map(category => {
-        const colors = colorMap[category.color] || colorMap.sky;
-        const sampleChecks = category.features.slice(0, 3);
-        const remaining = category.features.length - 3;
+    <!-- All 11 categories -->
+    <div id="category-grid">
+      <!-- Top 6: Full cards -->
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4 stagger-children">
+        {fullCategories.map(category => {
+          const colors = colorMap[category.color] || colorMap.sky;
+          const sampleChecks = category.features.slice(0, 3);
+          const remaining = category.features.length - 3;
 
-        return (
-          <div
-            class="category-card rounded-xl p-5 cursor-pointer transition-all duration-300"
-            style={`background:rgba(14,38,85,0.4);border:1px solid ${colors.border};`}
-            data-category={category.id}
-            data-border-color={colors.border}
-            data-border-hover={colors.border.replace('0.15', '0.35')}
-          >
-            {/* Header */}
-            <div class="flex items-center justify-between mb-3">
-              {(() => {
-                const IconComponent = iconMap[category.icon as string] || Search;
-                return (
-                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style={`background:${colors.bg};`}>
-                    <IconComponent class="h-4 w-4" style={`color:${colors.text};`} />
-                  </div>
-                );
-              })()}
-              <span class="text-xs font-bold px-2 py-0.5 rounded-md" style={`color:${colors.text};background:${colors.bg};`}>
-                {category.checkCount}
-              </span>
-            </div>
-
-            {/* Name */}
-            <h3 class="text-base font-bold text-white mb-2">{category.name}</h3>
-
-            {/* Sample checks */}
-            <div class="category-preview">
+          return (
+            <div
+              class="category-card rounded-xl p-5 cursor-pointer transition-all duration-300"
+              style={`background:rgba(14,38,85,0.4);border:1px solid ${colors.border};`}
+              data-category={category.id}
+              data-color={colors.text}
+              data-border={colors.border}
+            >
+              <div class="flex items-center justify-between mb-3">
+                {(() => {
+                  const IconComponent = iconMap[category.icon as string] || Search;
+                  return (
+                    <div class="w-9 h-9 rounded-lg flex items-center justify-center" style={`background:${colors.bg};`}>
+                      <IconComponent class="h-4 w-4" style={`color:${colors.text};`} />
+                    </div>
+                  );
+                })()}
+                <span class="text-xs font-bold px-2 py-0.5 rounded-md" style={`color:${colors.text};background:${colors.bg};`}>
+                  {category.checkCount}
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-white mb-2">{category.name}</h3>
               <div class="flex flex-col gap-2">
                 {sampleChecks.map(check => (
                   <span class="flex items-center gap-2.5 text-sm text-slate-300">
@@ -118,60 +114,55 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
                 )}
               </div>
             </div>
+          );
+        })}
+      </div>
 
-            {/* Expanded check list (collapsed by default via max-height) */}
-            <div class="category-expanded mt-4 pt-4" style={`border-top:1px solid ${colors.border};max-height:0;overflow:hidden;opacity:0;transition:max-height 300ms var(--ease-out-expo),opacity 300ms var(--ease-out-expo);`}>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {category.features.map(check => (
-                  <span class="flex items-start gap-2.5 text-sm text-slate-300">
-                    <Check class="h-3.5 w-3.5 flex-shrink-0 mt-0.5" style={`color:${colors.text};`} />
-                    <span>
-                      <span class="text-white font-medium">{check.title}</span>
-                      {check.description && <span class="text-slate-400"> — {check.description}</span>}
-                    </span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-
-    <!-- Bottom 5: Compact expandable cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 stagger-children" id="category-grid-compact">
-      {compactCategories.map(category => {
-        const colors = colorMap[category.color] || colorMap.sky;
-        return (
-          <div
-            class="category-card rounded-lg p-3 text-center cursor-pointer transition-all duration-300"
-            style={`background:rgba(14,38,85,0.3);border:1px solid ${colors.border};`}
-            data-category={category.id}
-          >
-            {/* Compact preview */}
-            <div class="category-preview">
+      <!-- Bottom 5: Compact cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 stagger-children">
+        {compactCategories.map(category => {
+          const colors = colorMap[category.color] || colorMap.sky;
+          return (
+            <div
+              class="category-card rounded-lg p-3 text-center cursor-pointer transition-all duration-300"
+              style={`background:rgba(14,38,85,0.3);border:1px solid ${colors.border};`}
+              data-category={category.id}
+              data-color={colors.text}
+              data-border={colors.border}
+            >
               <div class="text-sm font-semibold text-white">{category.name}</div>
               <div class="text-xs text-slate-500 mt-0.5">{category.checkCount} checks</div>
             </div>
+          );
+        })}
+      </div>
 
-            {/* Expanded check list */}
-            <div class="category-expanded text-left mt-3 pt-3" style={`border-top:1px solid ${colors.border};max-height:0;overflow:hidden;opacity:0;transition:max-height 300ms var(--ease-out-expo),opacity 300ms var(--ease-out-expo);`}>
-              <div class="flex flex-col gap-2">
-                {category.features.map(check => (
-                  <span class="flex items-start gap-2.5 text-sm text-slate-300">
-                    <Check class="h-3.5 w-3.5 flex-shrink-0 mt-0.5" style={`color:${colors.text};`} />
-                    <span>
-                      <span class="text-white font-medium">{check.title}</span>
-                      {check.description && <span class="text-slate-400"> — {check.description}</span>}
-                    </span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      <!-- Detail panel: inserted by JS below the clicked card's grid -->
+      <div id="category-detail" class="category-detail-panel" style="max-height:0;overflow:hidden;opacity:0;">
+      </div>
     </div>
+
+    <!-- Hidden data for JS to read -->
+    {sortedCategories.map(category => {
+      const colors = colorMap[category.color] || colorMap.sky;
+      return (
+        <template data-checks={category.id}>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2.5 p-6">
+            {category.features.map(check => (
+              <span class="flex items-start gap-2.5 text-sm text-slate-300">
+                <span class="mt-0.5 flex-shrink-0" style={`color:${colors.text};`}>
+                  <svg class="h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </span>
+                <span>
+                  <span class="text-white font-medium">{check.title}</span>
+                  {check.description && <span class="text-slate-400"> — {check.description}</span>}
+                </span>
+              </span>
+            ))}
+          </div>
+        </template>
+      );
+    })}
   </div>
 </section>
 
@@ -185,59 +176,95 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
   transform: translateY(-2px);
   box-shadow: 0 0 20px rgba(34,211,238,0.06), 0 8px 24px rgba(0,0,0,0.2);
 }
+.category-card.is-active {
+  transform: none;
+  box-shadow: 0 0 20px rgba(34,211,238,0.1), 0 4px 16px rgba(0,0,0,0.3);
+}
+.category-detail-panel {
+  transition: max-height 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 300ms ease,
+              margin 300ms ease;
+  border-radius: 0.75rem;
+  margin-top: 0;
+}
+.category-detail-panel.is-open {
+  margin-top: 0.75rem;
+  background: rgba(14,38,85,0.5);
+  border: 1px solid rgba(34,211,238,0.12);
+}
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    let expanded: HTMLElement | null = null;
+    const container = document.getElementById('category-grid');
+    const detail = document.getElementById('category-detail');
+    if (!container || !detail) return;
 
-    function collapse(card: HTMLElement) {
-      const preview = card.querySelector('.category-preview') as HTMLElement;
-      const expandedEl = card.querySelector('.category-expanded') as HTMLElement;
-      if (preview) { preview.style.maxHeight = preview.scrollHeight + 'px'; preview.style.opacity = '1'; }
-      if (expandedEl) { expandedEl.style.maxHeight = '0'; expandedEl.style.opacity = '0'; }
-      card.style.gridColumn = '';
+    let activeCard: HTMLElement | null = null;
+    let activeId: string | null = null;
+
+    function closeDetail() {
+      detail.style.maxHeight = '0';
+      detail.style.opacity = '0';
+      detail.classList.remove('is-open');
+      if (activeCard) {
+        activeCard.classList.remove('is-active');
+        activeCard.style.borderColor = '';
+      }
+      activeCard = null;
+      activeId = null;
     }
 
-    function expand(card: HTMLElement) {
-      const preview = card.querySelector('.category-preview') as HTMLElement;
-      const expandedEl = card.querySelector('.category-expanded') as HTMLElement;
-      if (preview) { preview.style.maxHeight = '0'; preview.style.opacity = '0'; }
-      if (expandedEl) { expandedEl.style.maxHeight = expandedEl.scrollHeight + 'px'; expandedEl.style.opacity = '1'; }
-      card.style.gridColumn = '1 / -1';
-    }
+    function openDetail(card: HTMLElement, categoryId: string) {
+      const template = document.querySelector(`template[data-checks="${categoryId}"]`) as HTMLTemplateElement;
+      if (!template) return;
 
-    function setupGrid(gridEl: HTMLElement) {
-      // Set initial max-height for previews
-      gridEl.querySelectorAll('.category-preview').forEach((el) => {
-        const preview = el as HTMLElement;
-        preview.style.maxHeight = preview.scrollHeight + 'px';
-        preview.style.opacity = '1';
-        preview.style.overflow = 'hidden';
-        preview.style.transition = 'max-height 300ms var(--ease-out-expo), opacity 300ms var(--ease-out-expo)';
+      const border = card.dataset.border || 'rgba(34,211,238,0.15)';
+
+      // Place the detail panel after the card's parent grid
+      const parentGrid = card.closest('.grid') as HTMLElement;
+      if (parentGrid && parentGrid.nextElementSibling !== detail) {
+        parentGrid.after(detail);
+      }
+
+      // Use safe DOM cloning from server-rendered <template> (no user input)
+      while (detail.firstChild) detail.removeChild(detail.firstChild);
+      detail.appendChild(template.content.cloneNode(true));
+      detail.style.borderColor = border.replace('0.15', '0.25');
+      detail.classList.add('is-open');
+
+      // Measure and animate
+      detail.style.maxHeight = '0';
+      detail.style.opacity = '0';
+      requestAnimationFrame(() => {
+        detail.style.maxHeight = detail.scrollHeight + 'px';
+        detail.style.opacity = '1';
       });
 
-      gridEl.addEventListener('click', (e) => {
-        const card = (e.target as HTMLElement).closest('.category-card') as HTMLElement | null;
-        if (!card) return;
-
-        if (expanded && expanded !== card) {
-          collapse(expanded);
-        }
-
-        if (expanded === card) {
-          collapse(card);
-          expanded = null;
-        } else {
-          expand(card);
-          expanded = card;
-        }
-      });
+      card.classList.add('is-active');
+      card.style.borderColor = border.replace('0.15', '0.4');
+      activeCard = card;
+      activeId = categoryId;
     }
 
-    const grid = document.getElementById('category-grid');
-    const gridCompact = document.getElementById('category-grid-compact');
-    if (grid) setupGrid(grid);
-    if (gridCompact) setupGrid(gridCompact);
+    container.addEventListener('click', (e) => {
+      const card = (e.target as HTMLElement).closest('.category-card') as HTMLElement | null;
+      if (!card) return;
+
+      const categoryId = card.dataset.category;
+      if (!categoryId) return;
+
+      if (activeId === categoryId) {
+        closeDetail();
+        return;
+      }
+
+      if (activeCard) {
+        activeCard.classList.remove('is-active');
+        activeCard.style.borderColor = '';
+      }
+
+      openDetail(card, categoryId);
+    });
   });
 </script>
