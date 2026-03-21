@@ -1,12 +1,12 @@
 // Site configuration - centralized values used across the website
 export const siteConfig = {
   // Current version of Crawlix
-  version: '1.2',
+  version: '1.0.0',
 
   // Version announcement for Hero badge
   versionAnnouncement: {
-    label: 'New in v1.2',
-    feature: 'AI Search Readiness Checks',
+    label: 'New in v1.0',
+    feature: '100+ SEO Checks, AI Search Ready',
   },
 
   // Site metadata
@@ -14,11 +14,8 @@ export const siteConfig = {
   siteUrl: 'https://crawlix.app',
   tagline: 'The Privacy-First SEO Crawler',
 
-  // Social links
-  social: {
-    github: 'https://github.com/crawlix',
-    twitter: 'https://twitter.com/crawlix',
-  },
+  // Social links (add when accounts exist)
+  social: {},
 
   // Support
   supportEmail: 'support@crawlix.app',

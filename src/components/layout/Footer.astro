@@ -1,5 +1,5 @@
 ---
-import { Github, Twitter } from '@lucide/astro';
+import { Mail } from '@lucide/astro';
 import { getNavigation } from '../../lib/keystatic';
 import defaultNavigation from '../../data/navigation';
 
@@ -28,11 +28,9 @@ const navigation = {
           The privacy-first SEO crawler. Your data stays on your machine. Forever.
         </p>
         <div class="mt-4 flex gap-4">
-          <a href="https://github.com/crawlix" class="text-slate-400 hover:text-white" aria-label="GitHub" rel="noopener noreferrer" target="_blank">
-            <Github class="h-5 w-5" />
-          </a>
-          <a href="https://twitter.com/crawlix" class="text-slate-400 hover:text-white" aria-label="Twitter" rel="noopener noreferrer" target="_blank">
-            <Twitter class="h-5 w-5" />
+          <a href="mailto:support@crawlix.app" class="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm">
+            <Mail class="h-4 w-4" />
+            support@crawlix.app
           </a>
         </div>
       </div>

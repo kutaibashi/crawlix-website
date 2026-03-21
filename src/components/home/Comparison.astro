@@ -33,18 +33,11 @@ const comparisonFeatures = [
     tooltip: null
   },
   {
-    feature: "Modern dark UI",
-    crawlix: true,
-    screamingFrog: false,
-    sitebulb: true,
-    tooltip: null
-  },
-  {
-    feature: "Perpetual license option",
+    feature: "One-time purchase option",
     crawlix: true,
     screamingFrog: false,
     sitebulb: false,
-    tooltip: "Pay once, own forever"
+    tooltip: "Pay once, use forever. No recurring fees."
   },
   {
     feature: "Free tier available",
@@ -148,11 +141,10 @@ const renderIcon = (value: boolean | string) => {
       </table>
     </div>
 
-    <!-- CTA -->
+    <!-- Link to full comparison -->
     <div class="mt-12 text-center">
-      <p class="text-slate-400 mb-4">Ready to see for yourself?</p>
-      <a href="/download" class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors">
-        Try Crawlix Free
+      <a href="/compare" class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 font-medium transition-colors">
+        See full comparison
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
