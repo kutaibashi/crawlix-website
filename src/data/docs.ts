@@ -34,7 +34,7 @@ export const quickStartSteps: QuickStart[] = [
   {
     step: 1,
     title: 'Download Crawlix',
-    description: 'Get the installer for your operating system. Available for Windows (64-bit), macOS (Intel & Apple Silicon), and Linux (.deb, .AppImage).',
+    description: 'Get the installer for your operating system. Available for Windows (64-bit) and Linux (.AppImage, .rpm). macOS support coming soon.',
     link: '/download',
   },
   {
@@ -70,12 +70,12 @@ export const docSections: DocSection[] = [
       {
         title: 'System Requirements',
         slug: 'getting-started/system-requirements',
-        description: 'Minimum specs: Windows 10+, macOS 10.15+, or Ubuntu 20.04+. 4GB RAM (8GB recommended), 500MB disk space.',
+        description: 'Minimum specs: Windows 10+ or Ubuntu 20.04+. 4GB RAM (8GB recommended), 500MB disk space. macOS coming soon.',
       },
       {
         title: 'Installation Guide',
         slug: 'getting-started/installation',
-        description: 'Step-by-step installation for Windows (.exe), macOS (.dmg), and Linux (.deb, .AppImage).',
+        description: 'Step-by-step installation for Windows (.exe) and Linux (.AppImage, .rpm). macOS support coming soon.',
       },
       {
         title: 'Your First Crawl',

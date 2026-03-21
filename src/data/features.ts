@@ -285,9 +285,9 @@ export const keyCapabilities = [
   },
   {
     title: 'Cross-Platform',
-    description: 'Native apps for Windows, macOS, and Linux. Works offline.',
+    description: 'Native apps for Windows and Linux. Works offline. macOS coming soon.',
     icon: 'Monitor',
-    stat: '3',
+    stat: '2',
     statLabel: 'platforms',
   },
 ];

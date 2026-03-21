@@ -11,7 +11,7 @@ const downloadFaqs = [
   { question: 'Is Crawlix really free?', answer: 'Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. You can use it forever without paying anything.' },
   { question: 'Do I need to create an account?', answer: 'No account is required to use the Free tier. You only need to provide an email when purchasing a Pro or Agency license.' },
   { question: 'Does Crawlix require an internet connection?', answer: 'You need an internet connection to crawl websites, but all data is stored locally. You can view and analyze previous crawls offline.' },
-  { question: 'Is the macOS version notarized?', answer: "Yes, the macOS version is code-signed and notarized by Apple, so you won't see security warnings when installing." },
+  { question: 'When will the macOS version be available?', answer: "macOS support is planned and under development. Sign up for updates at support@crawlix.app to be notified when it's ready." },
   { question: 'How do device activations work?', answer: 'Each license is permanently bound to your device. Free and Pro licenses allow 1 device, Agency allows 5 devices. If you reinstall your OS or format your drive, reactivation on the same hardware is automatic. To transfer to a new device, contact support@crawlix.app.' },
   { question: 'Where should I buy a license?', answer: 'Only purchase licenses through our official website (crawlix.app) or our Lemon Squeezy checkout. We do not authorize any third-party resellers.' },
 ];
@@ -20,7 +20,7 @@ const platforms = [
   {
     name: 'Windows',
     icon: 'windows',
-    version: '1.2.0',
+    version: '1.0.0',
     requirements: 'Windows 10 or later (64-bit)',
     downloads: [
       { label: 'Download .exe', url: '#', primary: true },
@@ -30,17 +30,14 @@ const platforms = [
   {
     name: 'macOS',
     icon: 'apple',
-    version: '1.2.0',
-    requirements: 'macOS 11 Big Sur or later',
-    downloads: [
-      { label: 'Download for Apple Silicon', url: '#', primary: true },
-      { label: 'Download for Intel', url: '#', primary: false },
-    ],
+    version: '',
+    requirements: 'Coming soon — join the waitlist',
+    downloads: [],
   },
   {
     name: 'Linux',
     icon: 'linux',
-    version: '1.2.0',
+    version: '1.0.0',
     requirements: 'Ubuntu 20.04+, Fedora 35+, or equivalent',
     downloads: [
       { label: 'Download .AppImage', url: '#', primary: true },
@@ -62,7 +59,7 @@ export const prerender = true;
 
 <BaseLayout
   title="Download"
-  description="Download Crawlix for Windows, macOS, or Linux. Free forever with no account required."
+  description="Download Crawlix for Windows or Linux. Free forever with no account required. macOS support coming soon."
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Download', url: '/download' },
@@ -181,11 +178,11 @@ export const prerender = true;
           <tbody class="divide-y divide-slate-800">
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-white">Operating System</td>
-              <td class="px-6 py-4 text-sm text-slate-400">Windows 10+, macOS 11+, Ubuntu 20.04+</td>
+              <td class="px-6 py-4 text-sm text-slate-400">Windows 10+, Ubuntu 20.04+ / Fedora 35+ (macOS coming soon)</td>
             </tr>
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-white">Processor</td>
-              <td class="px-6 py-4 text-sm text-slate-400">64-bit processor (Intel, AMD, or Apple Silicon)</td>
+              <td class="px-6 py-4 text-sm text-slate-400">64-bit processor (Intel or AMD)</td>
             </tr>
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-white">Memory</td>
@@ -257,7 +254,7 @@ export const prerender = true;
 
         <details class="group rounded-lg border border-slate-800 bg-[#0e2655]/50">
           <summary class="flex cursor-pointer items-center justify-between p-4 text-white font-medium">
-            Is the macOS version notarized?
+            When will the macOS version be available?
             <span class="ml-4 shrink-0 transition-transform group-open:rotate-180">
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -265,7 +262,7 @@ export const prerender = true;
             </span>
           </summary>
           <div class="px-4 pb-4 text-slate-400">
-            Yes, the macOS version is code-signed and notarized by Apple, so you won't see security warnings when installing.
+            macOS support is planned and under development. Sign up for updates at support@crawlix.app to be notified when it's ready.
           </div>
         </details>
 
