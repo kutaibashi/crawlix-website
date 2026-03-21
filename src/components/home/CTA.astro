@@ -1,14 +1,99 @@
 ---
 import { Download, Monitor, ArrowRight } from '@lucide/astro';
+
+// Converging node network — nodes are denser near center, sparser at edges
+// This creates a visual "pull" toward the CTA
+const nodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number }> = [];
+
+// Ring 1: outer ring — sparse, dim
+for (let i = 0; i < 20; i++) {
+  const angle = (i / 20) * Math.PI * 2 + Math.random() * 0.3;
+  const radius = 42 + Math.random() * 10;
+  nodes.push({
+    x: 50 + Math.cos(angle) * radius,
+    y: 50 + Math.sin(angle) * radius * 0.55,
+    size: 1.2 + Math.random() * 0.8,
+    opacity: 0.06 + Math.random() * 0.06,
+    delay: Math.random() * 4,
+  });
+}
+
+// Ring 2: mid ring — medium density
+for (let i = 0; i < 16; i++) {
+  const angle = (i / 16) * Math.PI * 2 + Math.random() * 0.4;
+  const radius = 25 + Math.random() * 10;
+  nodes.push({
+    x: 50 + Math.cos(angle) * radius,
+    y: 50 + Math.sin(angle) * radius * 0.55,
+    size: 1.5 + Math.random() * 1,
+    opacity: 0.1 + Math.random() * 0.08,
+    delay: Math.random() * 4,
+  });
+}
+
+// Ring 3: inner ring — dense, bright
+for (let i = 0; i < 10; i++) {
+  const angle = (i / 10) * Math.PI * 2 + Math.random() * 0.5;
+  const radius = 10 + Math.random() * 8;
+  nodes.push({
+    x: 50 + Math.cos(angle) * radius,
+    y: 50 + Math.sin(angle) * radius * 0.55,
+    size: 2 + Math.random() * 1.5,
+    opacity: 0.15 + Math.random() * 0.1,
+    delay: Math.random() * 3,
+  });
+}
+
+// Generate connections — connect nodes that are reasonably close
+const connections: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }> = [];
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const dx = nodes[i].x - nodes[j].x;
+    const dy = nodes[i].y - nodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 18 && Math.random() > 0.4) {
+      const avgOpacity = (nodes[i].opacity + nodes[j].opacity) / 2;
+      connections.push({
+        x1: nodes[i].x, y1: nodes[i].y,
+        x2: nodes[j].x, y2: nodes[j].y,
+        opacity: avgOpacity * 0.5,
+      });
+    }
+  }
+}
 ---
 
 <section class="py-24 sm:py-32 relative overflow-hidden" style="background:#040c1e;">
-  <!-- Dot grid -->
-  <div class="absolute inset-0 dot-grid opacity-30"></div>
+  <!-- Converging node network -->
+  <div class="absolute inset-0">
+    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Connection lines */}
+      {connections.map((c) => (
+        <line
+          x1={`${c.x1}%`} y1={`${c.y1}%`}
+          x2={`${c.x2}%`} y2={`${c.y2}%`}
+          stroke="#22d3ee" stroke-width="0.06"
+          opacity={c.opacity}
+        />
+      ))}
+      {/* Nodes */}
+      {nodes.map((n) => (
+        <circle
+          cx={`${n.x}%`} cy={`${n.y}%`}
+          r={n.size * 0.12}
+          fill="#22d3ee"
+          opacity={n.opacity}
+          class="cta-node"
+          style={`animation-delay:${n.delay}s;`}
+        />
+      ))}
+    </svg>
+  </div>
 
-  <!-- Cyan glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#22d3ee]/6 rounded-full blur-[100px]"></div>
+  <!-- Center glow — brighter, tighter -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-[#22d3ee]/8 rounded-full blur-[80px]"></div>
 
+  <!-- Content -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 relative text-center">
     <!-- Badge -->
     <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-[#22d3ee]/8 border border-[#22d3ee]/15 px-4 py-2 text-sm text-[#22d3ee]">
@@ -30,7 +115,7 @@ import { Download, Monitor, ArrowRight } from '@lucide/astro';
 
     <!-- CTA buttons -->
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-[#22d3ee] px-8 py-4 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-all shadow-lg shadow-[#22d3ee]/20">
+      <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-[#22d3ee] px-8 py-4 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-all shadow-lg shadow-[#22d3ee]/20 hover:shadow-[#22d3ee]/30">
         <Download class="h-5 w-5" />
         Download for Free
         <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -55,7 +140,7 @@ import { Download, Monitor, ArrowRight } from '@lucide/astro';
     </div>
 
     <!-- Trust -->
-    <div class="mt-5 flex flex-wrap items-center justify-center gap-5 text-xs text-slate-600">
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-5 text-xs text-slate-500">
       {['No signup required', 'Works offline', 'GDPR compliant'].map(item => (
         <span class="flex items-center gap-1.5">
           <span class="w-1 h-1 rounded-full bg-emerald-500/50"></span>
@@ -65,3 +150,16 @@ import { Download, Monitor, ArrowRight } from '@lucide/astro';
     </div>
   </div>
 </section>
+
+<style>
+  .cta-node {
+    animation: cta-pulse 5s ease-in-out infinite;
+  }
+  @keyframes cta-pulse {
+    0%, 100% { opacity: var(--tw-opacity, 0.1); }
+    50% { opacity: calc(var(--tw-opacity, 0.1) * 2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-node { animation: none !important; }
+  }
+</style>
