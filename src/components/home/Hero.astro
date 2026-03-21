@@ -3,72 +3,65 @@ import { Download, ArrowRight, Zap, Shield, Bot } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import { siteConfig } from '../../data/config';
 
-const { versionAnnouncement, version } = siteConfig;
+const { versionAnnouncement } = siteConfig;
 ---
 
-<section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-32">
-  <!-- Animated background gradient -->
-  <div class="absolute inset-0 -z-10">
-    <!-- Main gradient blob -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-gradient-to-b from-sky-500/20 via-sky-500/5 to-transparent rounded-full blur-3xl"></div>
-    <!-- Secondary glow -->
-    <div class="absolute top-40 right-1/4 w-[400px] h-[400px] bg-sky-600/10 rounded-full blur-3xl float"></div>
-    <!-- Accent glow -->
-    <div class="absolute top-60 left-1/4 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
-    <!-- Grid pattern overlay -->
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(46,163,242,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(46,163,242,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
-  </div>
+<section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28" style="background: #040c1e;">
+  <!-- Dot grid background -->
+  <div class="absolute inset-0 dot-grid opacity-60"></div>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center">
-      <!-- Animated Badge -->
-      <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-4 py-2 text-sm text-sky-400 shimmer">
-        <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
-        </span>
+  <!-- Subtle top glow -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#22d3ee]/8 rounded-full blur-[120px]"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Version Badge -->
+      <a href="/changelog" class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[#22d3ee]/20 bg-[#22d3ee]/5 px-4 py-2 text-sm text-[#22d3ee] hover:bg-[#22d3ee]/10 transition-colors">
+        <span class="node-dot" style="width:6px;height:6px;"></span>
         <span class="font-medium">{versionAnnouncement.label}</span>
-        <span class="text-slate-400">|</span>
-        <span>{versionAnnouncement.feature}</span>
-        <ArrowRight class="h-4 w-4" />
-      </div>
+        <span class="text-slate-600">|</span>
+        <span class="text-slate-400">{versionAnnouncement.feature}</span>
+        <ArrowRight class="h-3.5 w-3.5 text-slate-500" />
+      </a>
 
-      <!-- Headline with gradient text -->
-      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+      <!-- Headline -->
+      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl lg:text-[4.5rem] lg:leading-[1.1]">
         <span class="text-white">The SEO Crawler That</span>
         <br />
-        <span class="gradient-text-blue">Respects Your Privacy</span>
+        <span class="bg-gradient-to-r from-[#22d3ee] to-[#67e8f9] bg-clip-text text-transparent">Respects Your Privacy</span>
       </h1>
 
-      <!-- Subheadline with better typography -->
-      <p class="mx-auto mt-8 max-w-2xl text-lg text-slate-400 sm:text-xl leading-relaxed">
+      <!-- Subheadline -->
+      <p class="mx-auto mt-7 max-w-2xl text-lg text-slate-400 leading-relaxed">
         Audit any website with <span class="text-white font-medium">100+ SEO checks</span>.
         Your data stays on your machine.
-        <span class="text-sky-400 font-semibold">Forever.</span>
+        <span class="text-[#22d3ee] font-semibold">Forever.</span>
       </p>
 
       <!-- Feature pills -->
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
+      <div class="mt-7 flex flex-wrap items-center justify-center gap-4">
+        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
           <Zap class="h-4 w-4 text-amber-400" />
           Lightning fast
         </span>
-        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
+        <span class="text-slate-700">·</span>
+        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
           <Shield class="h-4 w-4 text-emerald-400" />
           Privacy first
         </span>
-        <span class="inline-flex items-center gap-2 rounded-full bg-slate-800/50 px-4 py-2 text-sm text-slate-300">
-          <Bot class="h-4 w-4 text-sky-400" />
+        <span class="text-slate-700">·</span>
+        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
+          <Bot class="h-4 w-4 text-[#22d3ee]" />
           AI ready
         </span>
       </div>
 
-      <!-- CTAs with better hierarchy -->
+      <!-- CTAs -->
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <Button href="/download" size="lg" class="group glow-blue">
           <Download class="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
           Download Free
-          <span class="ml-2 text-xs text-sky-200 font-normal">No account needed</span>
+          <span class="ml-2 text-xs text-sky-200/70 font-normal">No account needed</span>
         </Button>
         <Button href="/features" variant="ghost" size="lg" class="group">
           <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -76,43 +69,25 @@ const { versionAnnouncement, version } = siteConfig;
         </Button>
       </div>
 
-      <!-- Trust indicators with icons -->
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-500">
-        <span class="flex items-center gap-2">
-          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          No account required
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          Works offline
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          Free forever tier
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="h-5 w-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          Windows & Linux
-        </span>
+      <!-- Trust indicators -->
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
+        {['No account required', 'Works offline', 'Free forever tier', 'Windows & Linux'].map(item => (
+          <span class="flex items-center gap-2">
+            <span class="node-dot" style="width:5px;height:5px;box-shadow:none;background:#22c55e;"></span>
+            {item}
+          </span>
+        ))}
       </div>
     </div>
 
     <!-- Product Screenshot -->
     <div class="mt-20 sm:mt-24 scale-in" id="demo">
       <div class="relative mx-auto max-w-5xl">
-        <!-- Glow effect behind -->
-        <div class="absolute -inset-4 rounded-3xl bg-gradient-to-r from-sky-500/30 via-sky-400/20 to-sky-500/30 blur-2xl glow-pulse"></div>
+        <!-- Glow -->
+        <div class="absolute -inset-6 rounded-3xl bg-[#22d3ee]/10 blur-2xl glow-pulse"></div>
 
-        <!-- Screenshot with window chrome -->
-        <div class="relative overflow-hidden rounded-2xl border border-slate-700/50 shadow-2xl gradient-border">
+        <!-- Screenshot -->
+        <div class="relative overflow-hidden rounded-2xl border border-slate-700/40 shadow-2xl shadow-[#22d3ee]/5">
           <img
             src="/images/app-preview.png"
             alt="Crawlix dashboard showing health score, top issues, and quick actions"
@@ -128,7 +103,6 @@ const { versionAnnouncement, version } = siteConfig;
 </section>
 
 <script>
-  // Scale-in animation
   document.addEventListener('DOMContentLoaded', () => {
     const scaleObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

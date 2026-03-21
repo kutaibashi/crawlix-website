@@ -1,6 +1,7 @@
 ---
 /**
- * Who It's For — Target audience section showing 3 personas.
+ * Who It's For — LIGHT background section for visual rhythm break.
+ * Uses dark text on off-white, different card aesthetic.
  */
 import { Briefcase, Users, User } from '@lucide/astro';
 
@@ -8,13 +9,13 @@ const personas = [
   {
     icon: User,
     title: 'Freelancers',
-    description: 'Deliver professional SEO audits to clients without monthly subscriptions eating into your margins.',
+    description: 'Deliver professional SEO audits without monthly subscriptions eating into your margins.',
     highlights: [
       'One-time purchase, use forever',
       'White-label reports with your branding',
       'No per-client or per-project fees',
     ],
-    accent: 'cyan',
+    accent: '#06b6d4',
   },
   {
     icon: Users,
@@ -25,91 +26,65 @@ const personas = [
       'Custom logo, colors, and fonts in reports',
       'Scheduled crawls for recurring clients',
     ],
-    accent: 'violet',
+    accent: '#8b5cf6',
   },
   {
     icon: Briefcase,
     title: 'In-House Teams',
-    description: 'Keep all audit data on your own machines. No third-party data processing. Full GDPR compliance by default.',
+    description: 'Keep all audit data on your own machines. No third-party data processing. GDPR compliance by default.',
     highlights: [
       'Data never leaves your infrastructure',
       'No vendor lock-in or data portability issues',
       'Export everything — CSV, PDF, Excel',
     ],
-    accent: 'amber',
+    accent: '#f59e0b',
   },
 ];
-
-const accentClasses = {
-  cyan: {
-    iconBg: 'bg-cyan-500/10',
-    iconText: 'text-cyan-400',
-    border: 'border-cyan-500/20',
-    hoverBorder: 'hover:border-cyan-500/40',
-    bullet: 'text-cyan-400',
-  },
-  violet: {
-    iconBg: 'bg-violet-500/10',
-    iconText: 'text-violet-400',
-    border: 'border-violet-500/20',
-    hoverBorder: 'hover:border-violet-500/40',
-    bullet: 'text-violet-400',
-  },
-  amber: {
-    iconBg: 'bg-amber-500/10',
-    iconText: 'text-amber-400',
-    border: 'border-amber-500/20',
-    hoverBorder: 'hover:border-amber-500/40',
-    bullet: 'text-amber-400',
-  },
-};
 ---
 
-<section class="py-24 sm:py-32 bg-gradient-to-b from-[#091a3d] via-[#0b1e44] to-[#091a3d]">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
+<section class="section-light py-24 sm:py-32 relative overflow-hidden">
+  <!-- Light dot grid -->
+  <div class="absolute inset-0 dot-grid-light"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <!-- Section Header — centered (light section is a visual break, centered is ok here) -->
     <div class="text-center mb-16">
-      <span class="inline-block text-sm font-semibold text-cyan-400 uppercase tracking-widest mb-4">
+      <span class="inline-flex items-center gap-2 text-sm font-semibold text-cyan-600 uppercase tracking-widest mb-4">
+        <span class="node-dot" style="background:#06b6d4;box-shadow:none;width:6px;height:6px;"></span>
         Built For You
       </span>
-      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+      <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
         Whether you're solo or a team of 50
       </h2>
-      <p class="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+      <p class="mt-3 text-lg text-slate-500 max-w-2xl mx-auto">
         Crawlix adapts to how you work. Same powerful engine, tailored for your workflow.
       </p>
     </div>
 
-    <!-- Persona Cards -->
+    <!-- Persona Cards — light aesthetic -->
     <div class="grid gap-6 lg:grid-cols-3">
-      {personas.map(({ icon: Icon, title, description, highlights, accent }) => {
-        const colors = accentClasses[accent as keyof typeof accentClasses];
-
-        return (
-          <div class={`relative rounded-2xl border ${colors.border} ${colors.hoverBorder} bg-[#0e2655]/30 p-8 transition-all duration-300 hover:bg-[#0e2655]/50`}>
-            {/* Icon */}
-            <div class={`flex h-14 w-14 items-center justify-center rounded-2xl ${colors.iconBg} ${colors.iconText} mb-6`}>
-              <Icon class="h-7 w-7" />
-            </div>
-
-            {/* Title & Description */}
-            <h3 class="text-xl font-bold text-white mb-3">{title}</h3>
-            <p class="text-slate-400 leading-relaxed mb-6">{description}</p>
-
-            {/* Highlights */}
-            <ul class="space-y-3">
-              {highlights.map((item) => (
-                <li class="flex items-start gap-3 text-sm text-slate-300">
-                  <svg class={`h-4 w-4 mt-0.5 flex-shrink-0 ${colors.bullet}`} fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+      {personas.map(({ icon: Icon, title, description, highlights, accent }) => (
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300">
+          {/* Icon */}
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl mb-6" style={`background:${accent}10;color:${accent};`}>
+            <Icon class="h-6 w-6" />
           </div>
-        );
-      })}
+
+          {/* Title & Description */}
+          <h3 class="text-xl font-bold text-slate-900 mb-2">{title}</h3>
+          <p class="text-slate-500 leading-relaxed mb-5 text-sm">{description}</p>
+
+          {/* Highlights */}
+          <ul class="space-y-2.5">
+            {highlights.map((item) => (
+              <li class="flex items-start gap-2.5 text-sm text-slate-600">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={`background:${accent};`}></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   </div>
 </section>
