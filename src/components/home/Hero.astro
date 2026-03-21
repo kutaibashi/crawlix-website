@@ -5,174 +5,149 @@ import { siteConfig } from '../../data/config';
 
 const { versionAnnouncement } = siteConfig;
 
-// Generate random node positions for the network background
-// Nodes are placed in a grid-ish pattern with jitter for organic feel
+// Generate node-graph network
 const nodes: Array<{ id: number; x: number; y: number; size: number; delay: number; opacity: number }> = [];
-const cols = 12;
-const rows = 8;
+const cols = 14;
+const rows = 9;
 for (let row = 0; row < rows; row++) {
   for (let col = 0; col < cols; col++) {
     const id = row * cols + col;
-    // Base grid position + random jitter
-    const jitterX = (Math.random() - 0.5) * 6;
-    const jitterY = (Math.random() - 0.5) * 8;
+    const jitterX = (Math.random() - 0.5) * 5;
+    const jitterY = (Math.random() - 0.5) * 7;
     const x = (col / (cols - 1)) * 100 + jitterX;
     const y = (row / (rows - 1)) * 100 + jitterY;
     const size = 1.5 + Math.random() * 2;
     const delay = Math.random() * 5;
-    // Fade opacity toward edges
-    const edgeFade = Math.min(
-      col / 2, (cols - 1 - col) / 2,
-      row / 1.5, (rows - 1 - row) / 1.5,
-      1
-    );
-    const opacity = 0.15 + edgeFade * 0.45;
+    const edgeFade = Math.min(col / 2, (cols - 1 - col) / 2, row / 1.5, (rows - 1 - row) / 1.5, 1);
+    const opacity = 0.12 + edgeFade * 0.4;
     nodes.push({ id, x, y, size, delay, opacity });
   }
 }
 
-// Generate connections between nearby nodes
 const connections: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number; delay: number }> = [];
 for (let i = 0; i < nodes.length; i++) {
   for (let j = i + 1; j < nodes.length; j++) {
     const dx = nodes[i].x - nodes[j].x;
     const dy = nodes[i].y - nodes[j].y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    // Connect nodes that are close enough (roughly adjacent in grid)
-    if (dist < 16 && Math.random() > 0.3) {
-      const opacity = Math.max(0.03, 0.12 - dist * 0.006) * Math.min(nodes[i].opacity, nodes[j].opacity);
-      connections.push({
-        x1: nodes[i].x, y1: nodes[i].y,
-        x2: nodes[j].x, y2: nodes[j].y,
-        opacity,
-        delay: Math.random() * 4,
-      });
+    if (dist < 14 && Math.random() > 0.35) {
+      const opacity = Math.max(0.02, 0.1 - dist * 0.005) * Math.min(nodes[i].opacity, nodes[j].opacity);
+      connections.push({ x1: nodes[i].x, y1: nodes[i].y, x2: nodes[j].x, y2: nodes[j].y, opacity, delay: Math.random() * 4 });
     }
   }
 }
 ---
 
-<section class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 hero-section">
-  <!-- Deep dark base -->
-  <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 60% at 50% 40%, #0c2340 0%, #040c1e 70%, #020810 100%);"></div>
+<section class="relative overflow-hidden min-h-[100vh] flex items-center hero-section">
+  <!-- Deep background -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 50% at 30% 45%, #0c2340 0%, #040c1e 60%, #020810 100%);"></div>
 
-  <!-- Animated node-graph network background -->
-  <div class="absolute inset-0 -z-0">
+  <!-- Node-graph network -->
+  <div class="absolute inset-0">
     <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Connection lines -->
       {connections.map((conn) => (
         <line
           x1={`${conn.x1}%`} y1={`${conn.y1}%`}
           x2={`${conn.x2}%`} y2={`${conn.y2}%`}
-          stroke="#22d3ee"
-          stroke-width="0.08"
-          opacity={conn.opacity}
-          class="network-edge"
-          style={`animation-delay: ${conn.delay}s;`}
+          stroke="#22d3ee" stroke-width="0.07" opacity={conn.opacity}
+          class="network-edge" style={`animation-delay:${conn.delay}s;`}
         />
       ))}
-
-      <!-- Nodes -->
       {nodes.map((node) => (
         <circle
           cx={`${node.x}%`} cy={`${node.y}%`}
-          r={node.size * 0.15}
-          fill="#22d3ee"
-          opacity={node.opacity}
-          class="network-node"
-          style={`animation-delay: ${node.delay}s;`}
+          r={node.size * 0.13} fill="#22d3ee" opacity={node.opacity}
+          class="network-node" style={`animation-delay:${node.delay}s;`}
         />
       ))}
     </svg>
   </div>
 
-  <!-- Gradient fade at bottom for clean transition -->
-  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#091a3d] to-transparent"></div>
+  <!-- Bottom fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#091a3d] to-transparent z-10"></div>
 
-  <!-- Content -->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center max-w-4xl mx-auto">
-      <!-- Version Badge -->
-      <a href="/changelog" class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[#22d3ee]/15 bg-[#22d3ee]/5 px-4 py-2 text-sm text-[#22d3ee]/90 hover:bg-[#22d3ee]/10 transition-colors backdrop-blur-sm">
-        <span class="hero-ping"></span>
-        <span class="font-medium">{versionAnnouncement.label}</span>
-        <span class="text-slate-600">|</span>
-        <span class="text-slate-400">{versionAnnouncement.feature}</span>
-        <ArrowRight class="h-3.5 w-3.5 text-slate-500" />
-      </a>
+  <!-- Content: Split layout -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-28 pb-20 sm:pt-36 sm:pb-28">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-      <!-- Headline -->
-      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl lg:text-[4.75rem] lg:leading-[1.08] hero-title">
-        <span class="text-white">The SEO Crawler That</span>
-        <br />
-        <span class="hero-gradient-text">Respects Your Privacy</span>
-      </h1>
+      <!-- Left: Text content -->
+      <div class="lg:col-span-5 text-left">
+        <!-- Version Badge -->
+        <a href="/changelog" class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[#22d3ee]/15 bg-[#22d3ee]/5 px-3.5 py-1.5 text-xs text-[#22d3ee]/90 hover:bg-[#22d3ee]/10 transition-colors backdrop-blur-sm hero-fade">
+          <span class="hero-ping"></span>
+          <span class="font-semibold">{versionAnnouncement.label}</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-slate-500">{versionAnnouncement.feature}</span>
+        </a>
 
-      <!-- Subheadline -->
-      <p class="mx-auto mt-7 max-w-2xl text-lg text-slate-400 leading-relaxed hero-fade" style="animation-delay: 0.2s;">
-        Audit any website with <span class="text-white font-medium">100+ SEO checks</span>.
-        Your data stays on your machine.
-        <span class="text-[#22d3ee] font-semibold">Forever.</span>
-      </p>
+        <!-- Headline -->
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl xl:leading-[1.1] hero-title">
+          <span class="text-white">The SEO Crawler<br />That </span>
+          <span class="hero-gradient-text">Respects<br class="hidden sm:block" /> Your Privacy</span>
+        </h1>
 
-      <!-- Feature pills — inline with dot separators -->
-      <div class="mt-7 flex flex-wrap items-center justify-center gap-4 hero-fade" style="animation-delay: 0.35s;">
-        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
-          <Zap class="h-4 w-4 text-amber-400" />
-          Lightning fast
-        </span>
-        <span class="text-slate-700">·</span>
-        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
-          <Shield class="h-4 w-4 text-emerald-400" />
-          Privacy first
-        </span>
-        <span class="text-slate-700">·</span>
-        <span class="inline-flex items-center gap-2 text-sm text-slate-400">
-          <Bot class="h-4 w-4 text-[#22d3ee]" />
-          AI ready
-        </span>
-      </div>
+        <!-- Subheadline -->
+        <p class="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-md hero-fade" style="animation-delay:0.15s;">
+          Audit any website with <span class="text-white font-medium">100+ SEO checks</span>.
+          Your data stays on your machine. <span class="text-[#22d3ee] font-semibold">Forever.</span>
+        </p>
 
-      <!-- CTAs -->
-      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row hero-fade" style="animation-delay: 0.5s;">
-        <Button href="/download" size="lg" class="group hero-cta-glow">
-          <Download class="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
-          Download Free
-          <span class="ml-2 text-xs text-sky-200/70 font-normal">No account needed</span>
-        </Button>
-        <Button href="/features" variant="ghost" size="lg" class="group">
-          <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          See All Features
-        </Button>
-      </div>
-
-      <!-- Trust indicators -->
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500 hero-fade" style="animation-delay: 0.65s;">
-        {['No account required', 'Works offline', 'Free forever tier', 'Windows & Linux'].map(item => (
-          <span class="flex items-center gap-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/80"></span>
-            {item}
+        <!-- Feature list — vertical, not pills -->
+        <div class="mt-6 flex flex-col gap-2.5 hero-fade" style="animation-delay:0.3s;">
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+            <Zap class="h-4 w-4 text-amber-400 flex-shrink-0" />
+            Parallel crawling — thousands of pages in minutes
           </span>
-        ))}
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+            <Shield class="h-4 w-4 text-emerald-400 flex-shrink-0" />
+            100% local — zero data uploaded, ever
+          </span>
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+            <Bot class="h-4 w-4 text-[#22d3ee] flex-shrink-0" />
+            AI search readiness — GPTBot, Claude, llms.txt
+          </span>
+        </div>
+
+        <!-- CTAs — stacked on mobile, horizontal on desktop -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 hero-fade" style="animation-delay:0.45s;">
+          <Button href="/download" size="lg" class="group hero-cta-glow">
+            <Download class="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
+            Download Free
+          </Button>
+          <Button href="/features" variant="ghost" size="lg" class="group">
+            All Features
+            <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </div>
+
+        <!-- Trust line -->
+        <div class="mt-6 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-slate-600 hero-fade" style="animation-delay:0.6s;">
+          {['No account needed', 'Works offline', 'Free forever', 'Win & Linux'].map(item => (
+            <span class="flex items-center gap-1.5">
+              <span class="w-1 h-1 rounded-full bg-emerald-500/70"></span>
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
 
-    <!-- Product Screenshot -->
-    <div class="mt-20 sm:mt-24 hero-screenshot" id="demo">
-      <div class="relative mx-auto max-w-5xl">
-        <!-- Glow behind screenshot -->
-        <div class="absolute -inset-6 rounded-3xl bg-[#22d3ee]/8 blur-2xl hero-screenshot-glow"></div>
+      <!-- Right: Product screenshot — larger, overlapping -->
+      <div class="lg:col-span-7 hero-screenshot">
+        <div class="relative lg:-mr-16 xl:-mr-24">
+          <!-- Glow -->
+          <div class="absolute -inset-4 rounded-2xl bg-[#22d3ee]/6 blur-2xl hero-screenshot-glow"></div>
 
-        <!-- Screenshot -->
-        <div class="relative overflow-hidden rounded-2xl border border-[#22d3ee]/10 shadow-2xl shadow-[#22d3ee]/5">
-          <img
-            src="/images/app-preview.png"
-            alt="Crawlix dashboard showing health score, top issues, and quick actions"
-            width="1586"
-            height="860"
-            class="w-full h-auto"
-            loading="eager"
-          />
+          <!-- Screenshot -->
+          <div class="relative overflow-hidden rounded-xl border border-[#22d3ee]/10 shadow-2xl shadow-black/40">
+            <img
+              src="/images/app-preview.png"
+              alt="Crawlix dashboard showing health score, top issues, and quick actions"
+              width="1586"
+              height="860"
+              class="w-full h-auto"
+              loading="eager"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -184,99 +159,81 @@ for (let i = 0; i < nodes.length; i++) {
   .network-node {
     animation: node-pulse 4s ease-in-out infinite;
   }
-
   .network-edge {
     animation: edge-breathe 5s ease-in-out infinite;
   }
-
   @keyframes node-pulse {
-    0%, 100% { opacity: var(--tw-opacity, 0.3); r: inherit; }
-    50% { opacity: calc(var(--tw-opacity, 0.3) * 1.6); }
+    0%, 100% { opacity: var(--tw-opacity, 0.3); }
+    50% { opacity: calc(var(--tw-opacity, 0.3) * 1.8); }
   }
-
   @keyframes edge-breathe {
     0%, 100% { opacity: var(--tw-opacity, 0.08); }
-    50% { opacity: calc(var(--tw-opacity, 0.08) * 2); }
+    50% { opacity: calc(var(--tw-opacity, 0.08) * 2.2); }
   }
 
-  /* Hero gradient text — animated shimmer */
+  /* Gradient text shimmer */
   .hero-gradient-text {
-    background: linear-gradient(
-      90deg,
-      #22d3ee 0%,
-      #67e8f9 30%,
-      #a5f3fc 50%,
-      #67e8f9 70%,
-      #22d3ee 100%
-    );
+    background: linear-gradient(90deg, #22d3ee 0%, #67e8f9 30%, #a5f3fc 50%, #67e8f9 70%, #22d3ee 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: hero-text-shimmer 6s ease-in-out infinite;
   }
-
   @keyframes hero-text-shimmer {
     0% { background-position: 0% center; }
     50% { background-position: 100% center; }
     100% { background-position: 0% center; }
   }
 
-  /* Staggered fade-in */
+  /* Staggered reveals */
   .hero-title {
     opacity: 0;
-    transform: translateY(20px);
-    animation: hero-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(24px);
+    animation: hero-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
   }
-
   .hero-fade {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
     animation: hero-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-
   .hero-screenshot {
     opacity: 0;
-    transform: translateY(30px) scale(0.97);
-    animation: hero-screenshot-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    transform: translateX(40px);
+    animation: hero-slide-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
   }
-
   @keyframes hero-reveal {
     to { opacity: 1; transform: translateY(0); }
   }
-
-  @keyframes hero-screenshot-reveal {
-    to { opacity: 1; transform: translateY(0) scale(1); }
+  @keyframes hero-slide-in {
+    to { opacity: 1; transform: translateX(0); }
   }
 
-  /* CTA button glow */
+  /* CTA glow */
   .hero-cta-glow {
-    box-shadow: 0 0 30px rgba(34, 211, 238, 0.2), 0 0 60px rgba(34, 211, 238, 0.08);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.2), 0 0 48px rgba(34, 211, 238, 0.06);
     transition: box-shadow 0.3s ease;
   }
-
   .hero-cta-glow:hover {
-    box-shadow: 0 0 40px rgba(34, 211, 238, 0.35), 0 0 80px rgba(34, 211, 238, 0.15);
+    box-shadow: 0 0 36px rgba(34, 211, 238, 0.35), 0 0 72px rgba(34, 211, 238, 0.12);
   }
 
-  /* Screenshot glow pulse */
+  /* Screenshot glow */
   .hero-screenshot-glow {
     animation: screenshot-glow 4s ease-in-out infinite;
   }
-
   @keyframes screenshot-glow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
   }
 
-  /* Ping indicator */
+  /* Ping */
   .hero-ping {
     position: relative;
     display: inline-flex;
     width: 6px;
     height: 6px;
   }
-
   .hero-ping::before {
     content: '';
     position: absolute;
@@ -285,41 +242,23 @@ for (let i = 0; i < nodes.length; i++) {
     background: #22d3ee;
     animation: hero-ping-anim 2s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
-
   .hero-ping::after {
     content: '';
-    position: relative;
     display: block;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #22d3ee;
   }
-
   @keyframes hero-ping-anim {
     0% { transform: scale(1); opacity: 0.75; }
     75%, 100% { transform: scale(2.5); opacity: 0; }
   }
 
-  /* Respect reduced motion */
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .network-node,
-    .network-edge,
-    .hero-gradient-text,
-    .hero-screenshot-glow {
-      animation: none !important;
-    }
-
-    .hero-title,
-    .hero-fade,
-    .hero-screenshot {
-      opacity: 1 !important;
-      transform: none !important;
-      animation: none !important;
-    }
-
-    .hero-ping::before {
-      animation: none !important;
-    }
+    .network-node, .network-edge, .hero-gradient-text, .hero-screenshot-glow { animation: none !important; }
+    .hero-title, .hero-fade, .hero-screenshot { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .hero-ping::before { animation: none !important; }
   }
 </style>
