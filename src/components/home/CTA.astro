@@ -1,29 +1,62 @@
 ---
 import { Download, Monitor, ArrowRight } from '@lucide/astro';
+
+// Small node network for CTA background
+const nodes: Array<{ x: number; y: number; opacity: number }> = [];
+for (let i = 0; i < 30; i++) {
+  nodes.push({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    opacity: 0.08 + Math.random() * 0.12,
+  });
+}
+const lines: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }> = [];
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const dx = nodes[i].x - nodes[j].x;
+    const dy = nodes[i].y - nodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 25 && Math.random() > 0.5) {
+      lines.push({ x1: nodes[i].x, y1: nodes[j].y, x2: nodes[j].x, y2: nodes[j].y, opacity: 0.06 });
+    }
+  }
+}
 ---
 
 <section class="py-20 sm:py-28 relative overflow-hidden bg-[#091a3d]">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="relative overflow-hidden rounded-2xl">
-      <!-- Gradient background -->
-      <div class="absolute inset-0 bg-gradient-to-br from-[#0891b2] via-[#06b6d4] to-[#0e7490]"></div>
+      <!-- Dark gradient background — much better contrast -->
+      <div class="absolute inset-0 bg-gradient-to-br from-[#0c3a5e] via-[#0a2f4d] to-[#061e35]"></div>
 
-      <!-- Dot grid overlay -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1px);background-size:24px 24px;"></div>
+      <!-- Node network overlay -->
+      <div class="absolute inset-0">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          {lines.map((l) => (
+            <line x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
+              stroke="#22d3ee" stroke-width="0.1" opacity={l.opacity} />
+          ))}
+          {nodes.map((n) => (
+            <circle cx={`${n.x}%`} cy={`${n.y}%`} r="0.3"
+              fill="#22d3ee" opacity={n.opacity} />
+          ))}
+        </svg>
       </div>
+
+      <!-- Subtle cyan glow at top -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-[#22d3ee]/8 rounded-full blur-[80px]"></div>
 
       <!-- Content -->
       <div class="relative px-6 py-16 sm:px-16 sm:py-20 text-center">
-        <div class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 text-sm text-white/90">
-          <span class="node-dot" style="background:white;box-shadow:none;width:6px;height:6px;"></span>
+        <div class="mb-5 inline-flex items-center gap-2 rounded-full bg-[#22d3ee]/10 border border-[#22d3ee]/15 px-4 py-2 text-sm text-[#22d3ee]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee]"></span>
           Now available for Windows & Linux
         </div>
 
         <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
           Ready to Audit Your First Website?
         </h2>
-        <p class="mx-auto mt-5 max-w-xl text-lg text-cyan-100/80 leading-relaxed">
+        <p class="mx-auto mt-5 max-w-xl text-lg text-slate-300 leading-relaxed">
           Download Crawlix and find SEO issues in minutes.
           <br />
           <span class="font-semibold text-white">No account. No credit card. No data uploaded.</span>
@@ -31,18 +64,18 @@ import { Download, Monitor, ArrowRight } from '@lucide/astro';
 
         <!-- CTA buttons -->
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-semibold text-cyan-700 shadow-lg hover:bg-cyan-50 transition-all hover:shadow-xl">
+          <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-[#22d3ee] px-8 py-4 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-all">
             <Download class="h-5 w-5" />
             Download for Free
             <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </a>
-          <a href="/features" class="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 bg-white/10 backdrop-blur-sm px-8 py-4 font-semibold text-white hover:bg-white/20 transition-colors">
+          <a href="/features" class="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-8 py-4 font-semibold text-white hover:bg-white/10 transition-colors">
             See All Features
           </a>
         </div>
 
         <!-- Platform icons -->
-        <div class="mt-10 flex items-center justify-center gap-8 text-white/70">
+        <div class="mt-10 flex items-center justify-center gap-8 text-slate-400">
           <div class="flex items-center gap-2 text-sm">
             <Monitor class="h-5 w-5" />
             <span>Windows</span>
@@ -56,10 +89,10 @@ import { Download, Monitor, ArrowRight } from '@lucide/astro';
         </div>
 
         <!-- Trust -->
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-5 text-sm text-white/50">
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-5 text-sm text-slate-400">
           {['No signup required', 'Works offline', 'GDPR compliant'].map(item => (
             <span class="flex items-center gap-1.5">
-              <span class="w-1 h-1 rounded-full bg-white/50"></span>
+              <span class="w-1 h-1 rounded-full bg-slate-500"></span>
               {item}
             </span>
           ))}
