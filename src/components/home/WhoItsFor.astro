@@ -1,18 +1,49 @@
 ---
 /**
- * Who It's For — three personas in a horizontal layout
- * with accent-colored left borders and no card wrappers.
- * Visually distinct via deeper background + border accents.
+ * Who It's For — three personas as nodes in a network.
+ * Each persona is a "node" connected by lines to a central point.
  */
+
+const personas = [
+  {
+    title: 'Freelancers',
+    description: 'Deliver professional SEO audits without monthly subscriptions eating into your margins.',
+    highlights: [
+      'One-time purchase, use forever',
+      'White-label reports with your branding',
+      'No per-client or per-project fees',
+    ],
+    color: '#22d3ee',
+  },
+  {
+    title: 'Agencies',
+    description: 'Scale SEO audits across your team with 5 device seats, custom branding, and client-ready reports.',
+    highlights: [
+      '5 device seats for your team',
+      'Custom logo, colors, and fonts in reports',
+      'Scheduled crawls for recurring clients',
+    ],
+    color: '#a78bfa',
+  },
+  {
+    title: 'In-House Teams',
+    description: 'Keep all audit data on your own machines. No third-party data processing. GDPR compliance by default.',
+    highlights: [
+      'Data never leaves your infrastructure',
+      'No vendor lock-in or data portability issues',
+      'Export everything — CSV, PDF, Excel',
+    ],
+    color: '#fbbf24',
+  },
+];
 ---
 
 <section class="py-24 sm:py-32 relative overflow-hidden" style="background:#050e22;">
-  <!-- Dot grid -->
   <div class="absolute inset-0 dot-grid opacity-20"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <!-- Section Header -->
-    <div class="text-center mb-16">
+    <div class="text-center mb-20">
       <span class="inline-flex items-center gap-2 text-sm font-semibold text-[#22d3ee] uppercase tracking-widest mb-4">
         <span class="node-dot" style="width:6px;height:6px;"></span>
         Built For You
@@ -25,72 +56,72 @@
       </p>
     </div>
 
-    <!-- Three personas — border-left accent, no card wrapper -->
-    <div class="grid gap-10 lg:grid-cols-3">
-      <!-- Freelancers -->
-      <div class="border-l-2 border-[#22d3ee] pl-6">
-        <h3 class="text-xl font-bold text-white mb-2">Freelancers</h3>
-        <p class="text-slate-400 text-sm leading-relaxed mb-5">
-          Deliver professional SEO audits without monthly subscriptions eating into your margins.
-        </p>
-        <ul class="space-y-2.5">
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mt-1.5 flex-shrink-0"></span>
-            One-time purchase, use forever
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mt-1.5 flex-shrink-0"></span>
-            White-label reports with your branding
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee] mt-1.5 flex-shrink-0"></span>
-            No per-client or per-project fees
-          </li>
-        </ul>
+    <!-- Network topology layout -->
+    <div class="relative">
+      <!-- SVG network lines connecting nodes (desktop only) -->
+      <svg class="absolute inset-0 w-full h-full hidden lg:block pointer-events-none" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Lines from center hub to each persona node -->
+        <!-- Left node -->
+        <line x1="50%" y1="0" x2="16.67%" y2="50%" stroke="#22d3ee" stroke-width="1" opacity="0.12" />
+        <!-- Center node -->
+        <line x1="50%" y1="0" x2="50%" y2="50%" stroke="#a78bfa" stroke-width="1" opacity="0.12" />
+        <!-- Right node -->
+        <line x1="50%" y1="0" x2="83.33%" y2="50%" stroke="#fbbf24" stroke-width="1" opacity="0.12" />
+        <!-- Horizontal line connecting all three -->
+        <line x1="16.67%" y1="50%" x2="83.33%" y2="50%" stroke="white" stroke-width="1" opacity="0.04" />
+      </svg>
+
+      <!-- Central hub node (above cards, desktop only) -->
+      <div class="hidden lg:flex justify-center mb-12">
+        <div class="relative">
+          <div class="w-14 h-14 rounded-full border-2 border-[#22d3ee]/30 bg-[#050e22] flex items-center justify-center">
+            <div class="node-dot-lg"></div>
+          </div>
+          <!-- Radiating ring -->
+          <div class="absolute inset-0 rounded-full border border-[#22d3ee]/10 scale-[2] pointer-events-none"></div>
+          <div class="absolute inset-0 rounded-full border border-[#22d3ee]/5 scale-[3.5] pointer-events-none"></div>
+        </div>
       </div>
 
-      <!-- Agencies -->
-      <div class="border-l-2 border-violet-500 pl-6">
-        <h3 class="text-xl font-bold text-white mb-2">Agencies</h3>
-        <p class="text-slate-400 text-sm leading-relaxed mb-5">
-          Scale SEO audits across your team with 5 device seats, custom branding, and client-ready reports.
-        </p>
-        <ul class="space-y-2.5">
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1.5 flex-shrink-0"></span>
-            5 device seats for your team
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1.5 flex-shrink-0"></span>
-            Custom logo, colors, and fonts in reports
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1.5 flex-shrink-0"></span>
-            Scheduled crawls for recurring clients
-          </li>
-        </ul>
-      </div>
+      <!-- Persona nodes -->
+      <div class="grid gap-8 lg:grid-cols-3">
+        {personas.map(({ title, description, highlights, color }) => (
+          <div class="relative group">
+            {/* Node dot at top */}
+            <div class="flex justify-center lg:justify-start mb-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={`border: 2px solid ${color}30; background: #050e22;`}>
+                  <span class="rounded-full"
+                    style={`width:10px;height:10px;background:${color};box-shadow:0 0 10px ${color}60;`}></span>
+                </div>
+                <h3 class="text-xl font-bold text-white">{title}</h3>
+              </div>
+            </div>
 
-      <!-- In-House Teams -->
-      <div class="border-l-2 border-amber-500 pl-6">
-        <h3 class="text-xl font-bold text-white mb-2">In-House Teams</h3>
-        <p class="text-slate-400 text-sm leading-relaxed mb-5">
-          Keep all audit data on your own machines. No third-party data processing. GDPR compliance by default.
-        </p>
-        <ul class="space-y-2.5">
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-            Data never leaves your infrastructure
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-            No vendor lock-in or data portability issues
-          </li>
-          <li class="flex items-start gap-2.5 text-sm text-slate-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-            Export everything — CSV, PDF, Excel
-          </li>
-        </ul>
+            {/* Content */}
+            <div class="pl-0 lg:pl-[52px]">
+              <p class="text-slate-400 text-sm leading-relaxed mb-5">{description}</p>
+
+              {/* Highlights with connecting dots */}
+              <ul class="space-y-3">
+                {highlights.map((item) => (
+                  <li class="flex items-start gap-3 text-sm text-slate-300">
+                    <span class="mt-1.5 flex-shrink-0">
+                      <span class="block w-2 h-2 rounded-full" style={`background:${color};opacity:0.7;`}></span>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Subtle connection line below each persona */}
+              <div class="mt-6 flex items-center gap-2 opacity-30">
+                <div class="h-px flex-1" style={`background:linear-gradient(to right, ${color}, transparent);`}></div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
