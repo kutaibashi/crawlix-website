@@ -232,7 +232,7 @@ export const workflowSteps = [
   {
     step: 2,
     title: 'Crawl & Analyze',
-    description: 'Our engine crawls every page, running 97+ SEO checks in parallel.',
+    description: 'Our engine crawls every page, running 100+ SEO checks in parallel.',
   },
   {
     step: 3,
@@ -249,10 +249,10 @@ export const workflowSteps = [
 // Key capabilities for hero section
 export const keyCapabilities = [
   {
-    title: '97+ SEO Checks',
+    title: '100+ SEO Checks',
     description: 'Comprehensive audits across 11 categories: technical, content, performance, and more.',
     icon: 'Search',
-    stat: '97+',
+    stat: '100+',
     statLabel: 'checks',
   },
   {
@@ -294,7 +294,7 @@ export const keyCapabilities = [
 
 // Export formats
 export const exportFormats = [
-  { name: 'PDF', description: 'Professional reports for clients', icon: 'FileText' },
+  { name: 'PDF', description: 'White-label reports for clients', icon: 'FileText' },
   { name: 'CSV', description: 'Spreadsheet-compatible data', icon: 'Table' },
   { name: 'JSON', description: 'Machine-readable format', icon: 'Braces' },
   { name: 'Excel', description: 'Native Excel workbooks', icon: 'FileSpreadsheet' },
