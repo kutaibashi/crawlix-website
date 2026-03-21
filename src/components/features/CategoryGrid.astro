@@ -186,9 +186,11 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
               margin 300ms ease;
   border-radius: 0.75rem;
   margin-top: 0;
+  margin-bottom: 0;
 }
 .category-detail-panel.is-open {
-  margin-top: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   background: rgba(14,38,85,0.5);
   border: 1px solid rgba(34,211,238,0.12);
 }
@@ -209,7 +211,9 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
       detail.classList.remove('is-open');
       if (activeCard) {
         activeCard.classList.remove('is-active');
-        activeCard.style.borderColor = '';
+        // Restore original border color from data attribute
+        const originalBorder = activeCard.dataset.border || '';
+        activeCard.style.borderColor = originalBorder ? originalBorder : '';
       }
       activeCard = null;
       activeId = null;
