@@ -75,7 +75,7 @@ export const pricingTiers: PricingTier[] = [
       devices: '1',
     },
     features: [
-      '97+ SEO checks',
+      '100+ SEO checks',
       'Core Web Vitals analysis',
       'JavaScript rendering',
       'AI search readiness checks',
@@ -167,7 +167,7 @@ export const featureComparison = [
   { category: 'Limits', feature: 'Concurrent connections', free: '2', pro: '5', agency: '10' },
 
   // Analysis Features (all free - the hook)
-  { category: 'Analysis', feature: '97+ SEO checks', free: true, pro: true, agency: true },
+  { category: 'Analysis', feature: '100+ SEO checks', free: true, pro: true, agency: true },
   { category: 'Analysis', feature: 'Core Web Vitals', free: true, pro: true, agency: true },
   { category: 'Analysis', feature: 'JavaScript rendering', free: true, pro: true, agency: true },
   { category: 'Analysis', feature: 'AI search readiness', free: true, pro: true, agency: true },
@@ -229,7 +229,7 @@ export const pricingFaqs = [
   },
   {
     question: 'Can I try Crawlix before buying?',
-    answer: "Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. It includes all 97+ SEO checks, Core Web Vitals, JavaScript rendering, and more. You can use it forever to evaluate if Crawlix fits your needs.",
+    answer: "Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. It includes all 100+ SEO checks, Core Web Vitals, JavaScript rendering, and more. You can use it forever to evaluate if Crawlix fits your needs.",
   },
   {
     question: 'What counts as an "HTML page"?',
