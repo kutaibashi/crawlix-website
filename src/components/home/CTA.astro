@@ -1,62 +1,68 @@
 ---
 import { Download, Monitor, ArrowRight } from '@lucide/astro';
 
-// Converging node network — nodes are denser near center, sparser at edges
-// This creates a visual "pull" toward the CTA
-const nodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number }> = [];
+// Converging network — nodes scattered across the area, each connected
+// by a line toward the center point. Lines are directional, creating
+// a visual flow like data routing to a destination.
+const centerX = 50;
+const centerY = 48;
 
-// Ring 1: outer ring — sparse, dim
-for (let i = 0; i < 20; i++) {
-  const angle = (i / 20) * Math.PI * 2 + Math.random() * 0.3;
-  const radius = 42 + Math.random() * 10;
-  nodes.push({
-    x: 50 + Math.cos(angle) * radius,
-    y: 50 + Math.sin(angle) * radius * 0.55,
-    size: 1.2 + Math.random() * 0.8,
-    opacity: 0.06 + Math.random() * 0.06,
-    delay: Math.random() * 4,
-  });
+const nodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number; dist: number }> = [];
+
+// Scatter 50 nodes across the full area
+for (let i = 0; i < 50; i++) {
+  const x = 5 + Math.random() * 90;
+  const y = 5 + Math.random() * 90;
+  const dx = x - centerX;
+  const dy = y - centerY;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  // Closer nodes are bigger and brighter
+  const maxDist = 55;
+  const proximity = 1 - Math.min(dist / maxDist, 1);
+  const size = 1 + proximity * 2.5;
+  const opacity = 0.05 + proximity * 0.2;
+
+  nodes.push({ x, y, size, opacity, delay: Math.random() * 6, dist });
 }
 
-// Ring 2: mid ring — medium density
-for (let i = 0; i < 16; i++) {
-  const angle = (i / 16) * Math.PI * 2 + Math.random() * 0.4;
-  const radius = 25 + Math.random() * 10;
-  nodes.push({
-    x: 50 + Math.cos(angle) * radius,
-    y: 50 + Math.sin(angle) * radius * 0.55,
-    size: 1.5 + Math.random() * 1,
-    opacity: 0.1 + Math.random() * 0.08,
-    delay: Math.random() * 4,
-  });
+// Connection lines: each node connects toward center via
+// an intermediate node that's closer to center (creating flow paths)
+const flowLines: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number; delay: number }> = [];
+
+for (const node of nodes) {
+  // Draw a line from this node partway toward center
+  const dx = centerX - node.x;
+  const dy = centerY - node.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist > 8) {
+    // Line goes 30-50% of the way toward center
+    const t = 0.3 + Math.random() * 0.2;
+    const endX = node.x + dx * t;
+    const endY = node.y + dy * t;
+    const proximity = 1 - Math.min(dist / 55, 1);
+    flowLines.push({
+      x1: node.x, y1: node.y,
+      x2: endX, y2: endY,
+      opacity: 0.04 + proximity * 0.08,
+      delay: node.delay,
+    });
+  }
 }
 
-// Ring 3: inner ring — dense, bright
-for (let i = 0; i < 10; i++) {
-  const angle = (i / 10) * Math.PI * 2 + Math.random() * 0.5;
-  const radius = 10 + Math.random() * 8;
-  nodes.push({
-    x: 50 + Math.cos(angle) * radius,
-    y: 50 + Math.sin(angle) * radius * 0.55,
-    size: 2 + Math.random() * 1.5,
-    opacity: 0.15 + Math.random() * 0.1,
-    delay: Math.random() * 3,
-  });
-}
-
-// Generate connections — connect nodes that are reasonably close
-const connections: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }> = [];
+// Also connect nearby nodes to each other (lateral connections)
 for (let i = 0; i < nodes.length; i++) {
   for (let j = i + 1; j < nodes.length; j++) {
     const dx = nodes[i].x - nodes[j].x;
     const dy = nodes[i].y - nodes[j].y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 18 && Math.random() > 0.4) {
-      const avgOpacity = (nodes[i].opacity + nodes[j].opacity) / 2;
-      connections.push({
+    if (dist < 12 && Math.random() > 0.6) {
+      flowLines.push({
         x1: nodes[i].x, y1: nodes[i].y,
         x2: nodes[j].x, y2: nodes[j].y,
-        opacity: avgOpacity * 0.5,
+        opacity: 0.04,
+        delay: 0,
       });
     }
   }
@@ -67,13 +73,15 @@ for (let i = 0; i < nodes.length; i++) {
   <!-- Converging node network -->
   <div class="absolute inset-0">
     <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Connection lines */}
-      {connections.map((c) => (
+      {/* Flow lines — pointing toward center */}
+      {flowLines.map((l) => (
         <line
-          x1={`${c.x1}%`} y1={`${c.y1}%`}
-          x2={`${c.x2}%`} y2={`${c.y2}%`}
+          x1={`${l.x1}%`} y1={`${l.y1}%`}
+          x2={`${l.x2}%`} y2={`${l.y2}%`}
           stroke="#22d3ee" stroke-width="0.06"
-          opacity={c.opacity}
+          opacity={l.opacity}
+          class="cta-flow"
+          style={`animation-delay:${l.delay}s;`}
         />
       ))}
       {/* Nodes */}
@@ -87,33 +95,33 @@ for (let i = 0; i < nodes.length; i++) {
           style={`animation-delay:${n.delay}s;`}
         />
       ))}
+      {/* Center node — larger, brighter */}
+      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="0.5" fill="#22d3ee" opacity="0.4" class="cta-center" />
+      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="1.2" fill="none" stroke="#22d3ee" stroke-width="0.08" opacity="0.15" />
+      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="2.5" fill="none" stroke="#22d3ee" stroke-width="0.05" opacity="0.08" />
     </svg>
   </div>
 
-  <!-- Center glow — brighter, tighter -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-[#22d3ee]/8 rounded-full blur-[80px]"></div>
+  <!-- Center glow -->
+  <div class="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[250px] bg-[#22d3ee]/6 rounded-full blur-[80px]"></div>
 
   <!-- Content -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 relative text-center">
-    <!-- Badge -->
     <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-[#22d3ee]/8 border border-[#22d3ee]/15 px-4 py-2 text-sm text-[#22d3ee]">
       <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee]"></span>
       Now available for Windows & Linux
     </div>
 
-    <!-- Headline -->
     <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
       Ready to Audit Your First Website?
     </h2>
 
-    <!-- Subtitle -->
     <p class="mx-auto mt-5 max-w-xl text-lg text-slate-300 leading-relaxed">
       Download Crawlix and find SEO issues in minutes.
       <br />
       <span class="font-semibold text-white">No account. No credit card. No data uploaded.</span>
     </p>
 
-    <!-- CTA buttons -->
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a href="/download" class="group inline-flex items-center gap-2 rounded-xl bg-[#22d3ee] px-8 py-4 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-all shadow-lg shadow-[#22d3ee]/20 hover:shadow-[#22d3ee]/30">
         <Download class="h-5 w-5" />
@@ -125,7 +133,6 @@ for (let i = 0; i < nodes.length; i++) {
       </a>
     </div>
 
-    <!-- Platforms -->
     <div class="mt-10 flex items-center justify-center gap-8 text-slate-500">
       <div class="flex items-center gap-2 text-sm">
         <Monitor class="h-4 w-4" />
@@ -139,7 +146,6 @@ for (let i = 0; i < nodes.length; i++) {
       </div>
     </div>
 
-    <!-- Trust -->
     <div class="mt-5 flex flex-wrap items-center justify-center gap-5 text-xs text-slate-500">
       {['No signup required', 'Works offline', 'GDPR compliant'].map(item => (
         <span class="flex items-center gap-1.5">
@@ -155,11 +161,25 @@ for (let i = 0; i < nodes.length; i++) {
   .cta-node {
     animation: cta-pulse 5s ease-in-out infinite;
   }
+  .cta-flow {
+    animation: cta-flow-pulse 6s ease-in-out infinite;
+  }
+  .cta-center {
+    animation: cta-center-pulse 3s ease-in-out infinite;
+  }
   @keyframes cta-pulse {
     0%, 100% { opacity: var(--tw-opacity, 0.1); }
-    50% { opacity: calc(var(--tw-opacity, 0.1) * 2); }
+    50% { opacity: calc(var(--tw-opacity, 0.1) * 2.2); }
+  }
+  @keyframes cta-flow-pulse {
+    0%, 100% { opacity: var(--tw-opacity, 0.05); }
+    50% { opacity: calc(var(--tw-opacity, 0.05) * 2.5); }
+  }
+  @keyframes cta-center-pulse {
+    0%, 100% { opacity: 0.3; r: 0.5; }
+    50% { opacity: 0.6; r: 0.7; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .cta-node { animation: none !important; }
+    .cta-node, .cta-flow, .cta-center { animation: none !important; }
   }
 </style>
