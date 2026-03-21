@@ -67,7 +67,7 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
         {totalSeoChecks}+ checks across 11 categories
       </h2>
     </div>
-    <p class="text-slate-500 text-sm mb-10 pl-5 animate-on-scroll">Click any category to see every check.</p>
+    <p class="text-slate-500 text-base mb-10 pl-5 animate-on-scroll">Click any category to see every check.</p>
 
     <!-- Top 6: Full cards -->
     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4 stagger-children" id="category-grid">
@@ -100,19 +100,19 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
             </div>
 
             {/* Name */}
-            <h3 class="text-[13px] font-bold text-white mb-2">{category.name}</h3>
+            <h3 class="text-base font-bold text-white mb-2">{category.name}</h3>
 
             {/* Sample checks */}
             <div class="category-preview">
               <div class="flex flex-col gap-1.5">
                 {sampleChecks.map(check => (
-                  <span class="flex items-center gap-2 text-[10px] text-slate-400">
-                    <Check class="h-2.5 w-2.5 flex-shrink-0" style={`color:${colors.text};`} />
+                  <span class="flex items-center gap-2 text-xs text-slate-400">
+                    <Check class="h-3 w-3 flex-shrink-0" style={`color:${colors.text};`} />
                     {check.title}
                   </span>
                 ))}
                 {remaining > 0 && (
-                  <span class="text-[10px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                  <span class="text-xs text-slate-600 flex items-center gap-1.5 mt-0.5">
                     <span class="text-[8px]">+</span> {remaining} more checks
                   </span>
                 )}
@@ -123,8 +123,8 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
             <div class="category-expanded mt-4 pt-4" style={`border-top:1px solid ${colors.border};max-height:0;overflow:hidden;opacity:0;transition:max-height 300ms var(--ease-out-expo),opacity 300ms var(--ease-out-expo);`}>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 {category.features.map(check => (
-                  <span class="flex items-start gap-2 text-[10px] text-slate-400">
-                    <Check class="h-2.5 w-2.5 flex-shrink-0 mt-0.5" style={`color:${colors.text};`} />
+                  <span class="flex items-start gap-2 text-xs text-slate-400">
+                    <Check class="h-3 w-3 flex-shrink-0 mt-0.5" style={`color:${colors.text};`} />
                     <span>
                       <span class="text-slate-300 font-medium">{check.title}</span>
                       {check.description && <span class="text-slate-600"> — {check.description}</span>}
@@ -144,8 +144,8 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
         const colors = colorMap[category.color] || colorMap.sky;
         return (
           <div class="rounded-lg p-3 text-center" style={`background:rgba(14,38,85,0.3);border:1px solid ${colors.border};`}>
-            <div class="text-xs font-semibold text-white">{category.name}</div>
-            <div class="text-[10px] text-slate-500 mt-0.5">{category.checkCount} checks</div>
+            <div class="text-sm font-semibold text-white">{category.name}</div>
+            <div class="text-xs text-slate-500 mt-0.5">{category.checkCount} checks</div>
           </div>
         );
       })}

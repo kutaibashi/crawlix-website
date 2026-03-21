@@ -73,13 +73,13 @@ const tier3 = [
       <div class="flex-1 p-8 lg:p-10">
         <div class="flex items-center gap-2 mb-3">
           <span class="w-1.5 h-1.5 rounded-full" style={`background:${tier1.tagColor};box-shadow:0 0 8px ${tier1.tagColor}80;`}></span>
-          <span class="text-xs font-bold uppercase tracking-widest" style={`color:${tier1.tagColor};`}>{tier1.tag}</span>
+          <span class="text-sm font-bold uppercase tracking-widest" style={`color:${tier1.tagColor};`}>{tier1.tag}</span>
         </div>
-        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">{tier1.title}</h3>
-        <p class="text-slate-400 text-sm leading-relaxed mb-5">{tier1.description}</p>
-        <ul class="space-y-2.5">
+        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">{tier1.title}</h3>
+        <p class="text-slate-400 text-base leading-relaxed mb-6">{tier1.description}</p>
+        <ul class="space-y-3">
           {tier1.bullets.map(bullet => (
-            <li class="flex items-start gap-2.5 text-sm text-slate-300">
+            <li class="flex items-start gap-2.5 text-base text-slate-300">
               <span class="mt-1.5 w-[5px] h-[5px] rounded-full flex-shrink-0" style={`background:${tier1.tagColor};opacity:0.7;`}></span>
               {bullet}
             </li>
@@ -115,13 +115,13 @@ const tier3 = [
           <div class="p-6">
             <div class="flex items-center gap-2 mb-2">
               <span class="w-[5px] h-[5px] rounded-full" style={`background:${feature.tagColor};box-shadow:0 0 6px ${feature.tagColor}60;`}></span>
-              <span class="text-[10px] font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
+              <span class="text-xs font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">{feature.title}</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">{feature.description}</p>
-            <ul class="space-y-1.5">
+            <h3 class="text-xl font-bold text-white mb-2">{feature.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">{feature.description}</p>
+            <ul class="space-y-2">
               {feature.bullets.map(bullet => (
-                <li class="flex items-center gap-2 text-xs text-slate-300">
+                <li class="flex items-center gap-2 text-sm text-slate-300">
                   <span class="w-1 h-1 rounded-full flex-shrink-0" style={`background:${feature.tagColor};opacity:0.7;`}></span>
                   {bullet}
                 </li>
@@ -156,13 +156,13 @@ const tier3 = [
           <div>
             <div class="flex items-center gap-2 mb-1">
               <span class="w-[5px] h-[5px] rounded-full" style={`background:${feature.tagColor};box-shadow:0 0 6px ${feature.tagColor}60;`}></span>
-              <span class="text-[10px] font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
+              <span class="text-xs font-bold uppercase tracking-widest" style={`color:${feature.tagColor};`}>{feature.tag}</span>
             </div>
-            <h3 class="text-[15px] font-bold text-white mb-1">{feature.title}</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-3">{feature.description}</p>
+            <h3 class="text-lg font-bold text-white mb-1">{feature.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-3">{feature.description}</p>
             <div class="flex flex-wrap gap-2">
               {feature.tags.map(tag => (
-                <span class="text-[9px] px-2 py-0.5 rounded-md"
+                <span class="text-xs px-2.5 py-1 rounded-md"
                       style={`color:${feature.tagColor};background:${feature.tagColor}12;border:1px solid ${feature.tagColor}25;`}>
                   {tag}
                 </span>
