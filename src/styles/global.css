@@ -355,6 +355,28 @@ body {
   background-clip: text;
 }
 
+.gradient-text-cyan {
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #67e8f9 30%,
+    #a5f3fc 50%,
+    #67e8f9 70%,
+    #22d3ee 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift-cyan 6s ease-in-out infinite;
+}
+
+@keyframes gradient-shift-cyan {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
 /* Animated gradient text */
 .gradient-text-animated {
   background: linear-gradient(
@@ -900,6 +922,12 @@ body {
     animation: none !important;
   }
 
+  /* Disable animated gradient text */
+  .gradient-text-animated,
+  .gradient-text-cyan {
+    animation: none !important;
+  }
+
   /* Pause marquee */
   .logo-marquee-inner {
     animation: none !important;
@@ -923,7 +951,8 @@ body {
   }
 
   .gradient-text,
-  .gradient-text-blue {
+  .gradient-text-blue,
+  .gradient-text-cyan {
     -webkit-text-fill-color: currentColor;
     background: none;
   }
