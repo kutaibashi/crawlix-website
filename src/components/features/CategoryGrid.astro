@@ -1,0 +1,190 @@
+---
+import {
+  Check, Search, Gauge, Code, Shield, FileText, Monitor,
+  Wrench, BookOpen, Link, Image, Globe, Bot, Accessibility,
+  Zap, BarChart3, Table, Braces
+} from '@lucide/astro';
+import { getFeatureCategories, getTotalSeoChecks } from '../../lib/keystatic';
+
+const featureCategories = await getFeatureCategories();
+const totalSeoChecks = await getTotalSeoChecks();
+
+// Icon mapping for category-specific icons
+const iconMap: Record<string, any> = {
+  Search, Gauge, Code, Shield, FileText, Monitor, Wrench, BookOpen,
+  Link, Image, Globe, Bot, Accessibility, Zap, BarChart3, Table, Braces
+};
+
+// Ensure deterministic ordering matching the spec
+const displayOrder = ['technical', 'onpage', 'content', 'links', 'images', 'structured', 'performance', 'security', 'accessibility', 'international', 'ai'];
+const sortedCategories = displayOrder
+  .map(id => featureCategories.find(c => c.id === id))
+  .filter((c): c is NonNullable<typeof c> => c != null);
+
+// Top 6 get full cards, bottom 5 get compact treatment
+const fullCategories = sortedCategories.slice(0, 6);
+const compactCategories = sortedCategories.slice(6);
+
+// Color map for borders and accents
+const colorMap: Record<string, { border: string; bg: string; text: string }> = {
+  sky: { border: 'rgba(14,165,233,0.15)', bg: 'rgba(14,165,233,0.1)', text: '#38bdf8' },
+  violet: { border: 'rgba(139,92,246,0.15)', bg: 'rgba(139,92,246,0.1)', text: '#a78bfa' },
+  emerald: { border: 'rgba(16,185,129,0.15)', bg: 'rgba(16,185,129,0.1)', text: '#34d399' },
+  amber: { border: 'rgba(245,158,11,0.15)', bg: 'rgba(245,158,11,0.1)', text: '#fbbf24' },
+  rose: { border: 'rgba(244,63,94,0.15)', bg: 'rgba(244,63,94,0.1)', text: '#fb7185' },
+  cyan: { border: 'rgba(34,211,238,0.15)', bg: 'rgba(34,211,238,0.1)', text: '#22d3ee' },
+  indigo: { border: 'rgba(99,102,241,0.15)', bg: 'rgba(99,102,241,0.1)', text: '#818cf8' },
+  orange: { border: 'rgba(249,115,22,0.15)', bg: 'rgba(249,115,22,0.1)', text: '#fb923c' },
+  pink: { border: 'rgba(236,72,153,0.15)', bg: 'rgba(236,72,153,0.1)', text: '#f472b6' },
+  teal: { border: 'rgba(20,184,166,0.15)', bg: 'rgba(20,184,166,0.1)', text: '#2dd4bf' },
+  purple: { border: 'rgba(168,85,247,0.15)', bg: 'rgba(168,85,247,0.1)', text: '#a855f7' },
+};
+---
+
+<section class="py-24 sm:py-32 relative overflow-hidden" style="background:#040c1e;" id="categories">
+  <div class="absolute inset-0 dot-grid opacity-20"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <!-- Section header -->
+    <div class="section-header-bar mb-4 max-w-lg animate-on-scroll">
+      <span class="text-sm font-semibold text-[#22d3ee] uppercase tracking-widest">Complete Inventory</span>
+      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl mt-2">
+        {totalSeoChecks}+ checks across 11 categories
+      </h2>
+    </div>
+    <p class="text-slate-500 text-sm mb-10 pl-5 animate-on-scroll">Click any category to see every check.</p>
+
+    <!-- Top 6: Full cards -->
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4 stagger-children" id="category-grid">
+      {fullCategories.map(category => {
+        const colors = colorMap[category.color] || colorMap.sky;
+        const sampleChecks = category.features.slice(0, 3);
+        const remaining = category.features.length - 3;
+
+        return (
+          <div
+            class="category-card rounded-xl p-5 cursor-pointer transition-colors duration-200"
+            style={`background:rgba(14,38,85,0.4);border:1px solid ${colors.border};`}
+            data-category={category.id}
+            data-border-color={colors.border}
+            data-border-hover={colors.border.replace('0.15', '0.35')}
+          >
+            {/* Header */}
+            <div class="flex items-center justify-between mb-3">
+              {(() => {
+                const IconComponent = iconMap[category.icon as string] || Search;
+                return (
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center" style={`background:${colors.bg};`}>
+                    <IconComponent class="h-4 w-4" style={`color:${colors.text};`} />
+                  </div>
+                );
+              })()}
+              <span class="text-xs font-bold px-2 py-0.5 rounded-md" style={`color:${colors.text};background:${colors.bg};`}>
+                {category.checkCount}
+              </span>
+            </div>
+
+            {/* Name */}
+            <h3 class="text-[13px] font-bold text-white mb-2">{category.name}</h3>
+
+            {/* Sample checks */}
+            <div class="category-preview">
+              <div class="flex flex-col gap-1.5">
+                {sampleChecks.map(check => (
+                  <span class="flex items-center gap-2 text-[10px] text-slate-400">
+                    <Check class="h-2.5 w-2.5 flex-shrink-0" style={`color:${colors.text};`} />
+                    {check.title}
+                  </span>
+                ))}
+                {remaining > 0 && (
+                  <span class="text-[10px] text-slate-600 flex items-center gap-1.5 mt-0.5">
+                    <span class="text-[8px]">+</span> {remaining} more checks
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Expanded check list (collapsed by default via max-height) */}
+            <div class="category-expanded mt-4 pt-4" style={`border-top:1px solid ${colors.border};max-height:0;overflow:hidden;opacity:0;transition:max-height 300ms var(--ease-out-expo),opacity 300ms var(--ease-out-expo);`}>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {category.features.map(check => (
+                  <span class="flex items-start gap-2 text-[10px] text-slate-400">
+                    <Check class="h-2.5 w-2.5 flex-shrink-0 mt-0.5" style={`color:${colors.text};`} />
+                    <span>
+                      <span class="text-slate-300 font-medium">{check.title}</span>
+                      {check.description && <span class="text-slate-600"> — {check.description}</span>}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Bottom 5: Compact mini-cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 stagger-children">
+      {compactCategories.map(category => {
+        const colors = colorMap[category.color] || colorMap.sky;
+        return (
+          <div class="rounded-lg p-3 text-center" style={`background:rgba(14,38,85,0.3);border:1px solid ${colors.border};`}>
+            <div class="text-xs font-semibold text-white">{category.name}</div>
+            <div class="text-[10px] text-slate-500 mt-0.5">{category.checkCount} checks</div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('category-grid');
+    if (!grid) return;
+
+    let expanded: HTMLElement | null = null;
+
+    function collapse(card: HTMLElement) {
+      const preview = card.querySelector('.category-preview') as HTMLElement;
+      const expandedEl = card.querySelector('.category-expanded') as HTMLElement;
+      if (preview) { preview.style.maxHeight = preview.scrollHeight + 'px'; preview.style.opacity = '1'; }
+      if (expandedEl) { expandedEl.style.maxHeight = '0'; expandedEl.style.opacity = '0'; }
+      card.style.gridColumn = '';
+    }
+
+    function expand(card: HTMLElement) {
+      const preview = card.querySelector('.category-preview') as HTMLElement;
+      const expandedEl = card.querySelector('.category-expanded') as HTMLElement;
+      if (preview) { preview.style.maxHeight = '0'; preview.style.opacity = '0'; }
+      if (expandedEl) { expandedEl.style.maxHeight = expandedEl.scrollHeight + 'px'; expandedEl.style.opacity = '1'; }
+      card.style.gridColumn = '1 / -1';
+    }
+
+    // Set initial max-height for previews so they can animate
+    grid.querySelectorAll('.category-preview').forEach((el) => {
+      const preview = el as HTMLElement;
+      preview.style.maxHeight = preview.scrollHeight + 'px';
+      preview.style.opacity = '1';
+      preview.style.overflow = 'hidden';
+      preview.style.transition = 'max-height 300ms var(--ease-out-expo), opacity 300ms var(--ease-out-expo)';
+    });
+
+    grid.addEventListener('click', (e) => {
+      const card = (e.target as HTMLElement).closest('.category-card') as HTMLElement | null;
+      if (!card) return;
+
+      if (expanded && expanded !== card) {
+        collapse(expanded);
+      }
+
+      if (expanded === card) {
+        collapse(card);
+        expanded = null;
+      } else {
+        expand(card);
+        expanded = card;
+      }
+    });
+  });
+</script>
