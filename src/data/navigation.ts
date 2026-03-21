@@ -33,7 +33,6 @@ const navigation: Navigation = {
       { name: 'Documentation', href: '/docs' },
       { name: 'Blog', href: '/blog' },
       { name: 'Tutorials', href: '/docs/tutorials' },
-      { name: 'API Reference', href: '/docs/api' },
     ],
     company: [
       { name: 'About', href: '/about' },
