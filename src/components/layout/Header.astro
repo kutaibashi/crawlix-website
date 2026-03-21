@@ -3,14 +3,13 @@ import { Menu, X, Download } from '@lucide/astro';
 import { getNavigation } from '../../lib/keystatic';
 import defaultNavigation from '../../data/navigation';
 
-// Fetch navigation from Keystatic with fallback to default
 const keystaticNav = await getNavigation();
 const navigation = {
   main: keystaticNav?.main || defaultNavigation.main,
 };
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-800 bg-[#091a3d]/80 backdrop-blur-lg">
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/60 bg-[#091a3d]/80 backdrop-blur-lg">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2 text-xl font-bold text-white">
@@ -21,10 +20,7 @@ const navigation = {
     <!-- Desktop Navigation -->
     <div class="hidden items-center gap-8 md:flex">
       {navigation.main.map((item) => (
-        <a
-          href={item.href}
-          class="text-sm font-medium text-slate-300 transition-colors hover:text-white"
-        >
+        <a href={item.href} class="nav-link text-sm font-medium text-slate-300 transition-colors hover:text-white">
           {item.name}
         </a>
       ))}
@@ -34,7 +30,7 @@ const navigation = {
     <div class="hidden items-center gap-4 md:flex">
       <a
         href="/download"
-        class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-sky-500"
+        class="nav-cta inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-4 py-2 text-sm font-semibold text-slate-900 transition-all hover:bg-[#67e8f9]"
       >
         <Download class="h-4 w-4" />
         Download Free
@@ -68,7 +64,7 @@ const navigation = {
       ))}
       <a
         href="/download"
-        class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-4 py-3 text-sm font-semibold text-white hover:bg-sky-500"
+        class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-[#22d3ee] px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-[#67e8f9]"
       >
         <Download class="h-4 w-4" />
         Download Free
@@ -76,6 +72,70 @@ const navigation = {
     </div>
   </div>
 </header>
+
+<style>
+  /* Node-dot hover effect on nav links */
+  .nav-link {
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 8px;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(34, 211, 238, 0.4), transparent);
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-link:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* CTA glow */
+  .nav-cta {
+    box-shadow: 0 0 0 rgba(34, 211, 238, 0);
+    transition: box-shadow 0.3s ease, background-color 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.25), 0 0 40px rgba(34, 211, 238, 0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link::before,
+    .nav-link::after {
+      transition: none !important;
+    }
+  }
+</style>
 
 <script>
   const button = document.getElementById('mobile-menu-button');
@@ -100,29 +160,18 @@ const navigation = {
 
   button?.addEventListener('click', () => {
     const isExpanded = button.getAttribute('aria-expanded') === 'true';
-    if (isExpanded) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    if (isExpanded) { closeMenu(); } else { openMenu(); }
   });
 
-  // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     const target = e.target as Node;
-    if (header && !header.contains(target)) {
-      closeMenu();
-    }
+    if (header && !header.contains(target)) { closeMenu(); }
   });
 
-  // Close menu on escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeMenu();
-    }
+    if (e.key === 'Escape') { closeMenu(); }
   });
 
-  // Close menu when clicking a link
   menu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', closeMenu);
   });

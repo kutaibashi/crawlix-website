@@ -3,7 +3,6 @@ import { Mail } from '@lucide/astro';
 import { getNavigation } from '../../lib/keystatic';
 import defaultNavigation from '../../data/navigation';
 
-// Fetch navigation from Keystatic with fallback to default
 const keystaticNav = await getNavigation();
 const navigation = {
   footer: {
@@ -15,7 +14,7 @@ const navigation = {
 };
 ---
 
-<footer class="border-t border-slate-800 bg-[#091a3d]">
+<footer class="border-t border-slate-800/60 bg-[#060f24]">
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
       <!-- Brand Column -->
@@ -24,11 +23,11 @@ const navigation = {
           <img src="/images/logo-512.png" alt="Crawlix" width="32" height="32" class="w-8 h-8" />
           <span>Crawlix</span>
         </a>
-        <p class="mt-4 text-sm text-slate-400">
+        <p class="mt-4 text-sm text-slate-500">
           The privacy-first SEO crawler. Your data stays on your machine. Forever.
         </p>
-        <div class="mt-4 flex gap-4">
-          <a href="mailto:support@crawlix.app" class="text-slate-400 hover:text-white inline-flex items-center gap-2 text-sm">
+        <div class="mt-4">
+          <a href="mailto:support@crawlix.app" class="footer-link text-slate-500 hover:text-[#22d3ee] inline-flex items-center gap-2 text-sm transition-colors">
             <Mail class="h-4 w-4" />
             support@crawlix.app
           </a>
@@ -41,7 +40,7 @@ const navigation = {
         <ul class="mt-4 space-y-3">
           {navigation.footer.product.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+              <a href={item.href} class="footer-link text-sm text-slate-500 hover:text-white transition-colors">
                 {item.name}
               </a>
             </li>
@@ -55,7 +54,7 @@ const navigation = {
         <ul class="mt-4 space-y-3">
           {navigation.footer.resources.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+              <a href={item.href} class="footer-link text-sm text-slate-500 hover:text-white transition-colors">
                 {item.name}
               </a>
             </li>
@@ -69,7 +68,7 @@ const navigation = {
         <ul class="mt-4 space-y-3">
           {navigation.footer.company.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+              <a href={item.href} class="footer-link text-sm text-slate-500 hover:text-white transition-colors">
                 {item.name}
               </a>
             </li>
@@ -83,7 +82,7 @@ const navigation = {
         <ul class="mt-4 space-y-3">
           {navigation.footer.legal.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-slate-400 hover:text-white">
+              <a href={item.href} class="footer-link text-sm text-slate-500 hover:text-white transition-colors">
                 {item.name}
               </a>
             </li>
@@ -92,19 +91,47 @@ const navigation = {
       </div>
     </div>
 
-    <!-- Trust Badges -->
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-4 border-t border-slate-800 pt-8">
-      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">GDPR Compliant</span>
-      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">CCPA Compliant</span>
-      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">WCAG 2.1 AA</span>
-      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">ISO 29147</span>
+    <!-- Trust Badges — only verifiable claims -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-4 border-t border-slate-800/40 pt-8">
+      <span class="rounded-full bg-slate-800/50 px-3 py-1 text-xs font-medium text-slate-500">GDPR Compliant</span>
+      <span class="rounded-full bg-slate-800/50 px-3 py-1 text-xs font-medium text-slate-500">CCPA Compliant</span>
     </div>
 
     <!-- Copyright -->
-    <div class="mt-8 border-t border-slate-800 pt-8 text-center">
-      <p class="text-sm text-slate-400">
+    <div class="mt-8 border-t border-slate-800/40 pt-8 text-center">
+      <p class="text-sm text-slate-600">
         &copy; {new Date().getFullYear()} Crawlix. Made for SEO professionals.
       </p>
     </div>
   </div>
 </footer>
+
+<style>
+  /* Node-dot hover on footer links */
+  .footer-link {
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer-link::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #22d3ee;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-link:hover::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-link::before { transition: none !important; }
+  }
+</style>
