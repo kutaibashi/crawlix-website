@@ -42,7 +42,24 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
 ---
 
 <section class="py-24 sm:py-32 relative overflow-hidden" style="background:#040c1e;" id="categories">
+  <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#091a3d] to-transparent z-0"></div>
   <div class="absolute inset-0 dot-grid opacity-20"></div>
+  <!-- Decorative nodes -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="85" cy="8" r="0.3" fill="#22d3ee" opacity="0.15" />
+      <circle cx="90" cy="12" r="0.2" fill="#22d3ee" opacity="0.1" />
+      <circle cx="88" cy="5" r="0.25" fill="#22d3ee" opacity="0.12" />
+      <line x1="85" y1="8" x2="90" y2="12" stroke="#22d3ee" stroke-width="0.05" opacity="0.08" />
+      <line x1="85" y1="8" x2="88" y2="5" stroke="#22d3ee" stroke-width="0.05" opacity="0.06" />
+      <circle cx="12" cy="92" r="0.3" fill="#22d3ee" opacity="0.12" />
+      <circle cx="8" cy="88" r="0.2" fill="#22d3ee" opacity="0.08" />
+      <circle cx="15" cy="95" r="0.25" fill="#22d3ee" opacity="0.1" />
+      <line x1="12" y1="92" x2="8" y2="88" stroke="#22d3ee" stroke-width="0.05" opacity="0.06" />
+      <line x1="12" y1="92" x2="15" y2="95" stroke="#22d3ee" stroke-width="0.05" opacity="0.05" />
+    </svg>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#091a3d] to-transparent z-0"></div>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <!-- Section header -->
@@ -63,7 +80,7 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
 
         return (
           <div
-            class="category-card rounded-xl p-5 cursor-pointer transition-colors duration-200"
+            class="category-card rounded-xl p-5 cursor-pointer transition-all duration-300"
             style={`background:rgba(14,38,85,0.4);border:1px solid ${colors.border};`}
             data-category={category.id}
             data-border-color={colors.border}
@@ -137,6 +154,18 @@ const colorMap: Record<string, { border: string; bg: string; text: string }> = {
     </div>
   </div>
 </section>
+
+<style>
+.category-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(34,211,238,0.06), 0 8px 24px rgba(0,0,0,0.2);
+}
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

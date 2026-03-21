@@ -40,7 +40,7 @@ const tier3 = [
   {
     tag: 'Arabic & RTL',
     tagColor: '#fbbf24',
-    icon: '\u0639',
+    icon: 'ع',
     title: 'Built for Arabic from day one',
     description: 'Full Arabic UI + RTL-aware content analysis. Readability scoring, content quality checks, and reports — all direction-aware.',
     tags: ['Arabic UI', 'RTL Analysis', 'RTL Reports'],
@@ -58,6 +58,9 @@ const tier3 = [
 <section class="py-24 sm:py-32 relative overflow-hidden" style="background:#091a3d;">
   <div class="absolute inset-0 dot-grid opacity-30"></div>
 
+  <!-- Bottom fade into category grid -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#040c1e] to-transparent z-10"></div>
+
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <!-- Section header -->
     <div class="section-header-bar mb-16 max-w-lg animate-on-scroll">
@@ -68,8 +71,8 @@ const tier3 = [
     </div>
 
     <!-- Tier 1: Full-width hero feature -->
-    <div class="flex flex-col lg:flex-row gap-6 lg:gap-0 mb-6 rounded-2xl overflow-hidden animate-on-scroll"
-         style="background:rgba(14,38,85,0.4);border:1px solid rgba(34,211,238,0.12);backdrop-filter:blur(16px);">
+    <div class="tier1-card flex flex-col lg:flex-row gap-6 lg:gap-0 mb-6 rounded-2xl overflow-hidden animate-on-scroll"
+         style="background:rgba(14,38,85,0.4);border:1px solid rgba(34,211,238,0.25);backdrop-filter:blur(16px);">
       <div class="flex-1 p-8 lg:p-10">
         <div class="flex items-center gap-2 mb-3">
           <span class="w-1.5 h-1.5 rounded-full" style={`background:${tier1.tagColor};box-shadow:0 0 8px ${tier1.tagColor}80;`}></span>
@@ -94,19 +97,19 @@ const tier3 = [
       </div>
     </div>
 
-    <!-- Network connector -->
-    <div class="flex justify-center py-2">
+    <!-- Network connector: tier 1 → tier 2 -->
+    <div class="flex justify-center py-3">
       <div class="flex flex-col items-center">
-        <div class="network-line-solid h-10"></div>
-        <span class="node-dot-ring"></span>
-        <div class="network-line-solid h-10"></div>
+        <div class="h-12" style="width:1px;background:linear-gradient(to bottom, rgba(34,211,238,0.3), rgba(34,211,238,0.1));"></div>
+        <div class="connector-node"></div>
+        <div class="h-12" style="width:1px;background:linear-gradient(to bottom, rgba(34,211,238,0.1), rgba(34,211,238,0.3));"></div>
       </div>
     </div>
 
     <!-- Tier 2: Two medium cards -->
     <div class="grid gap-4 lg:grid-cols-2 mb-4 stagger-children">
       {tier2.map(feature => (
-        <div class="rounded-2xl overflow-hidden" style="background:rgba(14,38,85,0.4);border:1px solid rgba(30,41,59,0.8);backdrop-filter:blur(16px);">
+        <div class="spotlight-card rounded-2xl overflow-hidden" style="background:rgba(14,38,85,0.4);border:1px solid rgba(30,41,59,0.8);backdrop-filter:blur(16px);">
           <div class="bg-[#1e293b]/20 p-4 flex items-center justify-center min-h-[160px]">
             <div class="relative overflow-hidden rounded-lg border border-slate-800/60 max-w-md w-full">
               <img src={feature.image} alt={feature.imageAlt} width="600" height="375" class="w-full h-auto" loading="lazy" />
@@ -132,12 +135,12 @@ const tier3 = [
       ))}
     </div>
 
-    <!-- Smaller network connector -->
+    <!-- Network connector: tier 2 → tier 3 -->
     <div class="flex justify-center py-2">
       <div class="flex flex-col items-center">
-        <div class="network-line-solid h-6"></div>
-        <span class="node-dot-ring" style="width:8px;height:8px;border-width:1.5px;"></span>
-        <div class="network-line-solid h-6"></div>
+        <div class="h-8" style="width:1px;background:linear-gradient(to bottom, rgba(34,211,238,0.25), rgba(34,211,238,0.08));"></div>
+        <div class="connector-node-sm"></div>
+        <div class="h-8" style="width:1px;background:linear-gradient(to bottom, rgba(34,211,238,0.08), rgba(34,211,238,0.25));"></div>
       </div>
     </div>
 
@@ -174,3 +177,56 @@ const tier3 = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Tier 1 glow */
+  .tier1-card {
+    position: relative;
+  }
+  .tier1-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(167,139,250,0.15) 0%, rgba(34,211,238,0.08) 50%, rgba(167,139,250,0.15) 100%);
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.6;
+  }
+
+  /* Tier 2 hover glow */
+  .spotlight-card {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .spotlight-card:hover {
+    box-shadow: 0 0 30px rgba(34,211,238,0.08), 0 8px 32px rgba(0,0,0,0.3);
+    border-color: rgba(34,211,238,0.2) !important;
+  }
+
+  /* Network connector nodes */
+  .connector-node {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(34,211,238,0.4);
+    background: transparent;
+    box-shadow: 0 0 12px rgba(34,211,238,0.2);
+    animation: connector-pulse 3s ease-in-out infinite;
+  }
+  .connector-node-sm {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(34,211,238,0.3);
+    background: transparent;
+    box-shadow: 0 0 8px rgba(34,211,238,0.15);
+    animation: connector-pulse 3s ease-in-out infinite 1.5s;
+  }
+  @keyframes connector-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); }
+    50% { box-shadow: 0 0 16px rgba(34,211,238,0.35); border-color: rgba(34,211,238,0.5); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .connector-node, .connector-node-sm { animation: none !important; }
+  }
+</style>

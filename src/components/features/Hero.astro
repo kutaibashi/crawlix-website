@@ -4,11 +4,106 @@ import Button from '../ui/Button.astro';
 import { getTotalSeoChecks } from '../../lib/keystatic';
 
 const totalSeoChecks = await getTotalSeoChecks();
+
+// Node-graph network background — 10 cols x 7 rows with positional jitter
+const COLS = 10;
+const ROWS = 7;
+const W = 100; // viewBox width (%)
+const H = 100; // viewBox height (%)
+const CONNECT_DIST = 14;
+
+// Seeded pseudo-random for deterministic SSR output
+function seededRand(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+const rand = seededRand(42);
+
+interface GraphNode { x: number; y: number; opacity: number; delay: number; }
+const nodes: GraphNode[] = [];
+
+for (let row = 0; row < ROWS; row++) {
+  for (let col = 0; col < COLS; col++) {
+    const baseX = (col / (COLS - 1)) * W;
+    const baseY = (row / (ROWS - 1)) * H;
+    // jitter up to ±5% of viewBox
+    const jx = (rand() - 0.5) * 10;
+    const jy = (rand() - 0.5) * 10;
+    const x = Math.max(0, Math.min(W, baseX + jx));
+    const y = Math.max(0, Math.min(H, baseY + jy));
+    const opacity = 0.1 + rand() * 0.3; // 0.1 – 0.4
+    const delay = rand() * 4;            // animation delay
+    nodes.push({ x, y, opacity, delay });
+  }
+}
+
+interface GraphEdge { x1: number; y1: number; x2: number; y2: number; opacity: number; delay: number; }
+const edges: GraphEdge[] = [];
+
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const dx = nodes[i].x - nodes[j].x;
+    const dy = nodes[i].y - nodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < CONNECT_DIST) {
+      // semi-random: skip ~30% of eligible connections for a sparser look
+      if (rand() > 0.3) {
+        const opacity = 0.02 + rand() * 0.08; // 0.02 – 0.10
+        const delay = rand() * 5;
+        edges.push({ x1: nodes[i].x, y1: nodes[i].y, x2: nodes[j].x, y2: nodes[j].y, opacity, delay });
+      }
+    }
+  }
+}
 ---
 
 <section class="relative pt-32 pb-20 overflow-hidden" style="background:radial-gradient(ellipse 60% 50% at 50% 40%, #0c2340, #040c1e);">
-  <!-- Dot grid background -->
-  <div class="absolute inset-0 dot-grid opacity-30"></div>
+
+  <!-- Node-graph network background -->
+  <svg
+    class="absolute inset-0 w-full h-full pointer-events-none"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <!-- Edges -->
+    {edges.map((e) => (
+      <line
+        class="feat-edge"
+        x1={e.x1}
+        y1={e.y1}
+        x2={e.x2}
+        y2={e.y2}
+        stroke="#22d3ee"
+        stroke-width="0.15"
+        style={`--base-opacity:${e.opacity}; opacity:${e.opacity}; animation-delay:${e.delay.toFixed(2)}s;`}
+      />
+    ))}
+    <!-- Nodes -->
+    {nodes.map((n) => (
+      <circle
+        class="feat-node"
+        cx={n.x}
+        cy={n.y}
+        r="0.55"
+        fill="#22d3ee"
+        style={`--base-opacity:${n.opacity}; opacity:${n.opacity}; animation-delay:${n.delay.toFixed(2)}s;`}
+      />
+    ))}
+    <!-- Radial gradient overlay — keeps text area readable -->
+    <defs>
+      <radialGradient id="feat-center-fade" cx="50%" cy="50%" r="55%">
+        <stop offset="0%"   stop-color="#040c1e" stop-opacity="0.72" />
+        <stop offset="60%"  stop-color="#040c1e" stop-opacity="0.25" />
+        <stop offset="100%" stop-color="#040c1e" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <rect x="0" y="0" width="100" height="100" fill="url(#feat-center-fade)" />
+  </svg>
 
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center max-w-2xl mx-auto animate-on-scroll">
@@ -23,7 +118,7 @@ const totalSeoChecks = await getTotalSeoChecks();
       <!-- Headline -->
       <h1 class="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-[1.1]">
         <span class="text-white">Every Check Your Site Needs.</span><br />
-        <span class="gradient-text-cyan">Nothing You Don't.</span>
+        <span class="gradient-text-cyan font-extrabold text-4xl sm:text-5xl lg:text-[4.25rem]">Nothing You Don't.</span>
       </h1>
 
       <!-- Subtitle -->
@@ -54,6 +149,9 @@ const totalSeoChecks = await getTotalSeoChecks();
       </div>
     </div>
   </div>
+
+  <!-- Bottom gradient fade into next section (#091a3d) -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#091a3d] to-transparent z-10"></div>
 </section>
 
 <style>
@@ -63,5 +161,23 @@ const totalSeoChecks = await getTotalSeoChecks();
   }
   .hero-cta-glow:hover {
     box-shadow: 0 0 36px rgba(34, 211, 238, 0.35), 0 0 72px rgba(34, 211, 238, 0.12);
+  }
+
+  .feat-node {
+    animation: feat-node-pulse 4s ease-in-out infinite;
+  }
+  .feat-edge {
+    animation: feat-edge-breathe 5s ease-in-out infinite;
+  }
+  @keyframes feat-node-pulse {
+    0%, 100% { opacity: var(--base-opacity); }
+    50% { opacity: calc(var(--base-opacity) * 1.8); }
+  }
+  @keyframes feat-edge-breathe {
+    0%, 100% { opacity: var(--base-opacity); }
+    50% { opacity: calc(var(--base-opacity) * 2.2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feat-node, .feat-edge { animation: none !important; }
   }
 </style>
