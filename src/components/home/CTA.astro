@@ -1,111 +1,81 @@
 ---
 import { Download, Monitor, ArrowRight } from '@lucide/astro';
 
-// Converging network — nodes scattered across the area, each connected
-// by a line toward the center point. Lines are directional, creating
-// a visual flow like data routing to a destination.
-const centerX = 50;
-const centerY = 48;
-
-const nodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number; dist: number }> = [];
-
-// Scatter 50 nodes across the full area
-for (let i = 0; i < 50; i++) {
-  const x = 5 + Math.random() * 90;
-  const y = 5 + Math.random() * 90;
-  const dx = x - centerX;
-  const dy = y - centerY;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-
-  // Closer nodes are bigger and brighter
-  const maxDist = 55;
-  const proximity = 1 - Math.min(dist / maxDist, 1);
-  const size = 1 + proximity * 2.5;
-  const opacity = 0.05 + proximity * 0.2;
-
-  nodes.push({ x, y, size, opacity, delay: Math.random() * 6, dist });
+// Left side nodes — clustered on left edge
+const leftNodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number }> = [];
+for (let i = 0; i < 18; i++) {
+  leftNodes.push({
+    x: 2 + Math.random() * 18,
+    y: 8 + Math.random() * 84,
+    size: 1 + Math.random() * 2,
+    opacity: 0.08 + Math.random() * 0.15,
+    delay: Math.random() * 5,
+  });
 }
 
-// Connection lines: each node connects toward center via
-// an intermediate node that's closer to center (creating flow paths)
-const flowLines: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number; delay: number }> = [];
-
-for (const node of nodes) {
-  // Draw a line from this node partway toward center
-  const dx = centerX - node.x;
-  const dy = centerY - node.y;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-
-  if (dist > 8) {
-    // Line goes 30-50% of the way toward center
-    const t = 0.3 + Math.random() * 0.2;
-    const endX = node.x + dx * t;
-    const endY = node.y + dy * t;
-    const proximity = 1 - Math.min(dist / 55, 1);
-    flowLines.push({
-      x1: node.x, y1: node.y,
-      x2: endX, y2: endY,
-      opacity: 0.04 + proximity * 0.08,
-      delay: node.delay,
-    });
-  }
+// Right side nodes — clustered on right edge
+const rightNodes: Array<{ x: number; y: number; size: number; opacity: number; delay: number }> = [];
+for (let i = 0; i < 18; i++) {
+  rightNodes.push({
+    x: 80 + Math.random() * 18,
+    y: 8 + Math.random() * 84,
+    size: 1 + Math.random() * 2,
+    opacity: 0.08 + Math.random() * 0.15,
+    delay: Math.random() * 5,
+  });
 }
 
-// Also connect nearby nodes to each other (lateral connections)
-for (let i = 0; i < nodes.length; i++) {
-  for (let j = i + 1; j < nodes.length; j++) {
-    const dx = nodes[i].x - nodes[j].x;
-    const dy = nodes[i].y - nodes[j].y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 12 && Math.random() > 0.6) {
-      flowLines.push({
-        x1: nodes[i].x, y1: nodes[i].y,
-        x2: nodes[j].x, y2: nodes[j].y,
-        opacity: 0.04,
-        delay: 0,
-      });
+// Generate connections within each side
+function getConnections(nodes: typeof leftNodes) {
+  const lines: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }> = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 20 && Math.random() > 0.35) {
+        lines.push({
+          x1: nodes[i].x, y1: nodes[i].y,
+          x2: nodes[j].x, y2: nodes[j].y,
+          opacity: 0.04 + Math.random() * 0.06,
+        });
+      }
     }
   }
+  return lines;
 }
+
+const leftLines = getConnections(leftNodes);
+const rightLines = getConnections(rightNodes);
 ---
 
 <section class="py-24 sm:py-32 relative overflow-hidden" style="background:#040c1e;">
-  <!-- Converging node network -->
-  <div class="absolute inset-0">
+  <!-- Left side node network -->
+  <div class="absolute inset-0 pointer-events-none">
     <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Flow lines — pointing toward center */}
-      {flowLines.map((l) => (
-        <line
-          x1={`${l.x1}%`} y1={`${l.y1}%`}
-          x2={`${l.x2}%`} y2={`${l.y2}%`}
-          stroke="#22d3ee" stroke-width="0.06"
-          opacity={l.opacity}
-          class="cta-flow"
-          style={`animation-delay:${l.delay}s;`}
-        />
+      {leftLines.map((l) => (
+        <line x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
+          stroke="#22d3ee" stroke-width="0.08" opacity={l.opacity} />
       ))}
-      {/* Nodes */}
-      {nodes.map((n) => (
-        <circle
-          cx={`${n.x}%`} cy={`${n.y}%`}
-          r={n.size * 0.12}
-          fill="#22d3ee"
-          opacity={n.opacity}
-          class="cta-node"
-          style={`animation-delay:${n.delay}s;`}
-        />
+      {leftNodes.map((n) => (
+        <circle cx={`${n.x}%`} cy={`${n.y}%`} r={n.size * 0.13} fill="#22d3ee"
+          opacity={n.opacity} class="cta-node" style={`animation-delay:${n.delay}s;`} />
       ))}
-      {/* Center node — larger, brighter */}
-      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="0.5" fill="#22d3ee" opacity="0.4" class="cta-center" />
-      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="1.2" fill="none" stroke="#22d3ee" stroke-width="0.08" opacity="0.15" />
-      <circle cx={`${centerX}%`} cy={`${centerY}%`} r="2.5" fill="none" stroke="#22d3ee" stroke-width="0.05" opacity="0.08" />
+      {rightLines.map((l) => (
+        <line x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
+          stroke="#22d3ee" stroke-width="0.08" opacity={l.opacity} />
+      ))}
+      {rightNodes.map((n) => (
+        <circle cx={`${n.x}%`} cy={`${n.y}%`} r={n.size * 0.13} fill="#22d3ee"
+          opacity={n.opacity} class="cta-node" style={`animation-delay:${n.delay}s;`} />
+      ))}
     </svg>
   </div>
 
-  <!-- Center glow -->
-  <div class="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[250px] bg-[#22d3ee]/6 rounded-full blur-[80px]"></div>
+  <!-- Fade edges toward center so nodes don't touch content -->
+  <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to right, transparent 0%, #040c1e 20%, #040c1e 80%, transparent 100%);"></div>
 
-  <!-- Content -->
+  <!-- Content — clean center -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 relative text-center">
     <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-[#22d3ee]/8 border border-[#22d3ee]/15 px-4 py-2 text-sm text-[#22d3ee]">
       <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee]"></span>
@@ -161,25 +131,11 @@ for (let i = 0; i < nodes.length; i++) {
   .cta-node {
     animation: cta-pulse 5s ease-in-out infinite;
   }
-  .cta-flow {
-    animation: cta-flow-pulse 6s ease-in-out infinite;
-  }
-  .cta-center {
-    animation: cta-center-pulse 3s ease-in-out infinite;
-  }
   @keyframes cta-pulse {
     0%, 100% { opacity: var(--tw-opacity, 0.1); }
-    50% { opacity: calc(var(--tw-opacity, 0.1) * 2.2); }
-  }
-  @keyframes cta-flow-pulse {
-    0%, 100% { opacity: var(--tw-opacity, 0.05); }
-    50% { opacity: calc(var(--tw-opacity, 0.05) * 2.5); }
-  }
-  @keyframes cta-center-pulse {
-    0%, 100% { opacity: 0.3; r: 0.5; }
-    50% { opacity: 0.6; r: 0.7; }
+    50% { opacity: calc(var(--tw-opacity, 0.1) * 2); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .cta-node, .cta-flow, .cta-center { animation: none !important; }
+    .cta-node { animation: none !important; }
   }
 </style>
