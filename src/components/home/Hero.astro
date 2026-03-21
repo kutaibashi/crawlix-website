@@ -63,6 +63,9 @@ for (let i = 0; i < nodes.length; i++) {
     </svg>
   </div>
 
+  <!-- Left side dark zone for text readability -->
+  <div class="absolute inset-0 z-[1]" style="background: linear-gradient(to right, rgba(4,12,30,0.92) 0%, rgba(4,12,30,0.75) 35%, rgba(4,12,30,0.15) 55%, transparent 70%);"></div>
+
   <!-- Bottom fade -->
   <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#091a3d] to-transparent z-10"></div>
 
@@ -87,22 +90,22 @@ for (let i = 0; i < nodes.length; i++) {
         </h1>
 
         <!-- Subheadline -->
-        <p class="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-md hero-fade" style="animation-delay:0.15s;">
+        <p class="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed max-w-md hero-fade" style="animation-delay:0.15s;">
           Audit any website with <span class="text-white font-medium">100+ SEO checks</span>.
           Your data stays on your machine. <span class="text-[#22d3ee] font-semibold">Forever.</span>
         </p>
 
         <!-- Feature list — vertical, not pills -->
         <div class="mt-6 flex flex-col gap-2.5 hero-fade" style="animation-delay:0.3s;">
-          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-300">
             <Zap class="h-4 w-4 text-amber-400 flex-shrink-0" />
             Parallel crawling — thousands of pages in minutes
           </span>
-          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-300">
             <Shield class="h-4 w-4 text-emerald-400 flex-shrink-0" />
             100% local — zero data uploaded, ever
           </span>
-          <span class="inline-flex items-center gap-2.5 text-sm text-slate-400">
+          <span class="inline-flex items-center gap-2.5 text-sm text-slate-300">
             <Bot class="h-4 w-4 text-[#22d3ee] flex-shrink-0" />
             AI search readiness — GPTBot, Claude, llms.txt
           </span>
