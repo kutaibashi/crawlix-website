@@ -4,7 +4,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Button from '../components/ui/Button.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
-import { Check, X, Download, ArrowRight, Shield, CreditCard, RefreshCw, Sparkles } from '@lucide/astro';
+import { Check, X, Download, ArrowRight, Shield, CreditCard, Sparkles } from '@lucide/astro';
 import { getPricingTiers, getFAQs, getTotalSeoChecks } from '../lib/keystatic';
 import { featureComparison, featureCategories, lemonSqueezyConfig } from '../data/pricing';
 
@@ -383,10 +383,6 @@ for (let i = 0; i < licNodes.length; i++) {
         <div class="flex items-center gap-2">
           <CreditCard class="h-4 w-4 text-emerald-500/70" />
           <span>Secure payment via Lemon Squeezy</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <RefreshCw class="h-4 w-4 text-emerald-500/70" />
-          <span>Cancel anytime</span>
         </div>
       </div>
     </div>
