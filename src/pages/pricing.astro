@@ -99,6 +99,32 @@ const competitors = [
 ];
 
 const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
+
+// Sparse node network for Licensing section background
+const licNodes: Array<{ x: number; y: number; r: number; opacity: number }> = [];
+const licEdges: Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }> = [];
+for (let i = 0; i < 30; i++) {
+  licNodes.push({
+    x: rand() * 100,
+    y: rand() * 100,
+    r: 0.12 + rand() * 0.15,
+    opacity: 0.04 + rand() * 0.08,
+  });
+}
+for (let i = 0; i < licNodes.length; i++) {
+  for (let j = i + 1; j < licNodes.length; j++) {
+    const dx = licNodes[i].x - licNodes[j].x;
+    const dy = licNodes[i].y - licNodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 20 && rand() > 0.5) {
+      licEdges.push({
+        x1: licNodes[i].x, y1: licNodes[i].y,
+        x2: licNodes[j].x, y2: licNodes[j].y,
+        opacity: 0.02 + rand() * 0.04,
+      });
+    }
+  }
+}
 ---
 
 <BaseLayout
@@ -563,8 +589,21 @@ const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
   <!-- ============================================================
        LICENSING INFO
        ============================================================ -->
-  <section class="py-24 sm:py-28" style="background:#091a3d;">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+  <section class="py-24 sm:py-28 relative overflow-hidden" style="background:#091a3d;">
+    <!-- Node network background -->
+    <div class="absolute inset-0 pointer-events-none">
+      <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        {licEdges.map(e => (
+          <line x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+            stroke="#22d3ee" stroke-width="0.05" opacity={e.opacity} />
+        ))}
+        {licNodes.map(n => (
+          <circle cx={n.x} cy={n.y} r={n.r} fill="#22d3ee" opacity={n.opacity} />
+        ))}
+      </svg>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Section header — left-aligned with cyan bar -->
       <div class="section-header-bar mb-14 max-w-xl animate-on-scroll">
         <span class="text-sm font-semibold text-[#22d3ee] uppercase tracking-widest">Licensing</span>
@@ -649,8 +688,12 @@ const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
   <!-- ============================================================
        FAQ
        ============================================================ -->
-  <section class="py-24 sm:py-28" style="background:#040c1e;" id="faq">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+  <section class="py-24 sm:py-28 relative overflow-hidden" style="background:#040c1e;" id="faq">
+    <!-- Atmospheric radial glow -->
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(34,211,238,0.03) 0%, transparent 70%); transform: translate(30%, -30%);"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(139,92,246,0.03) 0%, transparent 70%); transform: translate(-30%, 30%);"></div>
+
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 relative z-10">
       <!-- Section header — left-aligned with cyan bar -->
       <div class="section-header-bar mb-14 max-w-xl animate-on-scroll">
         <span class="text-sm font-semibold text-[#22d3ee] uppercase tracking-widest">FAQ</span>
@@ -810,14 +853,27 @@ const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
     background: rgba(139, 92, 246, 0.1);
   }
 
-  /* Asymmetric card sizing */
+  /* Asymmetric card sizing — Pro elevated */
   .pricing-card-pro {
-    transform: scale(1.05);
+    transform: scale(1.08);
     z-index: 10;
+    box-shadow:
+      0 0 60px rgba(34, 211, 238, 0.12),
+      0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  }
+  .pricing-card-pro::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34, 211, 238, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
   }
   @media (max-width: 1023px) {
     .pricing-card-pro {
       transform: none;
+      box-shadow: 0 0 40px rgba(34, 211, 238, 0.1);
     }
   }
 
