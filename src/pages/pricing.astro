@@ -97,6 +97,8 @@ const competitors = [
   { name: 'Ahrefs Lite', price: 1548, unit: '/yr', pages: '100K/mo', perpetual: false, type: 'Cloud' },
   { name: 'SEMrush Pro', price: 1399, unit: '/yr', pages: '100K/mo', perpetual: false, type: 'Cloud' },
 ];
+
+const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
 ---
 
 <BaseLayout
@@ -376,42 +378,41 @@ const competitors = [
         </p>
       </div>
 
-      <div class="overflow-hidden rounded-2xl border border-slate-800/60 glass-card">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-slate-800/60">
-              <th class="px-5 py-4 text-left text-slate-500 font-medium text-xs uppercase tracking-wider">Tool</th>
-              <th class="px-5 py-4 text-center text-slate-500 font-medium text-xs uppercase tracking-wider">Annual Price</th>
-              <th class="px-5 py-4 text-center text-slate-500 font-medium text-xs uppercase tracking-wider">Pages</th>
-              <th class="px-5 py-4 text-center text-slate-500 font-medium text-xs uppercase tracking-wider">Buy Once?</th>
-              <th class="px-5 py-4 text-center text-slate-500 font-medium text-xs uppercase tracking-wider hidden sm:table-cell">Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Crawlix row — highlighted -->
-            <tr class="border-b border-[#22d3ee]/10 bg-[#22d3ee]/[0.03]">
-              <td class="px-5 py-4 text-white font-semibold">
-                <div class="flex items-center gap-2">
-                  Crawlix Pro
-                  <span class="text-[10px] font-semibold text-[#22d3ee] bg-[#22d3ee]/10 px-1.5 py-0.5 rounded">YOU</span>
-                </div>
-              </td>
-              <td class="px-5 py-4 text-center text-[#22d3ee] font-bold">$149</td>
-              <td class="px-5 py-4 text-center text-slate-300">50,000</td>
-              <td class="px-5 py-4 text-center"><Check class="h-4 w-4 mx-auto text-emerald-400" /></td>
-              <td class="px-5 py-4 text-center text-slate-400 hidden sm:table-cell">Desktop</td>
-            </tr>
-            {competitors.map((c, i) => (
-              <tr class={`border-b border-slate-800/30 ${i % 2 === 0 ? '' : 'bg-slate-900/20'}`}>
-                <td class="px-5 py-4 text-slate-400">{c.name}</td>
-                <td class="px-5 py-4 text-center text-slate-400">${c.price.toLocaleString()}</td>
-                <td class="px-5 py-4 text-center text-slate-500">{c.pages}</td>
-                <td class="px-5 py-4 text-center"><X class="h-4 w-4 mx-auto text-slate-700" /></td>
-                <td class="px-5 py-4 text-center text-slate-600 hidden sm:table-cell">{c.type}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div class="rounded-2xl border border-slate-800/60 glass-card p-6 sm:p-8">
+        <div class="space-y-4">
+          {/* Crawlix row — highlighted */}
+          <div class="flex items-center gap-4 p-3 rounded-xl bg-[#22d3ee]/[0.04] border border-[#22d3ee]/15">
+            <div class="w-28 sm:w-36 shrink-0">
+              <div class="text-sm font-semibold text-white">Crawlix Pro</div>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <span class="text-xs font-bold text-[#22d3ee]">$149/yr</span>
+                <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">✓ Buy once</span>
+              </div>
+            </div>
+            <div class="flex-1 h-6 bg-slate-900/40 rounded overflow-hidden">
+              <div
+                class="h-full rounded"
+                style={`width: ${(149 / maxCompetitorPrice * 100).toFixed(1)}%; background: linear-gradient(90deg, #22d3ee, #67e8f9);`}
+              ></div>
+            </div>
+          </div>
+
+          {/* Competitor rows */}
+          {competitors.map((c) => (
+            <div class="flex items-center gap-4 p-3">
+              <div class="w-28 sm:w-36 shrink-0">
+                <div class="text-sm text-slate-400">{c.name}</div>
+                <div class="text-xs text-slate-600 mt-0.5">${c.price.toLocaleString()}/yr · {c.type}</div>
+              </div>
+              <div class="flex-1 h-5 bg-slate-900/40 rounded overflow-hidden">
+                <div
+                  class="h-full rounded bg-white/[0.08]"
+                  style={`width: ${(c.price / maxCompetitorPrice * 100).toFixed(1)}%;`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <p class="mt-4 text-xs text-slate-600 text-center">
