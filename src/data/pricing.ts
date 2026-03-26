@@ -229,7 +229,7 @@ export const pricingFaqs = [
   },
   {
     question: 'Can I try Crawlix before buying?',
-    answer: "Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. It includes all 100+ SEO checks, Core Web Vitals, JavaScript rendering, and more. You can use it forever to evaluate if Crawlix fits your needs.",
+    answer: "Yes! The Free tier lets you crawl up to 100 pages per project with no time limit. It includes all SEO checks, Core Web Vitals, JavaScript rendering, and more. You can use it forever to evaluate if Crawlix fits your needs.",
   },
   {
     question: 'What counts as an "HTML page"?',
@@ -245,7 +245,7 @@ export const pricingFaqs = [
   },
   {
     question: 'Do you offer refunds?',
-    answer: "Yes, we offer a 14-day money-back guarantee for first-time purchases. Contact support@crawlix.app within 14 days for a full refund. Your license will be revoked and the same device cannot be used for future purchases. EU customers: by activating your license, you waive your 14-day withdrawal right for digital content.",
+    answer: "Yes, we offer a 14-day money-back guarantee for first-time purchases. Contact support@crawlix.app within 14 days for a full refund. Your license will be permanently revoked upon refund, and the same device cannot be used for future purchases. EU customers: by activating your license, you acknowledge waiving your statutory withdrawal right for digital content. See our full refund policy for details.",
   },
   {
     question: 'How do device activations work?',
