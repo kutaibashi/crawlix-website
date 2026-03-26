@@ -219,8 +219,8 @@ const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
               tier.highlighted
                 ? 'pricing-card-pro border border-[#22d3ee]/40 bg-[#22d3ee]/[0.04] shadow-xl shadow-[#22d3ee]/10'
                 : tier.id === 'starter'
-                  ? 'pricing-card-free glass-card'
-                  : 'pricing-card-agency glass-card'
+                  ? 'pricing-card-free border border-emerald-500/20 bg-emerald-500/[0.03] glass-card'
+                  : 'pricing-card-agency border border-[#a78bfa]/20 bg-[#a78bfa]/[0.03] glass-card'
             }`}
           >
             {/* Badge */}
@@ -234,7 +234,11 @@ const maxCompetitorPrice = Math.max(...competitors.map(c => c.price));
             )}
 
             <div>
-              <h3 class="text-xl font-semibold text-white">{tier.name}</h3>
+              <h3 class={`text-xl font-semibold ${
+                tier.id === 'starter' ? 'text-[#34d399]' :
+                tier.highlighted ? 'text-[#22d3ee]' :
+                'text-[#a78bfa]'
+              }`}>{tier.name}</h3>
               <p class="mt-1 text-sm text-slate-500">{tier.description}</p>
 
               {/* Price */}
