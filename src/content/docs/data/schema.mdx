@@ -1,0 +1,86 @@
+---
+title: "Database Schema"
+description: "Overview of the 20+ SQLite tables used to store crawl data."
+order: 2
+---
+
+## Database Overview
+
+Crawlix stores data in a SQLite database with 20+ tables. Each crawl session is a self-contained record; all pages, issues, and metrics reference the session they belong to.
+
+## Key Tables
+
+### `crawl_sessions`
+
+The root table. Every crawl creates one record with:
+
+- Session ID, start URL, crawl start/end time
+- Configuration used (max pages, depth, workers, etc.)
+- Summary stats (pages crawled, issues found, etc.)
+
+### `pages`
+
+One row per crawled page. Contains 100+ columns including:
+
+- URL, final URL (after redirects), HTTP status code
+- Content type, HTML size, word count
+- Title, meta description, H1, canonical URL
+- Crawl depth, inbound link count, outbound link count
+- Response time, TTFB
+- `noindex`, `nofollow`, `noarchive` flags
+- Viewport meta tag presence
+- Open Graph tags
+
+### `issues`
+
+One row per issue per page. Columns:
+
+- Session ID, page ID, issue check name
+- Severity (error / warning / notice), category
+- Details (issue-specific context, e.g., the duplicate title text)
+
+### `links`
+
+All discovered links. Columns:
+
+- Source page ID, destination URL, anchor text
+- Link type (internal/external), rel attributes (nofollow, ugc, sponsored)
+- Status code of the destination
+
+### `resources`
+
+CSS, JavaScript, images, fonts, and other resources. Columns:
+
+- URL, resource type, HTTP status, transfer size, content size
+
+### `cwv_metrics`
+
+Core Web Vitals per page:
+
+- LCP, CLS, FCP, TTFB, TBT, TTI, Speed Index
+
+### `structured_data`
+
+JSON-LD blocks found on each page:
+
+- Schema type, raw JSON content, validation results
+
+### `hreflang`
+
+Hreflang tag data per page:
+
+- Language code, href, self-referencing flag, return tag present flag
+
+### `redirects`
+
+Redirect chains:
+
+- Source URL, each hop URL, final URL, total hops
+
+### `screenshots`
+
+Screenshot binary data (when screenshot capture is enabled).
+
+## Direct Database Access
+
+You can connect to the SQLite database directly with any SQLite tool (e.g., DB Browser for SQLite, DBeaver, or the `sqlite3` command line) for custom queries and analysis beyond what the Crawlix UI provides.

@@ -1,0 +1,298 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { ChevronRight, ArrowLeft, ArrowRight, Download } from '@lucide/astro';
+
+interface Props {
+  title: string;
+  description: string;
+  badge?: 'new' | 'updated' | 'pro' | 'agency';
+  sectionId: string;
+  sectionTitle: string;
+  articleSlug: string;
+  prevArticle?: { title: string; slug: string } | null;
+  nextArticle?: { title: string; slug: string } | null;
+}
+
+const {
+  title,
+  description,
+  badge,
+  sectionId,
+  sectionTitle,
+  articleSlug,
+  prevArticle,
+  nextArticle,
+} = Astro.props;
+
+const badgeLabel: Record<string, string> = {
+  new: 'New',
+  updated: 'Updated',
+  pro: 'Pro',
+  agency: 'Agency',
+};
+
+const badgeClass: Record<string, string> = {
+  new: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+  updated: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
+  pro: 'text-[#22d3ee] bg-cyan-500/10 border-cyan-500/30',
+  agency: 'text-[#a78bfa] bg-violet-500/10 border-violet-500/30',
+};
+---
+
+<BaseLayout
+  title={`${title} - Crawlix Docs`}
+  description={description}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Docs', url: '/docs' },
+    { name: sectionTitle, url: `/docs/${sectionId}` },
+    { name: title, url: `/docs/${articleSlug}` },
+  ]}
+>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Header slot="header" />
+
+  <div style="background: #040c1e;">
+
+    <!-- Hero -->
+    <section
+      class="relative pt-32 pb-12 overflow-hidden"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 40%, #0c2340, #040c1e);"
+    >
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-slate-600 mb-8 flex-wrap">
+          <a href="/" class="hover:text-slate-400 transition-colors">Home</a>
+          <ChevronRight class="h-3 w-3 shrink-0" />
+          <a href="/docs" class="hover:text-slate-400 transition-colors">Docs</a>
+          <ChevronRight class="h-3 w-3 shrink-0" />
+          <a href={`/docs/${sectionId}`} class="hover:text-slate-400 transition-colors">{sectionTitle}</a>
+          <ChevronRight class="h-3 w-3 shrink-0" />
+          <span class="text-slate-400">{title}</span>
+        </nav>
+
+        <!-- Badge -->
+        {badge && (
+          <span class={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium mb-4 ${badgeClass[badge]}`}>
+            {badgeLabel[badge]}
+          </span>
+        )}
+
+        <!-- Title -->
+        <h1 class="text-2xl font-bold text-white sm:text-3xl lg:text-4xl leading-snug max-w-3xl">
+          {title}
+        </h1>
+
+        <!-- Description -->
+        <p class="mt-4 text-lg text-slate-400 max-w-2xl">
+          {description}
+        </p>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section id="main-content" class="py-14 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <div class="prose-docs">
+            <slot />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prev/Next Navigation -->
+    {(prevArticle || nextArticle) && (
+      <section class="py-10 border-t border-slate-800/30">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl flex flex-col sm:flex-row justify-between gap-4">
+            {prevArticle ? (
+              <a href={`/docs/${prevArticle.slug}`} class="group flex-1">
+                <div class="rounded-xl border border-slate-800 bg-slate-900/30 p-5 hover:border-slate-700 transition-colors">
+                  <span class="flex items-center gap-1 text-sm text-slate-500 group-hover:text-[#22d3ee] transition-colors">
+                    <ArrowLeft class="h-4 w-4" />
+                    Previous
+                  </span>
+                  <p class="mt-2 font-medium text-white text-sm line-clamp-2">{prevArticle.title}</p>
+                </div>
+              </a>
+            ) : <div class="flex-1"></div>}
+
+            {nextArticle ? (
+              <a href={`/docs/${nextArticle.slug}`} class="group flex-1 text-right">
+                <div class="rounded-xl border border-slate-800 bg-slate-900/30 p-5 hover:border-slate-700 transition-colors">
+                  <span class="flex items-center justify-end gap-1 text-sm text-slate-500 group-hover:text-[#22d3ee] transition-colors">
+                    Next
+                    <ArrowRight class="h-4 w-4" />
+                  </span>
+                  <p class="mt-2 font-medium text-white text-sm line-clamp-2">{nextArticle.title}</p>
+                </div>
+              </a>
+            ) : <div class="flex-1"></div>}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Download CTA -->
+    <section class="py-14 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/30 p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <div class="flex-1">
+            <h2 class="text-lg font-bold text-white">Ready to start auditing?</h2>
+            <p class="mt-1 text-slate-400 text-sm">Download Crawlix and run your first crawl in minutes. Free for up to 100 pages.</p>
+          </div>
+          <a
+            href="/download"
+            class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors shrink-0"
+          >
+            <Download class="h-4 w-4" />
+            Download Free
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style is:global>
+  .prose-docs h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-docs h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-docs p {
+    color: rgb(203 213 225);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .prose-docs ul {
+    margin-bottom: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .prose-docs ul li {
+    color: rgb(203 213 225);
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+  }
+
+  .prose-docs ul li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: rgb(100 116 139);
+  }
+
+  .prose-docs ol {
+    margin-bottom: 1rem;
+    list-style: none;
+    padding: 0;
+    counter-reset: item;
+  }
+
+  .prose-docs ol li {
+    color: rgb(203 213 225);
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+    counter-increment: item;
+  }
+
+  .prose-docs ol li::before {
+    content: counter(item) ".";
+    position: absolute;
+    left: 0;
+    color: rgb(100 116 139);
+    font-size: 0.875rem;
+  }
+
+  .prose-docs strong {
+    color: white;
+    font-weight: 600;
+  }
+
+  .prose-docs code {
+    color: rgb(34 211 238);
+    font-size: 0.875rem;
+    background: rgba(15 23 42 / 0.5);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+  }
+
+  .prose-docs pre {
+    background: rgba(15 23 42 / 0.5);
+    border: 1px solid rgba(30 41 59 / 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .prose-docs pre code {
+    color: rgb(203 213 225);
+    background: transparent;
+    padding: 0;
+  }
+
+  .prose-docs a {
+    color: rgb(34 211 238);
+    transition: color 0.2s;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose-docs a:hover {
+    color: white;
+  }
+
+  .prose-docs table {
+    width: 100%;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-docs th {
+    text-align: left;
+    padding: 0.5rem 1.5rem 0.5rem 0;
+    color: rgb(148 163 184);
+    font-weight: 500;
+    border-bottom: 1px solid rgba(30 41 59 / 0.3);
+  }
+
+  .prose-docs td {
+    padding: 0.5rem 1.5rem 0.5rem 0;
+    color: rgb(203 213 225);
+    border-bottom: 1px solid rgba(30 41 59 / 0.2);
+  }
+
+  .prose-docs blockquote {
+    border-left: 3px solid rgba(34 211 238 / 0.4);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    color: rgb(148 163 184);
+    font-style: italic;
+  }
+</style>

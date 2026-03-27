@@ -1,0 +1,55 @@
+---
+title: "API Export"
+description: "Access crawl data programmatically via a local HTTP API."
+badge: "agency"
+order: 5
+---
+
+## Overview
+
+Agency tier users can access their crawl data via a local HTTP API. This enables custom integrations, automated reporting pipelines, and custom dashboards built on top of Crawlix data.
+
+**Requires Agency tier.**
+
+## Enabling the API
+
+1. Go to **Settings > API**.
+2. Toggle **Enable Local API** on.
+3. Set the port (default: **7332**).
+4. Click **Save**.
+
+The API starts immediately and is accessible at `http://localhost:7332`.
+
+## Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/sessions` | List all crawl sessions |
+| GET | `/sessions/:id` | Get session metadata |
+| GET | `/sessions/:id/pages` | Get all pages for a session |
+| GET | `/sessions/:id/issues` | Get all issues for a session |
+| GET | `/sessions/:id/links` | Get all links for a session |
+
+## Pagination
+
+Page-level endpoints support pagination:
+
+- `?page=1&limit=100` — returns 100 results starting from page 1
+- Default limit: 1000 per request
+
+## Security
+
+The API is local-only by default — it only accepts connections from `localhost`. It is not exposed to the network.
+
+Do not change the binding to accept external connections unless you understand the security implications and have taken appropriate measures.
+
+## Documentation
+
+Full API documentation (including request/response schemas) is available in the app at **Settings > API > Documentation**.
+
+## Use Cases
+
+- **Custom dashboards** — pull issue counts and CWV data into your own reporting tool
+- **Automated reporting** — script a weekly report from crawl session data
+- **CI/CD integration** — crawl staging after deployments and fail the build if critical issues exceed a threshold
+- **Data warehousing** — push crawl data into your analytics platform

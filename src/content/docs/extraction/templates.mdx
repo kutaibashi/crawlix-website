@@ -1,0 +1,66 @@
+---
+title: "Templates & Presets"
+description: "Reusable extraction templates for ecommerce, blogs, and contact pages."
+order: 5
+---
+
+## What Are Templates?
+
+Templates are pre-built sets of extraction rules for common website types. Applying a template instantly creates multiple extraction rules tailored to that site type.
+
+## Built-In Presets
+
+### E-commerce
+
+Creates rules to extract:
+
+- Product name
+- SKU / product ID
+- Price
+- Currency
+- Stock / availability status
+- Product category
+- Brand
+
+### Blog / Editorial
+
+Creates rules to extract:
+
+- Publish date
+- Author name
+- Article category / tags
+- Read time (if shown on page)
+
+### Contact Pages
+
+Creates rules to extract:
+
+- Phone number
+- Email address
+- Physical address
+
+## Applying a Preset
+
+1. Go to **Settings > Custom Extraction > Templates**.
+2. Browse available presets.
+3. Click **Apply** on the preset you want.
+4. Crawlix creates the corresponding extraction rules using best-guess CSS selectors based on common patterns.
+5. Review each rule — you may need to adjust the selectors to match your specific site's HTML structure.
+
+## Customizing After Applying
+
+After applying a preset, all rules are fully editable. You might need to:
+
+- Update a CSS selector to match your site's specific class names
+- Add transforms (e.g., `trim`, `number`) to clean up extracted values
+- Add validation rules (e.g., require price on all product pages)
+
+## Saving Your Own Templates
+
+After configuring rules for a site type, you can save your configuration as a custom template for reuse on future projects.
+
+1. Select the rules you want to save.
+2. Click **Save as Template**.
+3. Give the template a name and description.
+
+Your saved templates appear alongside the built-in presets.

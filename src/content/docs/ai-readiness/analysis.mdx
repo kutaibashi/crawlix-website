@@ -1,0 +1,49 @@
+---
+title: "AI Crawler Analysis"
+description: "Check robots.txt blocking for all 12 tracked AI crawlers."
+order: 1
+---
+
+## Overview
+
+Crawlix checks your site's `robots.txt` against 12 known AI crawlers and shows exactly which ones are allowed or blocked. This helps you make informed decisions about AI crawler access to your content.
+
+## The 12 AI Crawlers Tracked
+
+| Bot Name | Company |
+|----------|---------|
+| GPTBot | OpenAI |
+| Google-Extended | Google (Gemini) |
+| anthropic-ai | Anthropic |
+| ClaudeBot | Anthropic |
+| CCBot | Common Crawl |
+| Bytespider | ByteDance (TikTok) |
+| Amazonbot | Amazon |
+| FacebookBot | Meta |
+| Applebot-Extended | Apple |
+| PerplexityBot | Perplexity AI |
+| YouBot | You.com |
+| cohere-ai | Cohere |
+
+## What Is Checked
+
+For each crawler, Crawlix checks:
+
+- **User-agent specific `Disallow` rules** — is this bot explicitly blocked?
+- **Wildcard `User-agent: *` rules** — does a wildcard rule block it?
+- **`Crawl-delay` directive** — is a crawl delay specified for this bot?
+- **`Allow` rules** — are specific paths explicitly allowed despite broader blocks?
+
+## Viewing the Results
+
+Navigate to the **AI Search Readiness** section in the Crawlix dashboard. You'll see:
+
+- A table showing each bot and its current access status (allowed / blocked / partial)
+- Which specific `robots.txt` rules apply to each bot
+- A copy of the relevant `robots.txt` sections
+
+## Notes
+
+- `robots.txt` is advisory — well-behaved crawlers respect it, but it's not technically enforced
+- This analysis is based on the `robots.txt` file found at the root of the crawled domain
+- For multi-domain sites, each domain's `robots.txt` is checked separately

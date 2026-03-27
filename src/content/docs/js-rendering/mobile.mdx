@@ -1,0 +1,37 @@
+---
+title: "Mobile Simulation"
+description: "Viewport settings, device scale factor, and mobile rendering."
+order: 5
+---
+
+## Mobile Simulation in JS Rendering
+
+When JavaScript rendering is enabled, you can simulate a mobile device by setting the browser viewport to mobile dimensions. This affects how the page renders and what content the server may serve.
+
+## Device Presets
+
+Select from common presets in **Settings > Crawl > JavaScript Rendering > Viewport**:
+
+| Device | Width | Height |
+|--------|-------|--------|
+| iPhone 14 | 390px | 844px |
+| Pixel 8 | 412px | 915px |
+| Custom | any | any |
+
+## What Gets Simulated
+
+- **Viewport width and height** — the browser window dimensions
+- **Device pixel ratio (DPR)** — scale factor (e.g., 2.0 for Retina displays). Affects which image sizes are requested via `srcset`.
+- **Touch events** — touch event APIs are enabled, which some sites check to serve mobile-specific UI.
+- **User agent** — a mobile user agent string is set automatically when a mobile preset is selected.
+
+## Why Use Mobile Simulation?
+
+- Detect content differences between mobile and desktop rendering
+- Audit sites that serve different HTML to mobile vs desktop user agents
+- Identify Mobile-First Indexing issues (Google primarily uses the mobile version for indexing)
+- Test responsive design behavior at mobile breakpoints
+
+## Standalone Mobile Crawling
+
+For a dedicated mobile crawl workflow (including mobile usability checks), see the [Mobile Crawling](/docs/mobile-crawling/enable) section.

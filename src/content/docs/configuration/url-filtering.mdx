@@ -1,0 +1,45 @@
+---
+title: "URL Filtering"
+description: "Include/exclude URL patterns, query parameter handling, and nofollow settings."
+order: 5
+---
+
+## Include Patterns
+
+When you define include patterns, Crawlix only crawls URLs that match at least one of the patterns. All other URLs are skipped (but may still be checked for broken link status if they appear as a link target).
+
+Patterns use regular expressions. Examples:
+
+- `^/products/` — only crawl URLs starting with `/products/`
+- `^/blog/[0-9]{4}/` — only crawl blog posts with a year in the path
+- `\.(html|htm)$` — only crawl URLs ending in `.html` or `.htm`
+
+## Exclude Patterns
+
+Crawlix skips any URL matching an exclude pattern. Examples:
+
+- `\?.*utm_` — skip URLs with UTM tracking parameters
+- `/tag/|/category/|/author/` — skip WordPress taxonomy pages
+- `/page/[0-9]+` — skip paginated archive pages
+- `/cdn-cgi/` — skip Cloudflare internal URLs
+- `/wp-admin/|/wp-login/` — skip WordPress admin pages
+
+## Stripping Query Parameters
+
+Enable **Strip query parameters** to normalize URLs by removing query strings before deduplication. This prevents Crawlix from treating `example.com/page?ref=twitter` and `example.com/page` as two separate pages.
+
+You can configure a list of specific parameters to strip (e.g., `utm_source`, `utm_medium`, `fbclid`, `ref`) while keeping other query parameters intact.
+
+## Follow Nofollow Links
+
+**Default: disabled**
+
+When a link has `rel="nofollow"`, Crawlix skips it by default. Enable **Follow nofollow** if you want Crawlix to follow these links anyway (useful for complete site discovery regardless of link attributes).
+
+## URL Normalization
+
+Crawlix normalizes URLs consistently:
+
+- Fragment identifiers (`#section`) are stripped — they refer to sections of the same page, not separate pages
+- Trailing slashes are normalized based on site behavior
+- Case differences in paths are handled consistently

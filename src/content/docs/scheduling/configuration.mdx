@@ -1,0 +1,41 @@
+---
+title: "Schedule Configuration"
+description: "Configure crawl settings per schedule independently of manual crawl settings."
+badge: "pro"
+order: 2
+---
+
+## Independent Settings Per Schedule
+
+Each schedule has its own crawl configuration that is separate from your manual crawl settings. This lets you use different settings for scheduled vs manual crawls.
+
+**Requires Pro or Agency tier.**
+
+## Configuring a Schedule's Crawl Settings
+
+When creating or editing a schedule, click **Advanced Crawl Settings** to configure:
+
+- **Max pages** — how many pages to crawl per scheduled run
+- **JavaScript rendering** — enable or disable for this schedule
+- **Concurrent workers** — how many parallel workers to use
+- **Crawl delay** — minimum delay between requests
+- **URL include/exclude filters** — restrict or skip specific URL patterns
+
+## Best Practices for Scheduled Crawls
+
+**Lower worker count:** For scheduled background crawls, consider using 3–4 workers instead of the maximum 5–10. This reduces the impact on the server during normal business hours.
+
+**Consistent settings over time:** Using the same settings for each scheduled run ensures that your historical comparisons are apples-to-apples. If you change settings mid-series, note it so you can account for it when comparing.
+
+**Use saved configurations:** Create a saved configuration for "scheduled monitoring" and apply it to all scheduled crawls for consistency.
+
+## Notifications
+
+Configure notifications for when a scheduled crawl completes:
+
+- **In-app notification** — Crawlix displays a notification when the crawl finishes
+- **Email notification** — send a summary email when the crawl completes (configure your email in **Settings > Notifications**)
+
+## Enable/Disable Without Deleting
+
+Each schedule can be toggled on or off without deleting it. This is useful for temporarily pausing monitoring during a site migration or major update period.

@@ -1,0 +1,58 @@
+---
+title: "PageSpeed Insights Integration"
+description: "Fetch real-user CWV field data from Google PageSpeed Insights API."
+badge: "pro"
+order: 3
+---
+
+## Overview
+
+The PageSpeed Insights integration calls Google's PSI API for each crawled page, returning performance scores and Core Web Vitals field data (real-user measurements from the Chrome User Experience Report).
+
+**Requires Pro or Agency tier.**
+
+## Getting a PSI API Key
+
+The PageSpeed Insights API is free:
+
+1. Go to [Google Cloud Console](https://console.developers.google.com/).
+2. Create or select a project.
+3. Enable the **PageSpeed Insights API**.
+4. Go to **Credentials > Create Credentials > API Key**.
+5. Copy the API key.
+
+The free tier allows 25,000 requests per day.
+
+## Setting Up in Crawlix
+
+1. Go to **Settings > Integrations > PageSpeed Insights**.
+2. Paste your API key.
+3. Click **Save**.
+
+Crawlix will call the PSI API for each page during the next crawl.
+
+## Data Returned
+
+For each page, PSI returns:
+
+- **Performance score** — 0–100 (both mobile and desktop)
+- **LCP** — field data value and rating
+- **CLS** — field data value and rating
+- **INP** — field data value and rating (real interaction data)
+- **FCP** — field data value and rating
+- **TTFB** — field data value and rating
+
+## Mobile and Desktop Scores
+
+The PSI integration fetches both mobile and desktop results. You can toggle between them in the Core Web Vitals view.
+
+## API Quota
+
+The default daily quota is 25,000 requests per API key. For sites with more pages, either:
+
+- Crawl in batches (use URL filters to focus on sections)
+- Request a quota increase in Google Cloud Console
+
+## Privacy
+
+PSI API requests go from your machine directly to Google's API using your key. No data passes through Crawlix servers.

@@ -1,0 +1,49 @@
+---
+title: "Google Analytics 4"
+description: "Connect GA4 via OAuth to enrich crawl data with traffic metrics."
+badge: "pro"
+order: 1
+---
+
+## Overview
+
+Connect your Google Analytics 4 property to add traffic data directly to Crawlix's Pages view. This combines SEO audit data with actual user metrics in one place.
+
+**Requires Pro or Agency tier.**
+
+## Connecting GA4
+
+1. Go to **Settings > Integrations > Google Analytics 4**.
+2. Click **Connect with Google**.
+3. A browser window opens for Google OAuth — sign in with your Google account.
+4. Grant Crawlix access to your Analytics data.
+5. Select the GA4 property you want to connect.
+6. Click **Save**.
+
+No API key is needed — the OAuth flow handles authentication securely.
+
+## Data Synced
+
+After connecting, Crawlix syncs the following metrics per page from your GA4 property:
+
+- **Sessions** — number of user sessions for each URL
+- **Pageviews** — total page views
+- **Engagement rate** — percentage of sessions where users engaged
+- **Bounce rate** — percentage of sessions with no meaningful engagement
+- **Traffic sources** — organic search, direct, referral, social breakdown
+
+Data is synced from the last 30 days by default. You can adjust the date range in integration settings.
+
+## Viewing GA Data in Crawlix
+
+GA4 data appears as extra columns in the **Pages** view. Sort by sessions or pageviews to find your highest-traffic pages and check their SEO health.
+
+## Orphan Pages Analysis
+
+One valuable use of GA4 integration: finding pages that receive traffic but have **no inbound internal links**. These are orphan pages — users can reach them (via bookmarks, external links, or direct search), but the site's internal link structure doesn't support them.
+
+See [Orphan Pages Analysis](/docs/integrations/orphan-pages) for details.
+
+## Data Privacy
+
+GA4 data is fetched from Google's API directly to your machine. No GA data passes through Crawlix servers. You must have at least **Viewer** role on the GA4 property.

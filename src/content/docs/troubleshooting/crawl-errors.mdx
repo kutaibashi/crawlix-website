@@ -1,0 +1,62 @@
+---
+title: "Crawl Errors"
+description: "Diagnose and fix timeout errors, connection failures, blocked requests, and memory limits."
+order: 1
+---
+
+## Timeout Errors
+
+**Symptom:** Many pages show a timeout error; crawl is slow or stalls.
+
+**Causes and fixes:**
+
+- The target server is slow — increase the request timeout in Settings (default: 30s). For very slow servers, try 60s.
+- JavaScript rendering is enabled on a slow site — increase timeout or switch to a faster wait strategy (`domcontentloaded` instead of `networkidle0`).
+- Too many concurrent workers overwhelming a slow server — reduce workers to 1–3.
+
+## Connection Refused / Blocked Requests
+
+**Symptom:** Pages return connection errors or 403 Forbidden.
+
+**Possible causes:**
+
+- The site has rate limiting or bot blocking enabled.
+- The Crawlix user agent is blocked.
+
+**Fixes:**
+
+- Try setting a custom user agent that resembles a real browser (Settings > Crawl > User Agent).
+- Increase crawl delay to 1000ms+ to reduce request frequency.
+- If you own the site: allowlist the Crawlix user agent in your hosting firewall or CDN settings.
+
+## Memory Limit Reached
+
+**Symptom:** Crawl pauses frequently or the app runs very slowly. Memory warning displayed.
+
+**Fixes:**
+
+- Reduce concurrent workers (fewer workers = less RAM usage).
+- If using JS rendering, reduce workers to 2.
+- Increase the memory limit in Settings > Performance (if your machine has more RAM available).
+- Segment large crawls using URL include/exclude filters.
+
+## Stuck or Frozen Crawl
+
+**Symptom:** The progress bar hasn't moved for a long time; the crawl appears to be doing nothing.
+
+**Fixes:**
+
+1. Check the status bar — it should show the current URL being processed.
+2. If the app appears unresponsive, click **Pause**, wait a few seconds, then **Resume**.
+3. If still stuck, stop the crawl. The data collected so far is saved. Restart with adjusted settings.
+
+## Partial Crawl
+
+**Symptom:** The crawl finished but far fewer pages were found than expected.
+
+**Possible causes:**
+
+- An exclude pattern is filtering out most URLs — review your URL filters.
+- `robots.txt` is blocking Crawlix from most of the site — check the robots.txt compliance setting.
+- The site requires login to access most content — Crawlix does not handle authenticated crawls.
+- Most pages are only reachable through forms or JavaScript interactions — enable JS rendering.

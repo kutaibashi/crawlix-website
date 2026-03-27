@@ -1,0 +1,48 @@
+---
+title: "Backup & Restore"
+description: "Export and import crawl sessions for backup and sharing."
+order: 4
+---
+
+## Exporting a Session
+
+To export a single crawl session as a portable archive:
+
+1. In the History view, right-click the session you want to export.
+2. Select **Export Session**.
+3. Choose a location and save the `.crawlix` file.
+
+Alternatively: **File > Export > Crawlix Archive (.crawlix)** while viewing a session.
+
+The `.crawlix` file contains all data for that session — pages, issues, links, resources, CWV metrics, custom extraction results, and screenshots.
+
+## Importing a Session
+
+To import a `.crawlix` archive on any machine with Crawlix installed:
+
+1. Go to **File > Import > Crawlix Archive**.
+2. Select the `.crawlix` file.
+3. The session is imported and appears in your History view as a read-only session.
+
+You can view all data from an imported session but cannot re-run checks or modify the data.
+
+## Sharing Sessions
+
+The `.crawlix` format is useful for:
+
+- **Sharing with colleagues** — send the file so another team member can view the full audit data in their Crawlix app
+- **Client handoff** — send the session to a client who has Crawlix installed
+- **Archiving** — store important crawl sessions outside the main database for long-term retention
+
+## Full Database Backup
+
+To back up all your sessions at once, copy the SQLite database file from the application data directory:
+
+- **Windows:** `%APPDATA%\Crawlix\data\crawlix.db`
+- **Linux:** `~/.config/Crawlix/data/crawlix.db`
+
+Copy this file to a backup location. To restore, replace the file and restart Crawlix.
+
+## Automated Backups
+
+For ongoing automated backups, set up a scheduled task or cron job to copy the database file to a backup location at regular intervals.

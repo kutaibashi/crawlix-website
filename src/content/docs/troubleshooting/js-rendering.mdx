@@ -1,0 +1,56 @@
+---
+title: "JavaScript Rendering Issues"
+description: "Fix blank pages, slow crawls, infinite scroll loops, and browser crashes."
+order: 2
+---
+
+## Page Shows Blank or Incomplete Content
+
+**Symptom:** Crawlix finds the page but content is empty or key elements are missing.
+
+**Fixes:**
+
+1. Switch the wait strategy to `networkidle0` — this waits for all async activity to complete.
+2. Increase the page timeout to 60s+ if the site makes slow API calls.
+3. Check the Rendering tab in the page detail for JavaScript errors that may prevent content from loading.
+4. Try capturing a screenshot to see what the page actually looks like after rendering.
+
+## Crawl Very Slow with JS Rendering
+
+**Symptom:** Pages take 10–30 seconds each; overall crawl is very slow.
+
+**Fixes:**
+
+- Reduce concurrent workers to 2–3.
+- Enable resource blocking for images, fonts, and analytics scripts (see [Resource Blocking](/docs/js-rendering/resource-blocking)).
+- Switch to `domcontentloaded` wait strategy if the site is mostly server-rendered.
+- Block third-party scripts that load external resources.
+
+## Infinite Loop / Infinite Scroll
+
+**Symptom:** A page takes extremely long to process and never finishes, or the crawl seems stuck on one page.
+
+**Fixes:**
+
+- Set a maximum scroll depth in **Settings > Crawl > JavaScript Rendering > Max Scrolls** to prevent infinite scrolling.
+- Check that the site's content doesn't trigger endless lazy loading.
+
+## Browser Instance Crashes
+
+**Symptom:** Pages show errors related to the browser process; crawl stops unexpectedly.
+
+**Fixes:**
+
+- Reduce concurrent workers to 1 or 2 — this reduces the number of browser instances running simultaneously.
+- Increase the memory limit in Settings.
+- Restart the crawl after increasing the timeout.
+
+## Cookie or Consent Banner Blocking Content
+
+**Symptom:** Crawlix sees a consent banner instead of the actual page content.
+
+**Fixes:**
+
+- Consent banners are JavaScript-based and may block the main content from rendering.
+- Consider pre-accepting cookies if you own the site (set a cookie via custom JS injection — advanced feature).
+- For sites you don't own, this is a limitation of headless browser crawling.

@@ -1,0 +1,36 @@
+---
+title: "Security Checks (10+ checks)"
+description: "HTTPS, mixed content, security headers, and form security checks."
+order: 7
+---
+
+## HTTPS
+
+- **HTTP pages** — pages served over plain HTTP when an HTTPS version is available. All pages should redirect to HTTPS.
+- **Mixed content** — an HTTPS page that loads resources (images, scripts, stylesheets, fonts) over HTTP. Mixed content degrades security and can trigger browser warnings.
+
+## Security Headers
+
+Crawlix checks for the presence of security-related HTTP response headers:
+
+- **HSTS (Strict-Transport-Security)** — instructs browsers to only connect over HTTPS. Missing HSTS means users could be downgraded to HTTP by an attacker.
+- **Content-Security-Policy** — limits which resources a page can load. Missing CSP increases XSS risk.
+- **X-Frame-Options** — prevents the page from being embedded in an iframe on other domains (clickjacking protection).
+- **X-Content-Type-Options** — prevents MIME-type sniffing. Should be set to `nosniff`.
+- **Referrer-Policy** — controls what referrer information is sent with requests. Missing or permissive policy may leak sensitive URLs.
+
+## Forms on HTTP
+
+Forms whose `action` attribute points to an HTTP URL can expose user-submitted data (including passwords) to network eavesdropping. These are flagged as errors.
+
+## External iframes
+
+Pages embedding iframes from external, unknown domains are flagged for review. Embedded iframes from unverified sources can be used for UI redress attacks.
+
+## Inline Scripts
+
+Pages with a large number of inline `<script>` blocks may have difficulty implementing a strict Content-Security-Policy. This is flagged as a notice, not an error.
+
+## Interpreting Security Check Results
+
+Security checks indicate opportunities to improve your security posture. Some findings may be acceptable for certain types of pages. Review each flagged item in context before deciding whether to fix it.

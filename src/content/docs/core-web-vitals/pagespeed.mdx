@@ -1,0 +1,48 @@
+---
+title: "PageSpeed Insights Integration"
+description: "Sync real-user field data from Google PageSpeed Insights API."
+badge: "pro"
+order: 5
+---
+
+## Overview
+
+The PageSpeed Insights (PSI) integration fetches Google's **field data** for each crawled page. Field data is collected from real Chrome users visiting your site via the Chrome User Experience Report (CrUX).
+
+**Requires Pro or Agency tier.**
+
+## Setting Up
+
+1. Get a free Google API key for the PageSpeed Insights API:
+   - Go to [Google Cloud Console](https://console.developers.google.com/)
+   - Create a project and enable the PageSpeed Insights API
+   - Create an API key under Credentials
+2. In Crawlix, go to **Settings > Integrations > PageSpeed Insights**.
+3. Paste your API key and save.
+
+## What Data Is Fetched
+
+For each crawled page, Crawlix calls the PSI API and retrieves:
+
+- **Performance score** (0–100) — both mobile and desktop
+- **LCP** — field data value and status
+- **CLS** — field data value and status
+- **INP** — field data value and status (real-user interaction data)
+- **FCP** — field data value and status
+- **TTFB** — field data value and status
+
+## Lab vs Field Data Side-by-Side
+
+In the Core Web Vitals view, you'll see both Crawlix lab data and PSI field data for each page. This lets you:
+
+- Identify pages where lab data is good but real users have poor experiences
+- Understand which optimizations actually impact real users
+- Prioritize fixes based on real-world impact
+
+## API Quota
+
+The PSI API is free and has a default quota of 25,000 requests per day per API key. For large sites (25,000+ pages), you may need to crawl in batches or request a quota increase in Google Cloud Console.
+
+## Privacy
+
+API calls go from your machine directly to Google's PSI API using your own API key. No PSI data passes through Crawlix servers.

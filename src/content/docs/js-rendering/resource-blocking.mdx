@@ -1,0 +1,48 @@
+---
+title: "Resource Blocking"
+description: "Block images, fonts, stylesheets, and analytics scripts to speed up JS crawls by 30–60%."
+order: 3
+---
+
+## Why Block Resources?
+
+During JavaScript rendering, the browser downloads all resources referenced by the page: images, fonts, CSS, scripts, analytics beacons, ad scripts, and more. Many of these aren't needed for SEO analysis.
+
+Blocking unnecessary resources can speed up JS rendering crawls by 30–60%.
+
+## Blocking by Category
+
+In **Settings > Crawl > JavaScript Rendering > Resource Blocking**, you can toggle entire categories:
+
+- **Images** — blocks all image requests (JPG, PNG, WebP, SVG, etc.). Saves the most time on image-heavy pages.
+- **Fonts** — blocks web font downloads. Font loading is a common source of render delay.
+- **Stylesheets** — blocks CSS files. Speeds up crawls but may affect how JS frameworks evaluate layout.
+- **Media** — blocks video and audio files.
+- **Analytics & tracking scripts** — blocks Google Analytics, Hotjar, Intercom, Segment, and similar third-party scripts. These add network requests and sometimes delay page load.
+
+## Custom Block List
+
+You can add specific URLs or URL patterns to block. For example:
+
+```
+cdn.segment.io
+pixel.facebook.com
+*.doubleclick.net
+```
+
+This is useful for blocking specific third-party services not covered by the category toggles.
+
+## What to Block Safely
+
+Blocking these categories is almost always safe for SEO analysis:
+
+- Images
+- Fonts
+- Analytics and tracking scripts
+- Ad scripts (Google Ads, etc.)
+
+Be cautious blocking stylesheets if the site uses CSS-in-JS or styles are critical for determining rendered text content.
+
+## What Not to Block
+
+Do not block the main JavaScript bundle of the site — this is what generates the page content you need to analyze.

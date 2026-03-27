@@ -1,0 +1,51 @@
+---
+title: "Mobile Usability Scoring"
+description: "Tap target size, font readability, viewport fit, and mobile-specific usability checks."
+order: 2
+---
+
+## Overview
+
+When Mobile Mode is enabled, Crawlix runs a set of mobile-specific usability checks on each page in addition to the standard SEO checks. Results appear in the **Mobile Usability** section of the dashboard.
+
+## Checks Performed
+
+### Tap Target Size
+
+Interactive elements (buttons, links, form inputs) should be at least **44×44 pixels** to be comfortably tappable on a mobile touchscreen. Elements smaller than this are flagged.
+
+Severity: Warning (elements just below threshold), Error (elements significantly too small)
+
+### Font Size
+
+Body text smaller than **12px** is difficult to read on mobile without zooming. Crawlix flags pages where the computed font size for body text is below the threshold.
+
+### Content Fits Viewport
+
+Pages that require horizontal scrolling are flagged. Content should fit within the viewport width without the user needing to scroll horizontally.
+
+Cause: fixed-width elements wider than the viewport.
+
+### Viewport Meta Tag
+
+Missing or incorrect viewport meta tag. All pages should include:
+```
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+Using `user-scalable=no` or `maximum-scale=1` disables user zoom, which is flagged as a usability and accessibility issue.
+
+### Mobile-Redirect Tags
+
+Checks for meta refresh redirects that send mobile users to an `m.` subdomain.
+
+### Flash / Plugin Content
+
+Pages requiring Flash, Java, or other plugins are flagged — these are not supported on modern mobile browsers.
+
+## Viewing Results
+
+Mobile Usability issues appear in:
+
+- The **Issues** view under the "Mobile Usability" category
+- The **Mobile Usability** section in the dashboard (when Mobile Mode was active during the crawl)

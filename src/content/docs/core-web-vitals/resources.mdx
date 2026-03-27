@@ -1,0 +1,49 @@
+---
+title: "Resource Breakdown"
+description: "Analyze bytes by type — HTML, CSS, JavaScript, images, fonts — to identify performance bottlenecks."
+order: 3
+---
+
+## What the Resources View Shows
+
+For each crawled page, Crawlix records every network resource loaded:
+
+- **HTML** — the main document
+- **CSS** — stylesheets
+- **JavaScript** — scripts
+- **Images** — all image formats (JPG, PNG, WebP, SVG, etc.)
+- **Fonts** — web fonts (WOFF2, WOFF, TTF, etc.)
+- **Other** — XHR/fetch responses, JSON, XML, and other resource types
+
+For each resource, Crawlix records the URL, transfer size, uncompressed size, and load time.
+
+## Metrics Available
+
+Per page in the Resources view:
+
+- **Total transfer size** — total bytes downloaded over the network (after compression)
+- **Total uncompressed size** — actual size of all resources
+- **Number of requests** — total HTTP requests made by the page
+- **Breakdown by type** — bytes and request count per category
+
+## Finding Heavy Pages
+
+Sort the Resources view by **Total size** to find the heaviest pages. These are the ones most likely to have LCP problems.
+
+Common findings:
+
+- Pages with > 1 MB of JavaScript — likely to cause TBT/TTI problems
+- Pages with > 500 KB of unoptimized images — likely to cause LCP problems
+- Pages loading many web fonts — fonts block rendering until downloaded
+
+## Per-Resource Detail
+
+Click any page in the Resources view to see a full list of every resource loaded, with its size and load time. This shows you exactly which files to optimize.
+
+## Using This for LCP Analysis
+
+A slow LCP is often caused by a large image or a render-blocking script. Use the resource breakdown to:
+
+1. Identify the largest image on the page (likely the LCP element)
+2. Check if it has been compressed (transfer size vs uncompressed size)
+3. Identify large JavaScript bundles that may delay rendering

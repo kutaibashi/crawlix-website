@@ -1,0 +1,50 @@
+---
+title: "Accessibility (WCAG)"
+description: "10+ WCAG-based accessibility checks: alt text, form labels, button names, skip links, and more."
+order: 8
+---
+
+## Why Accessibility Matters for SEO
+
+Accessibility and SEO share many best practices. Pages that are accessible to screen reader users are typically also better understood by search engine crawlers. Google has incorporated accessibility signals into its ranking considerations.
+
+## Image Alt Text
+
+- Images without any `alt` attribute — both an accessibility failure and an SEO issue
+- Images with empty alt text are valid for decorative images
+
+## Form Labels
+
+- `<input>`, `<textarea>`, and `<select>` elements without an associated `<label>` element or `aria-label` attribute. Screen readers cannot identify unlabeled form fields.
+
+## Buttons Without Accessible Names
+
+- `<button>` elements containing only an icon or no text, without `aria-label` or `title`. Screen readers will announce these as "button" with no description.
+
+## Links Without Descriptive Text
+
+- `<a>` elements with generic text ("click here", "read more") or no text at all. Screen readers present links in a list — non-descriptive text makes navigation difficult.
+
+## Skip Navigation Link
+
+- Missing "skip to main content" link at the top of the page. This allows keyboard users to bypass repeated navigation.
+
+## Color Contrast
+
+Crawlix flags pages that likely have color contrast issues based on detected CSS color values. Accurate contrast measurement requires visual rendering — this is a candidate flag for manual review, not a definitive measurement.
+
+## Tabindex
+
+- Positive `tabindex` values (e.g., `tabindex="1"`) override the natural tab order and typically cause confusion for keyboard users.
+
+## Language Attribute
+
+- Missing `lang` attribute on the `<html>` element. Screen readers use this to select the correct language voice.
+
+## iframe Titles
+
+- `<iframe>` elements without a `title` attribute. Screen readers need a title to describe the embedded content.
+
+## Auto-Playing Media
+
+- `<video>` or `<audio>` elements with the `autoplay` attribute. Auto-playing media can be disorienting for screen reader users and cognitively impaired users.

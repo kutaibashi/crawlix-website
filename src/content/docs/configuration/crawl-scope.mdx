@@ -1,0 +1,43 @@
+---
+title: "Crawl Scope"
+description: "Control which URLs Crawlix follows: subdomains, external links, and include/exclude patterns."
+order: 2
+---
+
+## Default Scope
+
+By default, Crawlix only follows links that stay on the same domain and subdomain as the start URL. If you start a crawl at `https://example.com`, Crawlix will crawl pages on `example.com` but will not follow links into `blog.example.com` or any other domain.
+
+## Subdomains
+
+You can optionally enable **include subdomains** to also crawl subdomains of the start URL. For example, if you crawl `example.com` with this enabled, links to `blog.example.com` or `shop.example.com` will also be followed.
+
+## External Links
+
+External links (links pointing to different domains) are checked for broken link status but are not followed into a full crawl by default. This means:
+
+- Crawlix will request the URL to check if it returns 200, 404, etc.
+- Crawlix will not follow links on the external page to discover more external pages
+
+This keeps the crawl focused on your site while still detecting broken outbound links.
+
+## Include Patterns
+
+A list of regular expression patterns. If set, only URLs matching at least one include pattern will be crawled. Everything else is skipped.
+
+Example: `^/blog/` — only crawl pages whose path starts with `/blog/`.
+
+## Exclude Patterns
+
+A list of regular expression patterns. URLs matching any exclude pattern are skipped.
+
+Common exclusions:
+
+- `/cdn-cgi/` — Cloudflare internal paths
+- `/wp-admin/` — WordPress admin
+- `\?.*utm_` — URLs with UTM tracking parameters
+- `/tag/`, `/author/`, `/page/` — avoid crawling archive/taxonomy pages
+
+## robots.txt Compliance
+
+When enabled (default), Crawlix reads the target site's `robots.txt` and respects `Disallow` directives for the Crawlix user agent and the wildcard `User-agent: *`. You can disable this if you own the site and want a complete audit.

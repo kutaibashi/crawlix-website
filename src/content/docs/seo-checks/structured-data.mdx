@@ -1,0 +1,56 @@
+---
+title: "Structured Data (10+ checks)"
+description: "JSON-LD validation, schema types, breadcrumbs, FAQ, and Product schema checks."
+order: 6
+---
+
+## JSON-LD Presence and Syntax
+
+- **Missing structured data** — pages with no JSON-LD blocks at all. Structured data helps search engines understand your content and can enable rich results.
+- **Syntax errors** — JSON-LD blocks that are not valid JSON are flagged as errors.
+
+## Schema.org Type Coverage
+
+Crawlix detects and validates the following Schema.org types when found on pages:
+
+- `Article` / `BlogPosting` / `NewsArticle`
+- `Product`
+- `BreadcrumbList`
+- `FAQPage`
+- `HowTo`
+- `Organization`
+- `WebSite` / `WebPage`
+- `LocalBusiness`
+- `Event`
+- `Review` / `AggregateRating`
+
+## Required Properties Validation
+
+For each schema type, Crawlix validates that required properties are present:
+
+- **Article** — `headline`, `author`, `datePublished`
+- **Product** — `name`, `description`
+- **BreadcrumbList** — `itemListElement` with valid `item` and `position` entries
+- **FAQPage** — `mainEntity` with `Question` and `Answer` pairs
+- **HowTo** — `step` entries with instructions
+
+Missing required properties are flagged as warnings.
+
+## Breadcrumb Schema
+
+- Breadcrumb schema present but missing `item.name` or `item.@id`
+- Position values not sequential
+- Breadcrumb schema present but no visible breadcrumb navigation on the page
+
+## FAQ Schema
+
+- `acceptedAnswer` missing for one or more questions
+- Empty question or answer text
+
+## Duplicate Schema Blocks
+
+Multiple JSON-LD blocks on the same page defining the same type. Usually harmless but can indicate copy-paste errors or CMS issues.
+
+## Accessing Structured Data
+
+In Crawlix, the **Structured Data** view shows all schema blocks found per page. Click any page to see the full JSON-LD content and validation results.

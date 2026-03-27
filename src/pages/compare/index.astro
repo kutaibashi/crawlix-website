@@ -2,18 +2,74 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
-import { ArrowRight, Download, Check, Bug, Lightbulb, BarChart3, Link, ChevronRight } from '@lucide/astro';
-import { allComparisons, competitors } from '../../data/comparisons';
-
-// Icon mapping for competitors
-const iconMap: Record<string, any> = {
-  Bug,
-  Lightbulb,
-  BarChart3,
-  Link,
-};
+import { ArrowRight, Download, Check, ChevronRight } from '@lucide/astro';
+import { allComparisons } from '../../data/comparisons';
 
 export const prerender = true;
+
+// Node-graph background — deterministic via seeded PRNG (seed 42)
+function seededRand(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+const rand = seededRand(42);
+const COLS = 10;
+const ROWS = 6;
+const W = 100;
+const H = 100;
+const CONNECT_DIST = 15;
+
+interface GraphNode { x: number; y: number; opacity: number; delay: number; }
+const nodes: GraphNode[] = [];
+
+for (let row = 0; row < ROWS; row++) {
+  for (let col = 0; col < COLS; col++) {
+    const baseX = (col / (COLS - 1)) * W;
+    const baseY = (row / (ROWS - 1)) * H;
+    const jx = (rand() - 0.5) * 10;
+    const jy = (rand() - 0.5) * 10;
+    nodes.push({
+      x: Math.max(0, Math.min(W, baseX + jx)),
+      y: Math.max(0, Math.min(H, baseY + jy)),
+      opacity: 0.08 + rand() * 0.2,
+      delay: rand() * 4,
+    });
+  }
+}
+
+interface GraphEdge { x1: number; y1: number; x2: number; y2: number; opacity: number; delay: number; }
+const edges: GraphEdge[] = [];
+
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const dx = nodes[i].x - nodes[j].x;
+    const dy = nodes[i].y - nodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < CONNECT_DIST && rand() > 0.35) {
+      edges.push({
+        x1: nodes[i].x, y1: nodes[i].y,
+        x2: nodes[j].x, y2: nodes[j].y,
+        opacity: 0.02 + rand() * 0.06,
+        delay: rand() * 5,
+      });
+    }
+  }
+}
+
+// Split comparisons: desktop crawlers vs cloud suites
+const desktopCrawlers = allComparisons.filter(c => ['screaming-frog', 'sitebulb'].includes(c.competitor.id));
+const cloudSuites = allComparisons.filter(c => ['semrush', 'ahrefs'].includes(c.competitor.id));
+
+const savingsMap: Record<string, string> = {
+  'screaming-frog': 'Save $110/yr',
+  'sitebulb': 'Save $271/yr',
+  'semrush': 'Save $1,250/yr',
+  'ahrefs': 'Save $1,399/yr',
+};
 ---
 
 <BaseLayout
@@ -23,273 +79,269 @@ export const prerender = true;
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <Header slot="header" />
 
-  <!-- Hero Section -->
-  <section class="pt-32 pb-16 bg-gradient-to-b from-[#091a3d] to-[#0a1d42]">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto animate-on-scroll">
-        <div class="inline-flex items-center gap-2 rounded-full bg-sky-500/10 border border-sky-500/30 px-4 py-1.5 text-sm text-sky-400 mb-6">
-          <span>Compare</span>
-        </div>
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 overflow-hidden" style="background: radial-gradient(ellipse 60% 50% at 50% 40%, #0c2340, #040c1e);">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        {edges.map((e) => (
+          <line
+            x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+            stroke="#22d3ee" stroke-width="0.12"
+            style={`--base-opacity:${e.opacity};--delay:${e.delay}s;opacity:${e.opacity}`}
+            class="compare-edge"
+          />
+        ))}
+        {nodes.map((n) => (
+          <circle
+            cx={n.x} cy={n.y} r="0.4" fill="#22d3ee"
+            style={`--base-opacity:${n.opacity};--delay:${n.delay}s;opacity:${n.opacity}`}
+            class="compare-node"
+          />
+        ))}
+      </svg>
+    </div>
 
-        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-          How Does Crawlix <span class="gradient-text-blue">Compare</span>?
+    <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl animate-on-scroll">
+        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+          Crawlix vs<br />
+          <span class="gradient-text-cyan">the alternatives.</span>
         </h1>
 
-        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
-          Honest, detailed comparisons with the leading SEO crawlers. See where Crawlix excels
-          and where competitors might be a better fit for your needs.
+        <p class="mt-5 text-lg text-slate-400 max-w-lg">
+          Honest comparisons. We show where Crawlix wins, where competitors are stronger, and who each tool is best for.
         </p>
 
-        <!-- Quick summary -->
-        <div class="mt-10 grid gap-4 sm:grid-cols-3 max-w-2xl mx-auto">
-          <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-center">
-            <p class="text-2xl font-bold text-emerald-400">90%</p>
-            <p class="text-sm text-slate-400">Cheaper than cloud tools</p>
-          </div>
-          <div class="rounded-xl border border-sky-500/30 bg-sky-500/10 p-4 text-center">
-            <p class="text-2xl font-bold text-sky-400">100%</p>
-            <p class="text-sm text-slate-400">Local data privacy</p>
-          </div>
-          <div class="rounded-xl border border-violet-500/30 bg-violet-500/10 p-4 text-center">
-            <p class="text-2xl font-bold text-violet-400">134+</p>
-            <p class="text-sm text-slate-400">SEO checks included</p>
-          </div>
+        <!-- Inline stat line — not cards -->
+        <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <span class="text-[#34d399] font-medium">90% cheaper than cloud tools</span>
+          <span class="text-slate-600" aria-hidden="true">·</span>
+          <span class="text-slate-400">100% local data</span>
+          <span class="text-slate-600" aria-hidden="true">·</span>
+          <span class="text-slate-400">134+ SEO checks</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Comparison Cards -->
-  <section class="py-20" id="main-content">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-white">Choose a Comparison</h2>
-        <p class="mt-3 text-slate-400">Detailed feature and pricing breakdowns</p>
-      </div>
+  <!-- Desktop Crawlers -->
+  <section class="pt-16 pb-8" style="background: #040c1e;">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <p class="text-xs font-medium uppercase tracking-widest text-slate-600 mb-6">vs Desktop Crawlers</p>
 
-      <div class="grid gap-8 md:grid-cols-2">
-        {allComparisons.map((comparison) => {
-          const Icon = iconMap[comparison.competitor.logo] || Bug;
-          const savings = comparison.competitor.id === 'screaming-frog'
-            ? 'Save $110/year'
-            : comparison.competitor.id === 'sitebulb'
-            ? 'Save $271/year'
-            : comparison.competitor.id === 'semrush'
-            ? 'Save $1,251/year'
-            : 'Save $1,399/year';
+      <div class="grid gap-5 md:grid-cols-2">
+        {desktopCrawlers.map((comparison) => (
+          <a
+            href={`/compare/${comparison.competitor.id}`}
+            class="group compare-card rounded-2xl p-6 sm:p-7"
+          >
+            <div class="flex items-center gap-4 mb-5">
+              <img
+                src={comparison.competitor.logoImage}
+                alt={comparison.competitor.name}
+                width="40" height="40"
+                class="w-10 h-10 object-contain rounded-lg"
+              />
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-bold text-white group-hover:text-[#22d3ee] transition-colors truncate">
+                  vs {comparison.competitor.name}
+                </h3>
+                <p class="text-xs text-slate-500">{comparison.competitor.tagline}</p>
+              </div>
+              <ChevronRight class="h-4 w-4 text-slate-700 group-hover:text-[#22d3ee] group-hover:translate-x-1 transition-all shrink-0" />
+            </div>
 
-          return (
-            <a
-              href={`/compare/${comparison.competitor.id}`}
-              class="group rounded-2xl border border-slate-800 bg-[#0e2655]/30 p-8 hover:border-sky-500/50 hover:bg-[#0e2655]/50 transition-all"
-            >
-              <div class="flex items-start justify-between mb-6">
-                <div class="flex items-center gap-4">
-                  <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-800 text-slate-400">
-                    <Icon class="h-7 w-7" />
-                  </div>
-                  <div>
-                    <h3 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
-                      Crawlix vs {comparison.competitor.name}
-                    </h3>
-                    <p class="text-sm text-slate-500">{comparison.competitor.tagline}</p>
+            <div class="space-y-2.5 mb-5">
+              {comparison.summaryPoints.slice(0, 3).map((point) => (
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-500">{point.title}</span>
+                  <div class="flex items-center gap-2">
+                    <span class={point.winner === 'crawlix' ? 'text-[#34d399] font-medium' : 'text-slate-400'}>
+                      {point.crawlix}
+                    </span>
+                    <span class="text-slate-700 text-xs">vs</span>
+                    <span class={point.winner === 'competitor' ? 'text-white' : 'text-slate-500'}>
+                      {point.competitor}
+                    </span>
                   </div>
                 </div>
-                <ChevronRight class="h-5 w-5 text-slate-600 group-hover:text-sky-400 group-hover:translate-x-1 transition-all" />
-              </div>
+              ))}
+            </div>
 
-              <p class="text-slate-400 mb-6">{comparison.subheadline}</p>
-
-              <!-- Key differences -->
-              <div class="space-y-3 mb-6">
-                {comparison.summaryPoints.slice(0, 3).map((point) => (
-                  <div class="flex items-center justify-between text-sm">
-                    <span class="text-slate-500">{point.title}</span>
-                    <div class="flex items-center gap-3">
-                      <span class={point.winner === 'crawlix' ? 'text-emerald-400 font-medium' : 'text-slate-400'}>
-                        {point.crawlix}
-                      </span>
-                      <span class="text-slate-600">vs</span>
-                      <span class={point.winner === 'competitor' ? 'text-white' : 'text-slate-500'}>
-                        {point.competitor}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <!-- Bottom row -->
-              <div class="flex items-center justify-between pt-6 border-t border-slate-800">
-                <span class="inline-flex items-center gap-1 text-emerald-400 text-sm font-medium">
-                  <Check class="h-4 w-4" />
-                  {savings}
-                </span>
-                <span class="text-sm text-sky-400 group-hover:underline">
-                  View full comparison
-                </span>
-              </div>
-            </a>
-          );
-        })}
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800/60">
+              <span class="text-[#34d399] text-sm font-medium">{savingsMap[comparison.competitor.id]}</span>
+              <span class="text-xs text-[#22d3ee] group-hover:underline">Full comparison →</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Why Compare -->
-  <section class="py-20 bg-[#0a1d42]/30">
+  <!-- Cloud Suites -->
+  <section class="pt-8 pb-16" style="background: #040c1e;">
     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl font-bold text-white">Why Our Comparisons Are Different</h2>
-        <p class="mt-3 text-slate-400">We believe in honest, transparent comparisons</p>
-      </div>
+      <p class="text-xs font-medium uppercase tracking-widest text-slate-600 mb-6">vs Cloud SEO Suites</p>
 
-      <div class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-6 text-center">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400 mx-auto mb-4">
-            <Check class="h-6 w-6" />
-          </div>
-          <h3 class="font-semibold text-white mb-2">Real Data</h3>
-          <p class="text-sm text-slate-400">
-            All pricing and feature information is verified from official sources.
-          </p>
-        </div>
+      <div class="grid gap-5 md:grid-cols-2">
+        {cloudSuites.map((comparison) => (
+          <a
+            href={`/compare/${comparison.competitor.id}`}
+            class="group compare-card rounded-2xl p-6 sm:p-7"
+          >
+            <div class="flex items-center gap-4 mb-5">
+              <img
+                src={comparison.competitor.logoImage}
+                alt={comparison.competitor.name}
+                width="40" height="40"
+                class="w-10 h-10 object-contain rounded-lg"
+              />
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-bold text-white group-hover:text-[#22d3ee] transition-colors truncate">
+                  vs {comparison.competitor.name}
+                </h3>
+                <p class="text-xs text-slate-500">{comparison.competitor.tagline}</p>
+              </div>
+              <ChevronRight class="h-4 w-4 text-slate-700 group-hover:text-[#22d3ee] group-hover:translate-x-1 transition-all shrink-0" />
+            </div>
 
-        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-6 text-center">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400 mx-auto mb-4">
-            <Check class="h-6 w-6" />
-          </div>
-          <h3 class="font-semibold text-white mb-2">Honest About Weaknesses</h3>
-          <p class="text-sm text-slate-400">
-            We acknowledge where competitors excel. No tool is perfect for everyone.
-          </p>
-        </div>
+            <div class="space-y-2.5 mb-5">
+              {comparison.summaryPoints.slice(0, 3).map((point) => (
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-500">{point.title}</span>
+                  <div class="flex items-center gap-2">
+                    <span class={point.winner === 'crawlix' ? 'text-[#34d399] font-medium' : 'text-slate-400'}>
+                      {point.crawlix}
+                    </span>
+                    <span class="text-slate-700 text-xs">vs</span>
+                    <span class={point.winner === 'competitor' ? 'text-white' : 'text-slate-500'}>
+                      {point.competitor}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-        <div class="rounded-xl border border-slate-800 bg-[#0e2655]/30 p-6 text-center">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400 mx-auto mb-4">
-            <Check class="h-6 w-6" />
-          </div>
-          <h3 class="font-semibold text-white mb-2">Use Case Focused</h3>
-          <p class="text-sm text-slate-400">
-            We help you decide based on your specific needs, not just features.
-          </p>
-        </div>
+            <div class="flex items-center justify-between pt-4 border-t border-slate-800/60">
+              <span class="text-[#34d399] text-sm font-medium">{savingsMap[comparison.competitor.id]}</span>
+              <span class="text-xs text-[#22d3ee] group-hover:underline">Full comparison →</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- Quick Comparison Table -->
-  <section class="py-20">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl font-bold text-white">Quick Comparison</h2>
-        <p class="mt-3 text-slate-400">At-a-glance differences</p>
-      </div>
+  <section class="py-16 border-t border-slate-800/40" style="background: #040c1e;">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-xl font-bold text-white mb-8">At a glance</h2>
 
-      <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-[#0e2655]/30">
-        <table class="w-full">
+      <div class="overflow-x-auto rounded-xl" style="background: rgba(14,38,85,0.3); border: 1px solid rgba(148,163,184,0.08);">
+        <table class="w-full text-sm">
           <thead>
-            <tr class="border-b border-slate-800 bg-[#0a1628]">
-              <th class="py-5 px-6 text-left text-sm font-semibold text-white">Tool</th>
-              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400">Starting Price</th>
-              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400">Data Location</th>
-              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400">Free Tier</th>
-              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400">Platform</th>
+            <tr style="background: rgba(9, 26, 61, 0.5);">
+              <th class="py-3.5 px-5 text-left font-medium text-slate-400">Tool</th>
+              <th class="py-3.5 px-5 text-center font-medium text-slate-400">Price</th>
+              <th class="py-3.5 px-5 text-center font-medium text-slate-400">Data</th>
+              <th class="py-3.5 px-5 text-center font-medium text-slate-400">Free Tier</th>
+              <th class="py-3.5 px-5 text-center font-medium text-slate-400">Platform</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="border-b border-slate-800 bg-sky-500/5">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <img src="/images/logo-512.png" alt="Crawlix" width="24" height="24" class="w-6 h-6" />
-                  <span class="font-medium text-sky-400">Crawlix</span>
+          <tbody class="divide-y divide-slate-800/30">
+            <tr style="background: rgba(34,211,238,0.03);">
+              <td class="py-3 px-5">
+                <div class="flex items-center gap-2.5">
+                  <img src="/images/logo-512.png" alt="Crawlix" width="20" height="20" class="w-5 h-5" />
+                  <span class="font-medium text-[#22d3ee]">Crawlix</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-center text-emerald-400 font-medium">$0 (free tier)</td>
-              <td class="py-4 px-6 text-center text-emerald-400">100% Local</td>
-              <td class="py-4 px-6 text-center"><Check class="h-5 w-5 mx-auto text-emerald-500" /></td>
-              <td class="py-4 px-6 text-center text-slate-300">Win/Linux</td>
+              <td class="py-3 px-5 text-center text-[#34d399] font-medium">Free / $149/yr</td>
+              <td class="py-3 px-5 text-center text-[#34d399]">Local</td>
+              <td class="py-3 px-5 text-center"><Check class="h-4 w-4 mx-auto text-[#34d399]" /></td>
+              <td class="py-3 px-5 text-center text-slate-300">Win/Linux</td>
             </tr>
-            <tr class="border-b border-slate-800/50">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <Bug class="h-5 w-5 text-slate-500" />
+            <tr>
+              <td class="py-3 px-5">
+                <div class="flex items-center gap-2.5">
+                  <img src="/images/competitors/screaming-frog.png" alt="Screaming Frog" width="18" height="18" class="w-[18px] h-[18px] object-contain" />
                   <span class="text-slate-300">Screaming Frog</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-center text-slate-400">$259/year</td>
-              <td class="py-4 px-6 text-center text-slate-400">Local</td>
-              <td class="py-4 px-6 text-center text-slate-500">500 URLs only</td>
-              <td class="py-4 px-6 text-center text-slate-400">Win/Mac/Linux</td>
+              <td class="py-3 px-5 text-center text-slate-400">$259/yr</td>
+              <td class="py-3 px-5 text-center text-slate-400">Local</td>
+              <td class="py-3 px-5 text-center text-slate-500">500 URLs</td>
+              <td class="py-3 px-5 text-center text-slate-400">Win/Mac/Linux</td>
             </tr>
-            <tr class="border-b border-slate-800/50">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <Lightbulb class="h-5 w-5 text-slate-500" />
+            <tr>
+              <td class="py-3 px-5">
+                <div class="flex items-center gap-2.5">
+                  <img src="/images/competitors/sitebulb.svg" alt="Sitebulb" width="18" height="18" class="w-[18px] h-[18px] object-contain" />
                   <span class="text-slate-300">Sitebulb</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-center text-slate-400">$162/year</td>
-              <td class="py-4 px-6 text-center text-slate-400">Local/Cloud</td>
-              <td class="py-4 px-6 text-center text-slate-500">Trial only</td>
-              <td class="py-4 px-6 text-center text-slate-400">Windows only*</td>
+              <td class="py-3 px-5 text-center text-slate-400">$162/yr (Lite)</td>
+              <td class="py-3 px-5 text-center text-slate-400">Local/Cloud</td>
+              <td class="py-3 px-5 text-center text-slate-500">Trial only</td>
+              <td class="py-3 px-5 text-center text-slate-400">Windows*</td>
             </tr>
-            <tr class="border-b border-slate-800/50">
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <BarChart3 class="h-5 w-5 text-slate-500" />
+            <tr>
+              <td class="py-3 px-5">
+                <div class="flex items-center gap-2.5">
+                  <img src="/images/competitors/semrush.png" alt="Semrush" width="18" height="18" class="w-[18px] h-[18px] object-contain" />
                   <span class="text-slate-300">Semrush</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-center text-slate-400">$1,400/year</td>
-              <td class="py-4 px-6 text-center text-slate-400">Cloud</td>
-              <td class="py-4 px-6 text-center text-slate-500">7-day trial</td>
-              <td class="py-4 px-6 text-center text-slate-400">Web only</td>
+              <td class="py-3 px-5 text-center text-slate-400">$1,400/yr</td>
+              <td class="py-3 px-5 text-center text-slate-400">Cloud</td>
+              <td class="py-3 px-5 text-center text-slate-500">7-day trial</td>
+              <td class="py-3 px-5 text-center text-slate-400">Web</td>
             </tr>
             <tr>
-              <td class="py-4 px-6">
-                <div class="flex items-center gap-3">
-                  <Link class="h-5 w-5 text-slate-500" />
+              <td class="py-3 px-5">
+                <div class="flex items-center gap-2.5">
+                  <img src="/images/competitors/ahrefs.png" alt="Ahrefs" width="18" height="18" class="w-[18px] h-[18px] object-contain" />
                   <span class="text-slate-300">Ahrefs</span>
                 </div>
               </td>
-              <td class="py-4 px-6 text-center text-slate-400">$348/year</td>
-              <td class="py-4 px-6 text-center text-slate-400">Cloud</td>
-              <td class="py-4 px-6 text-center text-slate-500">Limited</td>
-              <td class="py-4 px-6 text-center text-slate-400">Web only</td>
+              <td class="py-3 px-5 text-center text-slate-400">$348/yr</td>
+              <td class="py-3 px-5 text-center text-slate-400">Cloud</td>
+              <td class="py-3 px-5 text-center text-slate-500">Limited</td>
+              <td class="py-3 px-5 text-center text-slate-400">Web</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="mt-4 text-sm text-slate-500 text-center">* Desktop version is Windows-only; Cloud version works on all platforms</p>
+
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600">
+        <span>* Sitebulb Desktop is Windows-only; Cloud version works on all platforms</span>
+        <span>All pricing verified early 2026. Comparisons are honest — we show competitor strengths too.</span>
+      </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-20">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-600/10 to-violet-600/10 p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">
-          Try Crawlix for Free
-        </h2>
-        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
-          The best way to compare is to try it yourself. Download Crawlix and run your first crawl in minutes.
-        </p>
-        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="/download"
-            class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors"
-          >
-            <Download class="h-5 w-5" />
-            Download Free
-          </a>
-          <a
-            href="/features"
-            class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
-          >
-            View all features
-            <ArrowRight class="h-4 w-4" />
-          </a>
-        </div>
+  <!-- CTA -->
+  <section class="py-16 border-t border-slate-800/40" style="background: #040c1e;">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-white">The best comparison is trying it yourself.</h2>
+      <p class="mt-3 text-slate-400">
+        Download Crawlix, run 134+ checks on your site, and see how it stacks up. Free, no account required.
+      </p>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/download"
+          class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-6 py-3 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors"
+        >
+          <Download class="h-5 w-5" />
+          Download Free
+        </a>
+        <a
+          href="/features"
+          class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+        >
+          View all features
+          <ArrowRight class="h-4 w-4" />
+        </a>
       </div>
     </div>
   </section>
@@ -298,28 +350,93 @@ export const prerender = true;
 </BaseLayout>
 
 <style>
-  .gradient-text-blue {
-    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #38bdf8 100%);
+  .gradient-text-cyan {
+    background: linear-gradient(90deg, #22d3ee 0%, #67e8f9 30%, #a5f3fc 50%, #67e8f9 70%, #22d3ee 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    background-size: 200% 100%;
+  }
+
+  .compare-card {
+    background: rgba(14, 38, 85, 0.35);
+    border: 1px solid rgba(148, 163, 184, 0.08);
+  }
+
+  .compare-card:hover {
+    background: rgba(14, 38, 85, 0.55);
+    border-color: rgba(34, 211, 238, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  @keyframes gradient-shift-cyan {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes compare-pulse {
+    0%, 100% { opacity: var(--base-opacity); }
+    50% { opacity: calc(var(--base-opacity) * 2.2); }
+  }
+
+  @keyframes compare-breathe {
+    0%, 100% { opacity: var(--base-opacity); }
+    50% { opacity: calc(var(--base-opacity) * 1.8); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gradient-text-cyan {
+      animation: gradient-shift-cyan 6s ease-in-out infinite;
+    }
+
+    .compare-node {
+      animation: compare-pulse 4s ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .compare-edge {
+      animation: compare-breathe 5s ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .compare-card {
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .compare-card:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
     document.querySelectorAll('.animate-on-scroll').forEach(el => {
       observer.observe(el);

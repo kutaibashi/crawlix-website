@@ -1,0 +1,53 @@
+---
+title: "Instant Page Analysis"
+description: "On-page SEO checks, meta tags, schema detection, and link counts from your browser."
+order: 2
+---
+
+## Using Quick Audit
+
+1. Navigate to any webpage you want to analyze.
+2. Click the **Quick Audit** icon in your browser toolbar.
+3. The extension popup appears with instant analysis results — no full crawl required.
+
+## What's Analyzed
+
+Quick Audit checks the current page's HTML and reports:
+
+### Page Metadata
+- **Title tag** — content and character count
+- **Meta description** — content and character count
+- **Canonical URL** — whether a canonical is set and where it points
+- **Meta robots** — noindex, nofollow, noarchive directives
+
+### Heading Structure
+- **H1** — content of the first H1 (flags if missing or if multiple H1s)
+- Heading hierarchy overview (H1–H6 breakdown)
+
+### Social Media
+- **Open Graph tags** — og:title, og:description, og:image presence
+- **Twitter Card tags** — twitter:card, twitter:title presence
+
+### Structured Data
+- Schema.org types found on the page (Article, Product, BreadcrumbList, FAQ, etc.)
+- JSON-LD block count
+
+### Links
+- **Internal link count** — links to the same domain
+- **External link count** — links to other domains
+- **nofollow links** — count of links with rel="nofollow"
+
+### Images
+- **Total images** — count of `<img>` elements
+- **Images without alt text** — count of images missing alt attributes
+
+## Severity Indicators
+
+Issues are highlighted using the same severity system as the Crawlix desktop app: Errors in red, Warnings in amber, Notices in blue. This makes it familiar if you already use Crawlix.
+
+## Use Cases
+
+- Quick check of a page before publishing
+- Verify that SEO fixes have been applied correctly
+- Audit competitor pages while browsing
+- Check pages on mobile (using responsive design mode in Chrome DevTools with Quick Audit active)

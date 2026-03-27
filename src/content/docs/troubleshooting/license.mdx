@@ -1,0 +1,50 @@
+---
+title: "License Issues"
+description: "Troubleshoot activation failures, device limits, and expired licenses."
+order: 4
+---
+
+## Activation Fails
+
+**Symptom:** Entering the license key returns an error or fails silently.
+
+**Checks:**
+
+- Ensure you have an internet connection. License validation requires an outbound HTTPS request to `api.lemonsqueezy.com`.
+- Check that you're entering the complete license key — they are long alphanumeric strings. Copy-paste directly from your purchase email.
+- If you're behind a corporate firewall, verify that outbound HTTPS to external domains is allowed.
+
+## "License Already Used" or Device Limit Reached
+
+**Symptom:** Activation fails with a message that the license is already in use.
+
+**What's happening:** You've reached the device limit for your tier (Free: 1, Pro: 1, Agency: 5).
+
+**Fixes:**
+
+- On your old machine (if accessible): Go to **Settings > License > Manage Devices > Deactivate** to free up the slot.
+- If you can't access the old machine: Contact **support@crawlix.app** with your license key and a brief explanation. The team can manually release the activation.
+
+## License Shows as Expired
+
+**Symptom:** An active license is showing as expired.
+
+**Checks:**
+
+- Verify your system clock is correct. Incorrect date/time on your machine can cause expiry checks to fail incorrectly.
+- For annual licenses: check the expiry date in **Settings > License**. If it genuinely expired, renew at crawlix.app/pricing.
+
+## Lost License Key
+
+**Symptom:** You've lost the email with your license key.
+
+**Recovery options:**
+
+- Check your email inbox for the original purchase confirmation from Lemon Squeezy.
+- Log in to your Lemon Squeezy account at [app.lemonsqueezy.com](https://app.lemonsqueezy.com) — your license key is available in your purchase history.
+
+## Transferring to a New Machine
+
+1. On your old machine: **Settings > License > Manage Devices > Deactivate**.
+2. Install Crawlix on the new machine.
+3. Go to **Settings > License > Enter License Key** and activate with the same key.

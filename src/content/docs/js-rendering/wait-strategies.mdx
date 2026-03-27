@@ -1,0 +1,44 @@
+---
+title: "Wait Strategies"
+description: "Load, DOMContentLoaded, networkidle0/2, and custom wait conditions."
+order: 2
+---
+
+## What Are Wait Strategies?
+
+A wait strategy tells Crawlix when a page is considered "done loading" during JavaScript rendering. Choosing the right strategy affects both accuracy and speed.
+
+## Available Strategies
+
+### `load`
+
+Waits for the `window.onload` event — after all resources (images, stylesheets, scripts) have finished loading. Good for pages where content is embedded in the initial HTML but you want to ensure all resources are loaded.
+
+### `domcontentloaded`
+
+Waits for the DOM to be fully parsed but before external resources have loaded. This is faster than `load` and works well for pages where the content is in the initial HTML and doesn't depend on external resources to render.
+
+### `networkidle0`
+
+Waits until there are no active network connections for 500ms. This is the most thorough option — it waits for all async API calls and data fetches to complete. Use this for SPAs.
+
+### `networkidle2`
+
+Similar to `networkidle0` but allows up to 2 active network connections. Slightly faster than `networkidle0` and still captures most async content.
+
+### Custom Selector Wait
+
+Wait for a specific CSS selector to appear in the DOM. Useful when you know a specific element (e.g., `.product-price`, `[data-loaded]`) indicates the page content is ready.
+
+## Recommendations
+
+| Site Type | Recommended Strategy |
+|-----------|----------------------|
+| React / Vue / Angular SPA | `networkidle0` |
+| Traditional server-rendered | `domcontentloaded` |
+| Pages with background API calls | `networkidle0` |
+| Pages with persistent background requests | `networkidle2` or custom selector |
+
+## Timeout
+
+Each wait strategy has a timeout. If the condition isn't met within the configured timeout (default 30s), Crawlix captures the page as-is. The page is not marked as an error — it's analyzed with whatever content was loaded.

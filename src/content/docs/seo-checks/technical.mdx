@@ -1,0 +1,59 @@
+---
+title: "Technical SEO (20+ checks)"
+description: "Status codes, canonicals, redirects, HTTPS, URL structure, viewport, and crawl depth checks."
+order: 1
+---
+
+## Overview
+
+Crawlix runs 20+ technical SEO checks on every crawled page. These checks identify issues at the infrastructure and server level that affect how search engines crawl and index your site.
+
+## HTTP Status Codes
+
+- **4xx errors** — pages returning 404 Not Found, 410 Gone, or other client errors. These waste crawl budget and break user experience.
+- **5xx errors** — server errors (500, 503, etc.) that prevent pages from being indexed.
+- **Soft 404s** — pages that return HTTP 200 but display a "not found" or error message. Detected via content signals.
+
+## Canonical Tags
+
+- Missing canonical tag — Crawlix flags pages without a `<link rel="canonical">` tag.
+- Non-self-referencing canonical — a page whose canonical points to a different URL.
+- Conflicting canonicals — page A canonicalizes to page B, but page B canonicalizes elsewhere.
+- Canonical in body instead of head — canonical tags must be in the `<head>`.
+
+## Redirects
+
+- **Redirect chains** — pages that redirect through 3 or more hops. Search engines may not follow chains beyond a certain length.
+- **Redirect loops** — A → B → A (infinite redirects).
+- **302 used instead of 301** — temporary redirects where permanent redirects are expected. 302s may not pass full link equity.
+- **Links pointing to redirected URLs** — internal links that point to a URL that redirects. Fix the source link to point directly to the final destination.
+
+## HTTPS
+
+- HTTP pages when HTTPS is available
+- **Mixed content** — HTTPS pages loading resources (images, scripts, stylesheets) over HTTP
+- **Insecure forms** — forms whose `action` attribute points to an HTTP URL, potentially exposing submitted data
+
+## URL Structure
+
+- Overly long URLs (over 115 characters)
+- Underscores in URLs (hyphens are preferred by search engines)
+- Uppercase characters in URL paths
+- Dynamic parameters that could create duplicate URLs
+
+## Meta Robots and HTTP Headers
+
+- **`noindex` via meta robots** — pages with `<meta name="robots" content="noindex">`
+- **`noindex` via X-Robots-Tag** — noindex directive sent via HTTP header
+- **`nofollow`** — pages or links instructed not to be followed
+- **`noarchive`** — prevents Google from showing a cached version
+
+## Viewport
+
+- Missing `<meta name="viewport">` tag — required for mobile-friendly pages
+- Incorrect viewport value — e.g., `user-scalable=no` which disables pinch zoom
+
+## Page Size and Crawl Depth
+
+- **HTML size > 100 KB** — very large HTML documents slow rendering and may indicate bloated markup
+- **Crawl depth** — pages found deeper than the configured max depth are flagged so you can assess whether important pages are buried too deep

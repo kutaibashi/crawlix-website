@@ -4,7 +4,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import {
   Check, X, Minus, ArrowRight, Download, ExternalLink, ChevronRight,
-  Crown, Shield, Bot, FileText, PiggyBank, Key, Zap, Monitor, Gift,
+  Shield, Bot, FileText, PiggyBank, Key, Zap, Monitor, Gift,
   TrendingUp, Palette, Sparkles, WifiOff, Infinity, Calculator
 } from '@lucide/astro';
 import type { ComparisonData } from '../data/comparisons';
@@ -16,7 +16,6 @@ interface Props {
 
 const { data } = Astro.props;
 
-// Icon mapping
 const iconMap: Record<string, any> = {
   PiggyBank, Bot, FileText, Palette, Sparkles, Key, Monitor, Gift,
   TrendingUp, Shield, WifiOff, Infinity, Calculator, Zap
@@ -30,418 +29,315 @@ const iconMap: Record<string, any> = {
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <Header slot="header" />
 
-  <!-- Hero Section -->
-  <section class="pt-32 pb-16 bg-gradient-to-b from-[#091a3d] to-[#0a1d42]">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-4xl mx-auto animate-on-scroll">
-        <!-- Breadcrumb -->
-        <nav class="flex items-center justify-center gap-2 text-sm text-slate-500 mb-8">
-          <a href="/" class="hover:text-sky-400 transition-colors">Home</a>
-          <ChevronRight class="h-4 w-4" />
-          <a href="/compare" class="hover:text-sky-400 transition-colors">Compare</a>
-          <ChevronRight class="h-4 w-4" />
+  <!-- All content in one continuous dark background -->
+  <div style="background: #040c1e;">
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-12 overflow-hidden" style="background: radial-gradient(ellipse 60% 50% at 50% 40%, #0c2340, #040c1e);">
+      <div class="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-2 text-sm text-slate-600 mb-8">
+          <a href="/" class="hover:text-slate-400 transition-colors">Home</a>
+          <ChevronRight class="h-3 w-3" />
+          <a href="/compare" class="hover:text-slate-400 transition-colors">Compare</a>
+          <ChevronRight class="h-3 w-3" />
           <span class="text-slate-400">vs {data.competitor.name}</span>
         </nav>
 
-        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-          {data.headline}
-        </h1>
-
-        <p class="mt-6 text-xl text-slate-400">
-          {data.subheadline}
-        </p>
-
-        <!-- Quick Stats Row -->
-        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {data.summaryPoints.map((point) => (
-            <div class={`rounded-xl border p-4 ${
-              point.winner === 'crawlix'
-                ? 'border-emerald-500/30 bg-emerald-500/10'
-                : point.winner === 'competitor'
-                ? 'border-slate-700 bg-slate-800/30'
-                : 'border-slate-700 bg-slate-800/30'
-            }`}>
-              <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">{point.title}</p>
-              <div class="space-y-1">
-                <p class={`text-sm font-medium ${point.winner === 'crawlix' ? 'text-emerald-400' : 'text-white'}`}>
-                  Crawlix: {point.crawlix}
-                </p>
-                <p class={`text-sm ${point.winner === 'competitor' ? 'text-white' : 'text-slate-500'}`}>
-                  {data.competitor.name}: {point.competitor}
-                </p>
-              </div>
-              {point.winner === 'crawlix' && (
-                <Crown class="h-4 w-4 text-emerald-400 mt-2" />
-              )}
-            </div>
-          ))}
+        <div class="max-w-2xl">
+          <h1 class="text-3xl font-bold text-white sm:text-4xl lg:text-5xl leading-[1.15]">
+            {data.headline}
+          </h1>
+          <p class="mt-4 text-lg text-slate-400">{data.subheadline}</p>
         </div>
 
-        <!-- CTA Buttons -->
-        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="/download"
-            class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors"
-          >
-            <Download class="h-5 w-5" />
+        <!-- Quick stats inline table -->
+        <div class="mt-10 max-w-2xl">
+          <div class="grid grid-cols-[1fr_auto_auto] gap-x-6 text-sm">
+            <div class="pb-2.5 border-b border-slate-700/40"></div>
+            <div class="pb-2.5 border-b border-slate-700/40 text-[#22d3ee] font-semibold text-right">Crawlix</div>
+            <div class="pb-2.5 border-b border-slate-700/40 text-slate-500 font-medium text-right">{data.competitor.name}</div>
+
+            {data.summaryPoints.map((point) => (
+              <>
+                <div class="py-2 border-b border-slate-800/20 text-slate-400">{point.title}</div>
+                <div class={`py-2 border-b border-slate-800/20 text-right font-medium ${point.winner === 'crawlix' ? 'text-[#34d399]' : 'text-white'}`}>
+                  {point.crawlix}
+                </div>
+                <div class={`py-2 border-b border-slate-800/20 text-right ${point.winner === 'competitor' ? 'text-white font-medium' : 'text-slate-500'}`}>
+                  {point.competitor}
+                </div>
+              </>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="/download" class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors">
+            <Download class="h-4 w-4" />
             Try Crawlix Free
           </a>
-          <a
-            href="#comparison"
-            class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
-          >
-            See full comparison
-            <ArrowRight class="h-4 w-4" />
+          <a href="#comparison" class="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
+            Full feature table <ArrowRight class="h-3.5 w-3.5" />
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Pricing Comparison -->
-  <section class="py-16 border-b border-slate-800/50" id="main-content">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl font-bold text-white">Pricing Comparison</h2>
-        <p class="mt-2 text-slate-400">{data.pricing.notes}</p>
-      </div>
+    <!-- Pricing -->
+    <section class="py-14 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-lg font-bold text-white mb-1">Pricing</h2>
+        <p class="text-sm text-slate-500 mb-6">{data.pricing.notes}</p>
 
-      <div class="grid gap-6 md:grid-cols-2">
-        <!-- Crawlix Pricing -->
-        <div class="rounded-2xl border-2 border-sky-500/50 bg-gradient-to-br from-sky-500/10 to-transparent p-8">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400">
-              <img src="/images/logo-512.png" alt="Crawlix" width="32" height="32" class="w-8 h-8" />
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">Crawlix</h3>
-              <p class="text-sm text-slate-400">Privacy-first SEO crawler</p>
-            </div>
-          </div>
-          <p class="text-lg text-white font-medium">{data.pricing.crawlix}</p>
-          <ul class="mt-4 space-y-2">
-            <li class="flex items-center gap-2 text-sm text-slate-300">
-              <Check class="h-4 w-4 text-emerald-400" />
-              Free tier included (100 pages)
-            </li>
-            <li class="flex items-center gap-2 text-sm text-slate-300">
-              <Check class="h-4 w-4 text-emerald-400" />
-              Perpetual license available
-            </li>
-            <li class="flex items-center gap-2 text-sm text-slate-300">
-              <Check class="h-4 w-4 text-emerald-400" />
-              14-day money-back guarantee
-            </li>
-          </ul>
-        </div>
-
-        <!-- Competitor Pricing -->
-        <div class="rounded-2xl border border-slate-800 bg-slate-800/30 p-8">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-700 text-slate-400">
-              <span class="text-lg font-bold">{data.competitor.name.charAt(0)}</span>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">{data.competitor.name}</h3>
-              <p class="text-sm text-slate-400">{data.competitor.tagline}</p>
-            </div>
-          </div>
-          <p class="text-lg text-slate-300">{data.pricing.competitor}</p>
-          <p class="mt-4 text-sm text-slate-500">
-            <a href={`https://${data.competitor.website}`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-slate-400">
-              Visit {data.competitor.website}
-              <ExternalLink class="h-3 w-3" />
-            </a>
-          </p>
+        <div class="overflow-x-auto rounded-lg" style="background: rgba(14,38,85,0.2); border: 1px solid rgba(148,163,184,0.06);">
+          <table class="w-full text-sm">
+            <thead>
+              <tr style="background: rgba(9,26,61,0.3);">
+                <th class="py-3 px-5 text-left font-medium text-slate-500"></th>
+                <th class="py-3 px-5 text-left font-semibold text-[#22d3ee]">Crawlix</th>
+                <th class="py-3 px-5 text-left font-medium text-slate-400">{data.competitor.name}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/20">
+              <tr>
+                <td class="py-2.5 px-5 text-slate-500">Annual price</td>
+                <td class="py-2.5 px-5 text-white font-medium">{data.pricing.crawlix}</td>
+                <td class="py-2.5 px-5 text-slate-400">{data.pricing.competitor}</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-5 text-slate-500">Free tier</td>
+                <td class="py-2.5 px-5 text-[#34d399]">Yes — 100 pages, no time limit</td>
+                <td class="py-2.5 px-5 text-slate-500">Limited or trial only</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-5 text-slate-500">Perpetual license</td>
+                <td class="py-2.5 px-5 text-[#34d399]">From $249 one-time</td>
+                <td class="py-2.5 px-5 text-slate-500">No</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-5 text-slate-500">Refund policy</td>
+                <td class="py-2.5 px-5 text-slate-300">14-day refund policy</td>
+                <td class="py-2.5 px-5 text-slate-500">
+                  <a href={`https://${data.competitor.website}`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-slate-300 transition-colors">
+                    See terms <ExternalLink class="h-3 w-3" />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Crawlix Advantages -->
-  <section class="py-20">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-white">Why Choose Crawlix</h2>
-        <p class="mt-3 text-slate-400">Key advantages over {data.competitor.name}</p>
-      </div>
+    <!-- Where Crawlix wins -->
+    <section class="py-14 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-lg font-bold text-white mb-1">Where Crawlix wins</h2>
+        <p class="text-sm text-slate-500 mb-8">Key advantages over {data.competitor.name}</p>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {data.crawlixAdvantages.map((advantage) => {
-          const Icon = iconMap[advantage.icon] || Zap;
-          return (
-            <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6">
-              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 mb-4">
-                <Icon class="h-6 w-6" />
+        <div class="grid gap-x-12 gap-y-5 sm:grid-cols-2">
+          {data.crawlixAdvantages.map((advantage) => (
+            <div class="flex gap-3">
+              <div class="w-0.5 shrink-0 rounded-full bg-[#34d399]/30 mt-0.5" style="min-height: 100%;"></div>
+              <div>
+                <h3 class="text-sm font-semibold text-white mb-0.5">{advantage.title}</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">{advantage.description}</p>
               </div>
-              <h3 class="text-lg font-semibold text-white mb-2">{advantage.title}</h3>
-              <p class="text-sm text-slate-400">{advantage.description}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- Full Feature Comparison -->
-  <section class="py-20 bg-[#0a1d42]/30" id="comparison">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-white">Feature-by-Feature Comparison</h2>
-        <p class="mt-3 text-slate-400">Detailed breakdown of capabilities</p>
-      </div>
-
-      <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-[#0e2655]/30">
-        <table class="w-full">
-          <thead>
-            <tr class="border-b border-slate-800 bg-[#0a1628]">
-              <th class="py-5 px-6 text-left text-sm font-semibold text-white sticky left-0 bg-[#0a1628] min-w-[200px]">Feature</th>
-              <th class="py-5 px-6 text-center text-sm font-semibold min-w-[150px]">
-                <span class="text-sky-400">Crawlix</span>
-              </th>
-              <th class="py-5 px-6 text-center text-sm font-semibold text-slate-400 min-w-[150px]">{data.competitor.name}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {featureCategories.map((category) => {
-              const categoryFeatures = data.features.filter(f => f.category === category);
-              if (categoryFeatures.length === 0) return null;
-
-              return (
-                <>
-                  <tr class="border-b border-slate-800/50 bg-slate-900/30">
-                    <td colspan="3" class="py-3 px-6 text-xs font-semibold text-sky-400 uppercase tracking-wider">
-                      {category}
-                    </td>
-                  </tr>
-                  {categoryFeatures.map((row, idx) => (
-                    <tr class={`border-b border-slate-800/30 ${idx % 2 === 0 ? '' : 'bg-slate-900/20'} hover:bg-slate-800/30 transition-colors`}>
-                      <td class="py-4 px-6 text-sm text-slate-300 sticky left-0 bg-inherit">
-                        {row.feature}
-                        {row.note && <span class="text-xs text-slate-500 ml-1">({row.note})</span>}
-                      </td>
-                      <td class={`py-4 px-6 text-center ${row.winner === 'crawlix' ? 'bg-emerald-500/5' : ''}`}>
-                        {typeof row.crawlix === 'boolean' ? (
-                          row.crawlix ? (
-                            <Check class="h-5 w-5 mx-auto text-emerald-500" />
-                          ) : (
-                            <X class="h-5 w-5 mx-auto text-slate-700" />
-                          )
-                        ) : (
-                          <span class={`text-sm ${row.winner === 'crawlix' ? 'text-emerald-400 font-medium' : 'text-slate-300'}`}>
-                            {row.crawlix}
-                          </span>
-                        )}
-                      </td>
-                      <td class={`py-4 px-6 text-center ${row.winner === 'competitor' ? 'bg-slate-700/20' : ''}`}>
-                        {typeof row.competitor === 'boolean' ? (
-                          row.competitor ? (
-                            <Check class="h-5 w-5 mx-auto text-emerald-500" />
-                          ) : (
-                            <X class="h-5 w-5 mx-auto text-slate-700" />
-                          )
-                        ) : (
-                          <span class={`text-sm ${row.winner === 'competitor' ? 'text-white font-medium' : 'text-slate-400'}`}>
-                            {row.competitor}
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Honest Competitor Strengths -->
-  <section class="py-20">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl font-bold text-white">Being Honest: Where {data.competitor.name} Excels</h2>
-        <p class="mt-3 text-slate-400">We believe in transparent comparisons</p>
-      </div>
-
-      <div class="grid gap-6 sm:grid-cols-2">
-        {data.competitorStrengths.map((strength) => (
-          <div class="rounded-xl border border-slate-800 bg-slate-800/30 p-6">
-            <h3 class="font-semibold text-white mb-2">{strength.title}</h3>
-            <p class="text-sm text-slate-400">{strength.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Best For Section -->
-  <section class="py-20 bg-[#0a1d42]/30">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl font-bold text-white">Which Tool is Right for You?</h2>
-        <p class="mt-3 text-slate-400">Find the best fit based on your needs</p>
-      </div>
-
-      <div class="grid gap-8 md:grid-cols-2">
-        <!-- Crawlix Best For -->
-        <div class="rounded-2xl border-2 border-sky-500/30 bg-gradient-to-br from-sky-500/5 to-transparent p-8">
-          <div class="flex items-center gap-3 mb-6">
-            <img src="/images/logo-512.png" alt="Crawlix" width="32" height="32" class="w-8 h-8" />
-            <h3 class="text-xl font-bold text-white">Choose Crawlix if you...</h3>
-          </div>
-          <ul class="space-y-3">
-            {data.bestFor.crawlix.map((item) => (
-              <li class="flex items-start gap-3">
-                <Check class="h-5 w-5 text-sky-400 shrink-0 mt-0.5" />
-                <span class="text-slate-300">{item}</span>
-              </li>
-            ))}
-          </ul>
-          <a
-            href="/download"
-            class="mt-8 inline-flex items-center gap-2 rounded-lg bg-sky-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-sky-500 transition-colors"
-          >
-            <Download class="h-4 w-4" />
-            Download Crawlix Free
-          </a>
-        </div>
-
-        <!-- Competitor Best For -->
-        <div class="rounded-2xl border border-slate-800 bg-slate-800/30 p-8">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-8 w-8 items-center justify-center rounded bg-slate-700 text-slate-400 text-sm font-bold">
-              {data.competitor.name.charAt(0)}
-            </div>
-            <h3 class="text-xl font-bold text-white">Choose {data.competitor.name} if you...</h3>
-          </div>
-          <ul class="space-y-3">
-            {data.bestFor.competitor.map((item) => (
-              <li class="flex items-start gap-3">
-                <Minus class="h-5 w-5 text-slate-500 shrink-0 mt-0.5" />
-                <span class="text-slate-400">{item}</span>
-              </li>
-            ))}
-          </ul>
-          <a
-            href={`https://${data.competitor.website}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-8 inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/50 px-5 py-2.5 text-sm font-medium text-slate-300 hover:border-slate-600 hover:text-white transition-colors"
-          >
-            Visit {data.competitor.name}
-            <ExternalLink class="h-4 w-4" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Migration Steps (if available) -->
-  {data.migrationSteps && (
-    <section class="py-20">
-      <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-2xl font-bold text-white">Switching from {data.competitor.name}?</h2>
-          <p class="mt-3 text-slate-400">Getting started with Crawlix is easy</p>
-        </div>
-
-        <div class="space-y-4">
-          {data.migrationSteps.map((step, index) => (
-            <div class="flex gap-4 p-4 rounded-xl border border-slate-800 bg-[#0e2655]/30">
-              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-500/20 text-sky-400 text-sm font-bold">
-                {index + 1}
-              </div>
-              <p class="text-slate-300 pt-1">{step}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )}
 
-  <!-- Final CTA -->
-  <section class="py-20">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-600/10 to-violet-600/10 p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">
-          Ready to try Crawlix?
-        </h2>
-        <p class="mt-4 text-slate-400 max-w-xl mx-auto">
-          Download the free version and run 134+ SEO checks on your first site.
-          No account required. Your data stays on your machine.
+    <!-- Feature-by-Feature Comparison -->
+    <section class="py-14 border-t border-slate-800/30" id="comparison">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-lg font-bold text-white mb-1">Feature comparison</h2>
+        <p class="text-sm text-slate-500 mb-8">Full breakdown of capabilities</p>
+
+        <div class="overflow-x-auto rounded-lg" style="background: rgba(14,38,85,0.2); border: 1px solid rgba(148,163,184,0.06);">
+          <table class="w-full text-sm">
+            <thead>
+              <tr style="background: rgba(9,26,61,0.4);">
+                <th class="py-3 px-5 text-left font-medium text-slate-400 sticky left-0 min-w-[180px]" style="background: rgba(9,26,61,0.95);">Feature</th>
+                <th class="py-3 px-5 text-center font-semibold text-[#22d3ee] min-w-[130px]">Crawlix</th>
+                <th class="py-3 px-5 text-center font-medium text-slate-400 min-w-[130px]">{data.competitor.name}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {featureCategories.map((category) => {
+                const categoryFeatures = data.features.filter(f => f.category === category);
+                if (categoryFeatures.length === 0) return null;
+
+                return (
+                  <>
+                    <tr style="background: rgba(14,38,85,0.15);">
+                      <td colspan="3" class="py-2 px-5 text-xs font-semibold text-[#22d3ee]/70 uppercase tracking-wider">
+                        {category}
+                      </td>
+                    </tr>
+                    {categoryFeatures.map((row, idx) => (
+                      <tr style={`border-bottom: 1px solid rgba(148,163,184,0.04); background: ${idx % 2 !== 0 ? 'rgba(14,38,85,0.08)' : 'rgba(4,12,30,0.6)'};`}>
+                        <td class="py-2.5 px-5 text-slate-300 sticky left-0" style="background: inherit;">
+                          {row.feature}
+                          {row.note && <span class="text-xs text-slate-600 ml-1">({row.note})</span>}
+                        </td>
+                        <td class={`py-2.5 px-5 text-center ${row.winner === 'crawlix' ? 'bg-[#34d399]/[0.03]' : ''}`}>
+                          {typeof row.crawlix === 'boolean' ? (
+                            row.crawlix ? <Check class="h-4 w-4 mx-auto text-emerald-500" /> : <X class="h-4 w-4 mx-auto text-slate-700" />
+                          ) : (
+                            <span class={row.winner === 'crawlix' ? 'text-emerald-400 font-medium' : 'text-slate-300'}>{row.crawlix}</span>
+                          )}
+                        </td>
+                        <td class={`py-2.5 px-5 text-center ${row.winner === 'competitor' ? 'bg-slate-700/10' : ''}`}>
+                          {typeof row.competitor === 'boolean' ? (
+                            row.competitor ? <Check class="h-4 w-4 mx-auto text-emerald-500" /> : <X class="h-4 w-4 mx-auto text-slate-700" />
+                          ) : (
+                            <span class={row.winner === 'competitor' ? 'text-white font-medium' : 'text-slate-400'}>{row.competitor}</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Which tool is right for you -->
+    <section class="py-14 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <h2 class="text-lg font-bold text-white mb-8">Which tool is right for you?</h2>
+
+        <div class="grid gap-8 md:grid-cols-2 items-start">
+          <!-- Crawlix -->
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <img src="/images/logo-512.png" alt="Crawlix" width="20" height="20" class="w-5 h-5" />
+              <h3 class="text-sm font-semibold text-[#22d3ee]">Choose Crawlix if you...</h3>
+            </div>
+            <ul class="space-y-2">
+              {data.bestFor.crawlix.map((item) => (
+                <li class="flex items-start gap-2.5 text-sm">
+                  <Check class="h-4 w-4 text-[#34d399] shrink-0 mt-0.5" />
+                  <span class="text-slate-300">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <a href="/download" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-4 py-2 text-sm font-medium text-slate-900 hover:bg-[#67e8f9] transition-colors">
+              <Download class="h-4 w-4" />
+              Download Free
+            </a>
+          </div>
+
+          <!-- Competitor -->
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <img src={data.competitor.logoImage} alt={data.competitor.name} width="20" height="20" class="w-5 h-5 object-contain" />
+              <h3 class="text-sm font-semibold text-slate-400">Choose {data.competitor.name} if you...</h3>
+            </div>
+            <ul class="space-y-2">
+              {data.bestFor.competitor.map((item) => (
+                <li class="flex items-start gap-2.5 text-sm">
+                  <Minus class="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
+                  <span class="text-slate-500">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <a href={`https://${data.competitor.website}`} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors">
+              Visit {data.competitor.name} <ExternalLink class="h-3 w-3" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verdict -->
+    {data.verdict && (
+      <section class="py-14 border-t border-slate-800/30">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div class="max-w-2xl">
+            <h2 class="text-lg font-bold text-white mb-3">{data.verdict.title}</h2>
+            <p class="text-slate-400 leading-relaxed">{data.verdict.summary}</p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Try alongside -->
+    {data.migrationSteps && (
+      <section class="py-14 border-t border-slate-800/30">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 class="text-lg font-bold text-white mb-1">Try Crawlix alongside {data.competitor.name}</h2>
+          <p class="text-sm text-slate-500 mb-8">Get started in five minutes — no commitment required</p>
+
+          <ol class="space-y-3 max-w-2xl">
+            {data.migrationSteps.map((step, index) => (
+              <li class="flex gap-3 text-sm">
+                <span class="text-[#22d3ee] font-semibold shrink-0 w-5 text-right">{index + 1}.</span>
+                <span class="text-slate-300">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )}
+
+    <!-- CTA -->
+    <section class="py-16 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl font-bold text-white">Ready to try Crawlix?</h2>
+        <p class="mt-3 text-slate-400 max-w-lg mx-auto">
+          Download the free version and run 134+ SEO checks on your site. No account required.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="/download"
-            class="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-500 transition-colors"
-          >
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/download" class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-6 py-3 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors">
             <Download class="h-5 w-5" />
             Download Free
           </a>
-          <a
-            href="/pricing"
-            class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
-          >
-            View pricing
-            <ArrowRight class="h-4 w-4" />
+          <a href="/pricing" class="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
+            View pricing <ArrowRight class="h-4 w-4" />
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Other Comparisons -->
-  <section class="py-12 border-t border-slate-800/50">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <h3 class="text-lg font-semibold text-white mb-6 text-center">Other Comparisons</h3>
-      <div class="flex flex-wrap justify-center gap-4">
-        {data.competitor.id !== 'screaming-frog' && (
-          <a href="/compare/screaming-frog" class="rounded-full border border-slate-800 bg-slate-800/50 px-4 py-2 text-sm text-slate-400 hover:border-sky-500/50 hover:text-white transition-colors">
-            vs Screaming Frog
-          </a>
-        )}
-        {data.competitor.id !== 'sitebulb' && (
-          <a href="/compare/sitebulb" class="rounded-full border border-slate-800 bg-slate-800/50 px-4 py-2 text-sm text-slate-400 hover:border-sky-500/50 hover:text-white transition-colors">
-            vs Sitebulb
-          </a>
-        )}
-        {data.competitor.id !== 'semrush' && (
-          <a href="/compare/semrush" class="rounded-full border border-slate-800 bg-slate-800/50 px-4 py-2 text-sm text-slate-400 hover:border-sky-500/50 hover:text-white transition-colors">
-            vs Semrush
-          </a>
-        )}
-        {data.competitor.id !== 'ahrefs' && (
-          <a href="/compare/ahrefs" class="rounded-full border border-slate-800 bg-slate-800/50 px-4 py-2 text-sm text-slate-400 hover:border-sky-500/50 hover:text-white transition-colors">
-            vs Ahrefs
-          </a>
-        )}
+    <!-- Other comparisons -->
+    <section class="py-10 border-t border-slate-800/30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <p class="text-sm text-slate-500 mb-4 text-center">Other comparisons</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {data.competitor.id !== 'screaming-frog' && <a href="/compare/screaming-frog" class="text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full border border-slate-800/50 hover:border-slate-700">vs Screaming Frog</a>}
+          {data.competitor.id !== 'sitebulb' && <a href="/compare/sitebulb" class="text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full border border-slate-800/50 hover:border-slate-700">vs Sitebulb</a>}
+          {data.competitor.id !== 'semrush' && <a href="/compare/semrush" class="text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full border border-slate-800/50 hover:border-slate-700">vs Semrush</a>}
+          {data.competitor.id !== 'ahrefs' && <a href="/compare/ahrefs" class="text-sm text-slate-400 hover:text-white transition-colors px-3 py-1.5 rounded-full border border-slate-800/50 hover:border-slate-700">vs Ahrefs</a>}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+  </div><!-- end continuous dark background -->
 
   <Footer slot="footer" />
 </BaseLayout>
 
-<script>
-  // Initialize scroll animations
-  document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
       });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
   });
 </script>

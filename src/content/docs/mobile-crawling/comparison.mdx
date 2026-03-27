@@ -1,0 +1,54 @@
+---
+title: "Desktop vs Mobile Comparison"
+description: "Compare content differences between desktop and mobile crawl sessions."
+order: 4
+---
+
+## Overview
+
+Running two separate crawls of the same site — one in standard (desktop) mode and one in Mobile Mode — lets you detect differences between what Google's desktop crawler and mobile-first indexing bot see.
+
+## Setting Up the Comparison
+
+1. **Run a standard crawl** (mobile mode off) and note the session.
+2. **Enable Mobile Mode** and re-crawl the same site.
+3. Go to **History > Compare Sessions**.
+4. Select the desktop session and the mobile session.
+5. Choose **"Desktop vs Mobile"** comparison type.
+
+## What the Comparison Shows
+
+### Content Differences
+
+For each page present in both sessions, Crawlix shows:
+
+- **Title** — is the title different on mobile?
+- **Meta description** — any differences?
+- **H1** — different heading on mobile?
+- **Body text** — significant difference in word count?
+- **Structured data** — different schema blocks?
+
+### Missing Elements
+
+- Elements present on desktop but missing on mobile (or vice versa)
+- This is the most important finding for Mobile-First Indexing — Google uses the mobile version for indexing, so content present only on desktop may not be indexed
+
+### Link Count Differences
+
+- Pages with significantly fewer internal links in the mobile version
+- Mobile navigation often has fewer links than desktop navigation
+
+### Image Differences
+
+- Images present on desktop but missing on mobile
+- Different image URLs (srcset serving different images to mobile)
+
+## Mobile-First Indexing Implications
+
+Google primarily uses the **mobile version** of pages for indexing and ranking. If your mobile version has:
+
+- Less content than desktop
+- Missing structured data
+- Fewer internal links
+
+...your rankings may be impacted. This comparison highlights these discrepancies for action.

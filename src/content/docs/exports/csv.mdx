@@ -1,0 +1,40 @@
+---
+title: "CSV Export"
+description: "Export pages, issues, links, and resources as CSV files."
+order: 1
+---
+
+## Overview
+
+CSV export is available on all tiers (Free, Pro, Agency). It's the fastest way to get your crawl data into a spreadsheet tool like Excel, Google Sheets, or for use in data pipelines.
+
+## Exporting
+
+Go to **File > Export > CSV** and choose what to export:
+
+- **Pages** — all crawled pages with full metadata (URL, status code, title, description, H1, word count, canonical, and all other fields)
+- **Issues** — every SEO issue found, with columns for issue type, severity, category, affected URL, and details
+- **Links** — all discovered links with source URL, destination URL, anchor text, link type, and status code
+- **Resources** — all images, scripts, and stylesheets found, with URL, size, and status
+- **Custom extraction data** — if you have extraction rules configured, export the extracted values per page
+
+## File Format
+
+CSV files use comma-separated values with UTF-8 encoding. Column headers are in the first row. All columns from the current view are included.
+
+## Large Sites
+
+For very large crawls (tens of thousands of pages), the CSV export may be split into multiple files to keep file sizes manageable. Crawlix will notify you if splitting occurs.
+
+## Opening in Google Sheets
+
+After exporting, import the CSV into Google Sheets:
+
+1. In Google Sheets, go to **File > Import > Upload**.
+2. Select the CSV file.
+3. Choose "Comma" as the separator.
+4. The data imports with all columns.
+
+## Opening in Excel
+
+Double-click the CSV file to open it in Excel, or use **File > Open** within Excel. For files with special characters (e.g., non-Latin URLs), use Excel's **Data > Get Data > From Text/CSV** for proper encoding.

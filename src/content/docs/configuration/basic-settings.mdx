@@ -1,0 +1,49 @@
+---
+title: "Basic Settings"
+description: "Max pages, crawl depth, concurrent workers, and request timeout."
+order: 1
+---
+
+## Max Pages
+
+Controls how many HTML pages Crawlix will crawl in a single session.
+
+| Tier | Limit |
+|------|-------|
+| Free | 100 pages |
+| Pro | 50,000 pages |
+| Agency | Unlimited |
+
+Only HTML pages (content-type `text/html`) count toward this limit. CSS files, JavaScript files, images, fonts, PDFs, and other non-HTML resources are fetched and analyzed but do not consume a page slot.
+
+## Max Depth
+
+**Default: 10**
+
+Depth refers to how many link levels away from the start URL Crawlix will follow. Depth 1 means only pages linked directly from the start URL. Depth 10 means pages up to 10 links away from the start URL.
+
+For most sites, depth 10 is sufficient to discover all pages. If your site has a very flat structure, you can reduce this to speed up the crawl.
+
+## Concurrent Workers
+
+**Default: 5 | Range: 1–10**
+
+The number of pages Crawlix fetches simultaneously. Higher values mean faster crawls but more load on the target server.
+
+- **1–2** — very gentle, suitable for shared hosting or when you want minimal server impact
+- **5** — balanced default, suitable for most sites
+- **8–10** — aggressive, suitable for large sites on robust hosting when you need speed
+
+When JavaScript rendering is enabled, the effective number of browser instances also scales with workers. Reduce workers to 2–3 when using JS rendering to keep memory usage manageable.
+
+## Request Timeout
+
+**Default: 30,000ms (30 seconds)**
+
+How long Crawlix waits for a page to respond before marking it as a timeout error. If you're crawling slow servers or JS-heavy pages, consider increasing this to 60 seconds. If a site consistently responds fast, you can reduce it.
+
+## Respect robots.txt
+
+**Default: enabled**
+
+When enabled, Crawlix respects `Disallow` rules in `robots.txt`. If you are the site owner and want a full audit regardless of `robots.txt` rules, you can disable this. Use responsibly.

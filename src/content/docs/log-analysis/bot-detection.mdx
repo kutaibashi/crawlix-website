@@ -1,0 +1,47 @@
+---
+title: "Bot Detection & Analysis"
+description: "Classify crawlers and analyze bot vs human traffic ratios."
+order: 2
+---
+
+## How Bot Detection Works
+
+Crawlix classifies each log entry by analyzing the user agent string. Every request is assigned to one of these categories:
+
+- **Search engines** — Googlebot, Bingbot, DuckDuckBot, Yandex, Baidu, and other indexing bots
+- **AI crawlers** — all 12 tracked AI bots (GPTBot, ClaudeBot, Google-Extended, etc.)
+- **SEO tools** — Semrush, Ahrefs, Majestic, Moz, Screaming Frog, and similar
+- **Social media fetchers** — Facebook, Twitter/X, LinkedIn, and other social scrapers
+- **Monitoring services** — uptime monitors, status page checkers
+- **Human users** — requests with browser user agents (Chrome, Firefox, Safari, etc.)
+- **Unknown bots** — unrecognized, non-browser user agents
+
+## Bot vs Human Ratio
+
+The summary view shows the overall split between bot and human traffic for the imported log period. A typical site might see 30–70% bot traffic. Unusually high bot ratios can indicate:
+
+- Heavy crawling by SEO tools
+- AI crawler activity
+- Distributed denial of service (DDoS) or scraping
+
+## Googlebot Crawl Frequency
+
+Crawlix shows how often Googlebot crawled your site during the log period:
+
+- Pages crawled per day (on average and by day)
+- Most frequently crawled pages
+- Crawl budget distribution — are bots spending time on your most important pages?
+
+## AI Crawler Volume
+
+See which AI crawlers have been visiting your site and how frequently:
+
+- Total requests per AI crawler
+- Most frequently crawled pages by AI bots
+- Timeline of AI crawler activity
+
+This is useful for publishers who want to understand whether AI companies are indexing their content heavily.
+
+## Unknown Bots
+
+User agents that Crawlix doesn't recognize are grouped under "Unknown Bots." Review this list to identify scrapers, new bots, or misconfigured user agents.

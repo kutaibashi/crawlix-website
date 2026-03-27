@@ -1,0 +1,68 @@
+---
+title: "Extraction Methods"
+description: "CSS selectors, XPath, regex, JSON-LD, meta tags, and attribute extraction."
+order: 1
+---
+
+## What Is Custom Extraction?
+
+Custom Extraction lets you define rules to pull specific data from every page during a crawl. The extracted data appears as extra columns in the Pages view and is included in CSV and Excel exports.
+
+Use cases: product prices, SKU codes, publish dates, author names, custom meta tags, A/B test flags, or any other data embedded in your pages.
+
+## CSS Selector
+
+Target any HTML element using standard CSS selectors.
+
+Examples:
+
+- `.product-price` — the text content of an element with class `product-price`
+- `[data-sku]` — the value of the `data-sku` attribute
+- `h1.page-title` — the text of an H1 with class `page-title`
+- `meta[name="author"]` — the `content` attribute of a named meta tag
+
+## XPath
+
+More powerful selectors for complex DOM structures. Useful when CSS selectors aren't specific enough.
+
+Example: `//div[@class='price']/span[@itemprop='price']`
+
+## Regex
+
+Extract patterns from the full page source or from extracted text content.
+
+Examples:
+
+- `\$[\d,.]+` — extract a price value like `$29.99`
+- `SKU:\s*([A-Z0-9-]+)` — extract a SKU code
+
+## JSON-LD
+
+Extract specific fields from structured data blocks on the page.
+
+Examples:
+
+- `$.price` — product price from `Product` schema
+- `$.name` — product name
+- `$.author.name` — article author name
+
+## Meta Tags
+
+Extract the `content` value of any `<meta>` tag by `name` or `property`.
+
+Examples:
+
+- `meta[name="robots"]` — the robots directive
+- `meta[property="og:image"]` — the OG image URL
+
+## Open Graph
+
+A shorthand for common OG tag extraction: `og:title`, `og:description`, `og:image`, `og:type`.
+
+## Extraction Target
+
+For each rule, specify what to extract:
+
+- **Text content** — the visible text of the matched element
+- **innerHTML** — the full HTML inside the element
+- **Attribute value** — the value of a specific HTML attribute (e.g., `href`, `src`, `data-id`)

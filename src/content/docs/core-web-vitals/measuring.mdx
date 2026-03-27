@@ -1,0 +1,50 @@
+---
+title: "Measuring with Crawlix"
+description: "How Crawlix collects CWV metrics using Chrome DevTools Protocol."
+order: 2
+---
+
+## How Crawlix Collects Metrics
+
+Crawlix uses the **Chrome DevTools Protocol (CDP)** to collect performance metrics during JavaScript rendering. CDP gives access to the same data that Chrome DevTools' Performance tab shows.
+
+**JavaScript rendering must be enabled** for Core Web Vitals measurement. Without JS rendering, Crawlix cannot run a real browser and therefore cannot collect these metrics.
+
+## Metrics Collected Per Page
+
+For each page crawled with JS rendering enabled, Crawlix records:
+
+| Metric | Description |
+|--------|-------------|
+| LCP | Largest Contentful Paint |
+| CLS | Cumulative Layout Shift |
+| FCP | First Contentful Paint |
+| TTFB | Time to First Byte |
+| TBT | Total Blocking Time |
+| TTI | Time to Interactive |
+| Speed Index | Visual completeness over time |
+
+INP is measured when there is user interaction — since Crawlix doesn't simulate full user interaction sequences, INP from lab data is limited. Use PageSpeed Insights field data for real-world INP.
+
+## Where to View Results
+
+Navigate to the **Core Web Vitals** view in the left sidebar. You'll see:
+
+- All crawled pages with their CWV scores
+- Color-coded status: green (good), orange (needs improvement), red (poor)
+- Sortable by any metric — find your slowest pages quickly
+- Click any page to see the full metric breakdown
+
+## Session Comparison
+
+Each crawl session stores its CWV results independently. Use the [Historical Tracking](/docs/core-web-vitals/history) feature to compare metrics between sessions.
+
+## Lab Data Caveats
+
+Lab data is collected in a controlled environment (no browser extensions, consistent network speed). Results may differ from real-user field data because:
+
+- Real users have varying devices and network speeds
+- Lab data uses a single "render" — real-user data averages thousands of visits
+- Third-party scripts may behave differently during crawl vs real user visits
+
+For the most accurate real-world data, combine lab data with [PageSpeed Insights field data](/docs/core-web-vitals/pagespeed).

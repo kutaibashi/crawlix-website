@@ -1,0 +1,60 @@
+---
+title: "Integration Problems"
+description: "Fix OAuth failures, sync errors, and API quota issues for Google integrations."
+order: 3
+---
+
+## OAuth Error with Google
+
+**Symptom:** The Google OAuth window shows an error or the connection fails.
+
+**Fixes:**
+
+- Ensure you're not blocking popups in your browser. The OAuth flow opens in a browser window — if it's blocked, the flow can't complete.
+- Try a different browser for the OAuth authorization.
+- Check that you're signed into the correct Google account (the one with access to the GA4 / GSC property).
+- Disconnect the integration fully and try reconnecting from scratch (**Settings > Integrations > [Service] > Disconnect**).
+
+## GA4 Data Not Syncing
+
+**Symptom:** Google Analytics 4 is connected but no traffic data appears in the Pages view.
+
+**Checks:**
+
+- Verify your Google account has at least **Viewer** role on the GA4 property.
+- Confirm the correct GA4 property is selected in the integration settings.
+- Check that the site domain in your GA4 property matches the domain you crawled.
+- Allow a few minutes after connecting — the initial sync may take some time.
+
+## GSC Property Not Listed
+
+**Symptom:** The Google Search Console property for your site doesn't appear in the selection list.
+
+**Fixes:**
+
+- Your Google account must have **Full User** or **Owner** access to the property in Search Console.
+- If you have Restricted User access, properties may not be visible via API.
+- Try reconnecting the integration — your OAuth token may have expired.
+
+## PageSpeed Insights API Quota Exceeded
+
+**Symptom:** PSI data is missing for many pages; you see quota error messages.
+
+**Information:**
+
+- The free PSI API allows 25,000 requests per day per API key.
+- Large sites (25,000+ pages) may exceed this in a single crawl.
+
+**Fixes:**
+
+- Use URL filters to crawl smaller sections at a time.
+- Request a quota increase in Google Cloud Console for your API key project.
+
+## General Integration Reset
+
+If an integration is behaving unexpectedly, try this sequence:
+
+1. Go to **Settings > Integrations > [Service]**.
+2. Click **Disconnect**.
+3. Confirm the disconnection.
+4. Click **Connect** again and complete the OAuth flow fresh.

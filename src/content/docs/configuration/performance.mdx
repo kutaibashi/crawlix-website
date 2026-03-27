@@ -1,0 +1,50 @@
+---
+title: "Performance Tuning"
+description: "Concurrent workers, crawl delay, memory limits, and batch sizes."
+order: 3
+---
+
+## Concurrent Workers
+
+**Default: 5 | Range: 1–10**
+
+Workers control how many pages are fetched in parallel. More workers = faster crawl = more server load.
+
+For most sites, the default of 5 works well. Adjust based on:
+
+- **Server capacity** — shared hosting may struggle with 5+ concurrent requests. Use 1–2.
+- **Site size** — for very large sites, use 8–10 workers on stable servers to finish faster.
+- **JS rendering** — when enabled, each worker runs a browser instance. Reduce to 2–3 workers to manage memory.
+
+## Crawl Delay
+
+**Default: 350ms**
+
+Minimum time Crawlix waits between requests to the same server. This prevents overwhelming the server with requests.
+
+Crawlix also respects the `Crawl-delay` directive in `robots.txt` when it is set.
+
+For polite crawling on production sites you don't control, consider increasing the delay to 500ms–1000ms. For your own staging server, you can reduce it.
+
+## Batch Size
+
+**Default: 50 pages per batch**
+
+Crawlix processes pages in batches and writes results to the database at each checkpoint. This protects against data loss if the crawl is interrupted. A smaller batch size means more frequent saves; a larger batch size is slightly faster.
+
+## Memory Limit
+
+**Default: 2048 MB (2 GB)**
+
+Crawlix monitors memory usage during crawls. If memory approaches the limit, the crawler automatically pauses to write a checkpoint and flush memory before continuing.
+
+For large sites or JS rendering crawls, you can increase this limit if your machine has sufficient RAM. For machines with 4 GB RAM total, keep this at or below 1500 MB.
+
+## Large Site Strategy
+
+For sites with hundreds of thousands of pages:
+
+1. Use URL include/exclude patterns to crawl sections at a time
+2. Set workers to 8–10 if the server can handle it
+3. Use scheduled crawls to distribute the work over time
+4. Configure data retention to clean up old sessions automatically

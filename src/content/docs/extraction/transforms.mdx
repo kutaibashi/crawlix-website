@@ -1,0 +1,74 @@
+---
+title: "Data Transforms"
+description: "Apply post-processing to extracted values: trim, lowercase, regex_replace, and number extraction."
+order: 3
+---
+
+## What Are Transforms?
+
+Transforms post-process the raw extracted value before it's stored. They're applied in order, left to right. Use them to clean up, normalize, or reformat extracted data.
+
+## Available Transforms
+
+### `trim`
+
+Removes leading and trailing whitespace from the value.
+
+Use case: text content extracted from HTML often includes extra whitespace from indentation.
+
+### `lowercase`
+
+Converts the entire value to lowercase.
+
+Use case: normalize category names or status fields for consistent comparison.
+
+### `uppercase`
+
+Converts the entire value to uppercase.
+
+### `regex_replace`
+
+Applies a regular expression substitution to the value.
+
+Configuration:
+- Pattern: the regex to match (e.g., `[^0-9.]`)
+- Replacement: what to replace matches with (e.g., empty string `""`)
+
+Use case: strip non-numeric characters from a price string.
+
+### `prefix`
+
+Prepends a string to the value.
+
+Use case: add a label like `SKU: ` before the SKU code.
+
+### `suffix`
+
+Appends a string to the value.
+
+### `number`
+
+Extracts the first number found in the text. Strips currency symbols, commas, and other non-numeric characters (while preserving decimal points).
+
+Use case: extract `29.99` from `$29.99` or `Price: £29.99`.
+
+## Chaining Transforms
+
+Transforms are applied in order. For example, to extract a clean price from `Price: $29.99 USD`:
+
+1. `regex_replace` — pattern `[^0-9.]`, replacement `""` → `29.99`
+
+Or using the simpler `number` transform:
+
+1. `number` → `29.99`
+
+## Example: Extracting a Product Price
+
+Rule configuration:
+
+- Method: CSS
+- Selector: `.product-price`
+- Target: text content
+- Transforms: `trim`, `number`
+
+This extracts the text, trims whitespace, then converts to a clean number.

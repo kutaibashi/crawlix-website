@@ -1,0 +1,45 @@
+---
+title: "Network Throttling"
+description: "Simulate 3G and 4G network conditions for realistic mobile performance testing."
+order: 3
+---
+
+## Overview
+
+Network throttling simulates slower mobile network conditions during a crawl. This gives you a realistic picture of how your site performs for users on mobile networks, rather than the fast connection of a typical server environment.
+
+**Requires JavaScript rendering and Mobile Mode to be enabled.**
+
+## Available Throttling Presets
+
+| Preset | Download Speed | Upload Speed | Latency |
+|--------|---------------|--------------|---------|
+| 4G | ~9 Mbps | ~4 Mbps | ~20ms |
+| 3G Fast | ~1.6 Mbps | ~0.75 Mbps | ~40ms |
+| 3G Slow | ~0.4 Mbps | ~0.35 Mbps | ~100ms |
+| No throttling | Full speed | Full speed | Minimal |
+
+## Enabling Throttling
+
+Go to **Settings > Crawl > Mobile Mode > Network Throttling** and select a preset.
+
+## How Throttling Affects Metrics
+
+With throttling enabled:
+
+- **TTFB** — includes network latency, more representative of real mobile conditions
+- **LCP** — large images take longer to download, showing realistic LCP on slow connections
+- **Load time** — reflects actual download times for JavaScript bundles and other assets
+
+This is particularly useful for identifying:
+
+- Resources too large for 3G users (JavaScript bundles > 500 KB, images > 200 KB)
+- Pages that time out or fail to load on slow connections
+
+## Performance Impact on Crawl Speed
+
+Network throttling significantly slows down crawl speed because each page takes longer to load. For large sites, consider using throttling on a subset of pages (using URL filters) rather than the entire site.
+
+## Lab Data Context
+
+Throttled metrics are still lab data — they represent a consistent simulated condition, not real-user field data. For real-user mobile network data, use the [PageSpeed Insights integration](/docs/core-web-vitals/pagespeed).

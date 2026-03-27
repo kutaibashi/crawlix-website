@@ -1,0 +1,39 @@
+---
+title: "User Agents"
+description: "Default Crawlix user agent and how to set a custom user agent string."
+order: 4
+---
+
+## Default User Agent
+
+Crawlix identifies itself with the following user agent string:
+
+```
+Crawlix/2.0 (compatible; SEO Crawler; +https://crawlix.app/bot)
+```
+
+This is sent with every HTTP request during a crawl. You can visit [crawlix.app/bot](/bot) to learn more about the Crawlix bot and how to allow or block it via `robots.txt`.
+
+## Custom User Agent
+
+You can set any custom user agent string in **Settings > Crawl > User Agent**.
+
+Common use cases:
+
+- **Mobile user agent** — test how the server responds to mobile browsers. Some sites serve different HTML, different image sizes, or different JavaScript bundles based on user agent.
+- **Googlebot** — see how the site responds to Googlebot (useful for troubleshooting cloaking issues).
+- **Generic browser** — use a standard Chrome user agent to see what real users see.
+
+## Example: Mobile User Agent
+
+A common mobile Chrome user agent:
+
+```
+Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36
+```
+
+## Robots.txt and User Agents
+
+Websites can allow or block specific user agents in `robots.txt`. If you set a custom user agent, Crawlix will respect `robots.txt` rules for that user agent (when `robots.txt` compliance is enabled in settings).
+
+For information about adding Crawlix to your site's `robots.txt` allow list, see [crawlix.app/bot](/bot).

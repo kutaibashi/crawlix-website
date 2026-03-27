@@ -1,0 +1,42 @@
+---
+title: "Historical Tracking"
+description: "Compare Core Web Vitals across crawl sessions to track performance improvements."
+order: 4
+---
+
+## How Historical Data Works
+
+Every time you crawl a site, Crawlix stores the results — including Core Web Vitals — as a separate session. Sessions are never overwritten. This lets you build a performance history over time.
+
+## Comparing Two Sessions
+
+1. Go to **History** in the left sidebar.
+2. Select two crawl sessions for the same site.
+3. Click **Compare Sessions**.
+
+The comparison view shows, for every page that appeared in both sessions:
+
+- **CWV change** — whether LCP, CLS, or FCP improved, worsened, or stayed the same
+- **Status change** — whether a metric crossed a threshold (e.g., moved from "needs improvement" to "good")
+- **Delta values** — the numeric difference between sessions
+
+## Filtering the Comparison
+
+- Filter by metric type (show only LCP regressions, only CLS improvements, etc.)
+- Filter by URL pattern to focus on a section of the site
+- Sort by largest improvement or largest regression
+
+## Typical Use Cases
+
+**After a performance optimization sprint:** Run a crawl before and after your changes to quantify the improvement.
+
+**After a deployment:** Run a scheduled or manual crawl after each deploy to catch regressions early.
+
+**Monthly SEO reporting:** Scheduled crawls create a consistent historical record. Compare month-over-month to show progress to clients or stakeholders.
+
+## New and Removed Pages
+
+The comparison also shows:
+
+- Pages that are **new** in the latest session (didn't exist in the earlier session)
+- Pages that have been **removed** (appeared in the earlier session but not the latest)

@@ -1,0 +1,49 @@
+---
+title: "Local Storage"
+description: "All crawl data is stored in a local SQLite database — nothing is uploaded to servers."
+order: 1
+---
+
+## Where Your Data Lives
+
+All crawl data is stored in a **SQLite database** on your local machine. The database is located in your operating system's application data directory:
+
+- **Windows:** `%APPDATA%\Crawlix\data\`
+- **Linux:** `~/.config/Crawlix/data/` or the XDG config directory
+
+No crawl data is ever uploaded to Crawlix servers. You have complete ownership and control of your data.
+
+## What Is Stored Locally
+
+Everything from every crawl is stored locally:
+
+- All crawled pages and their metadata
+- All SEO issues found
+- All discovered links
+- All images and resource data
+- Core Web Vitals measurements
+- Custom extraction results
+- Structured data found
+- Screenshots (if captured)
+- Log analysis data
+
+## What Network Calls Does Crawlix Make?
+
+Crawlix makes outbound network calls only for:
+
+1. **License validation** — a one-time call to api.lemonsqueezy.com when you activate a license
+2. **Integration API calls** — only when you've explicitly connected Google Analytics, Search Console, or PageSpeed Insights (and only when you trigger a sync)
+3. **Crawling the target website** — the actual web crawl
+
+No telemetry, no usage tracking, no data collection.
+
+## Managing Your Data
+
+See [Data Retention](/docs/data/retention) to configure automatic cleanup of old crawl sessions, and [Backup & Restore](/docs/data/backup) to export or import sessions.
+
+## Deleting All Data
+
+To delete all Crawlix data:
+
+1. Use **Settings > Data Management > Clear All Data** to delete from within the app.
+2. Or delete the database file directly from the application data directory.

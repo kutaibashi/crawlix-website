@@ -1,0 +1,50 @@
+---
+title: "Content Quality (15+ checks)"
+description: "Word count, readability scoring, keyword stuffing, and thin content detection."
+order: 3
+---
+
+## Word Count
+
+Crawlix counts the words in the visible text content of each page (excluding navigation, footer, and other boilerplate when detected).
+
+- **Thin content** — pages below a configurable word count threshold are flagged. The default threshold is 300 words. You can adjust this in Settings > SEO Checks > Content.
+- Pages with extremely low word counts (under 50 words) are flagged as Errors; pages below the threshold but above the minimum are flagged as Warnings.
+
+## Readability
+
+Crawlix calculates a **Flesch-Kincaid readability score** for each page's body text.
+
+- Scores range from 0–100. Higher scores mean easier to read.
+- A score of 60–70 is considered readable for a general audience.
+- Very low scores (below 30) flag the content as complex or hard to read.
+
+Readability scoring supports both **English** and **Arabic** text.
+
+## Keyword Density
+
+Crawlix detects potential **keyword stuffing** by analyzing the frequency of words relative to total content. Pages with abnormally high repetition of a single word or phrase are flagged.
+
+This is a heuristic check — it flags candidates for review, not definitive violations.
+
+## Content-to-HTML Ratio
+
+A low ratio of text content to total HTML indicates a page heavy with markup and light on content. Pages with very low content-to-HTML ratios are flagged.
+
+## Near-Duplicate Content
+
+Using **cosine similarity**, Crawlix compares the text content of pages on the same site. Pages that are very similar to other pages on the site (but not identical) are flagged as near-duplicate content.
+
+This is useful for detecting:
+
+- Product pages with nearly identical descriptions
+- Blog posts republished with minor edits
+- Category/tag pages with overlapping content
+
+## Boilerplate Detection
+
+Pages that consist mostly of navigation, headers, footers, and very little unique text content are flagged as boilerplate-heavy. These pages offer little unique value to search engines.
+
+## Placeholder Content
+
+Crawlix detects Lorem Ipsum text and other placeholder content patterns. A live page containing placeholder text is always an error.

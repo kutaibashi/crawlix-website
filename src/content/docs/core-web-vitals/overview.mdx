@@ -1,0 +1,58 @@
+---
+title: "Understanding Core Web Vitals"
+description: "LCP, CLS, INP, FCP, and TTFB explained with Google's thresholds."
+order: 1
+---
+
+## What Are Core Web Vitals?
+
+Core Web Vitals are a set of metrics defined by Google that measure real-world user experience — specifically loading performance, visual stability, and interactivity. They became Google ranking signals in 2021.
+
+## The Three Core Metrics
+
+### LCP — Largest Contentful Paint
+
+Measures **loading performance**: the time from page navigation to when the largest visible content element (image, video, or text block) is rendered.
+
+- **Good:** ≤ 2.5 seconds
+- **Needs improvement:** 2.5s – 4.0s
+- **Poor:** > 4.0 seconds
+
+Common causes of poor LCP: slow server response, render-blocking resources, large unoptimized images.
+
+### CLS — Cumulative Layout Shift
+
+Measures **visual stability**: the sum of unexpected layout shifts that occur during the page lifecycle. A score of 0 means no shifts.
+
+- **Good:** ≤ 0.1
+- **Needs improvement:** 0.1 – 0.25
+- **Poor:** > 0.25
+
+Common causes: images without width/height attributes, ads inserting content above existing content, web fonts causing FOUT.
+
+### INP — Interaction to Next Paint
+
+Measures **interactivity**: the time from a user interaction (click, tap, key press) to the next paint of the page.
+
+- **Good:** ≤ 200ms
+- **Needs improvement:** 200ms – 500ms
+- **Poor:** > 500ms
+
+Common causes: heavy JavaScript execution blocking the main thread.
+
+## Supporting Metrics
+
+Crawlix also measures:
+
+- **FCP (First Contentful Paint)** — time to first visible content. Should be ≤ 1.8s.
+- **TTFB (Time to First Byte)** — server response time. Should be < 800ms.
+
+## Lab vs Field Data
+
+Crawlix measures **lab data** — metrics collected under controlled, consistent conditions during the crawl. Lab data is useful for:
+
+- Consistent before/after comparisons
+- Identifying pages that are objectively slow
+- Running performance analysis as part of an SEO audit
+
+**Field data** comes from real users using Chrome in the wild (Chrome User Experience Report). Field data is available via the [PageSpeed Insights integration](/docs/core-web-vitals/pagespeed) (Pro/Agency).

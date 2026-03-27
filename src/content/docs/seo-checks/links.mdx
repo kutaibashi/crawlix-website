@@ -1,0 +1,42 @@
+---
+title: "Link Analysis (15+ checks)"
+description: "Internal and external broken links, anchor text quality, orphan pages, and nofollow distribution."
+order: 4
+---
+
+## Broken Internal Links
+
+Internal links pointing to pages on your own site that return a 4xx or 5xx error. These are high-priority fixes — broken internal links hurt both user experience and crawlability.
+
+## Broken External Links
+
+Links pointing to other domains that return errors. Less urgent than internal broken links, but still worth fixing for user trust.
+
+## Redirect Chains in Links
+
+Internal links that point to a URL that redirects to another URL. You should update these links to point directly to the final destination URL, avoiding unnecessary redirects.
+
+## Anchor Text
+
+- **Generic anchor text** — links with anchor text like "click here", "read more", "learn more", or "this page" provide no context to search engines.
+- **Empty anchor text** — `<a href="..."></a>` with no visible text
+- **Duplicate anchor text pointing to different URLs** — the same anchor text linking to multiple different pages can confuse search engines.
+- **Keyword-rich anchor text over-optimization** — flagged when many links use the exact same keyword-heavy anchor text
+
+## Internal Link Counts
+
+- **Pages with no inbound internal links (orphan pages)** — these pages cannot be discovered through normal navigation. They may have reduced indexation.
+- **Pages with too few inbound links** — important pages (product pages, key landing pages) with very few links from the rest of the site.
+- **Pages with too many outbound links** — pages with an unusually high number of links (possible link schemes or navigation issues).
+
+## Nofollow Distribution
+
+Analysis of `rel="nofollow"`, `rel="ugc"`, and `rel="sponsored"` link attributes across the site:
+
+- Pages where most/all outbound links are nofollowed
+- Internal links with nofollow (usually unintentional)
+- Percentage of internal vs external nofollow links
+
+## Link Depth Analysis
+
+Pages that are only reachable through many clicks from the homepage are considered "deep" pages. Combined with the crawl depth setting, this helps identify important content that is buried in the site structure.

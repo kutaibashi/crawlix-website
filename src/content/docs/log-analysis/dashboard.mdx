@@ -1,0 +1,60 @@
+---
+title: "Log Analysis Dashboard"
+description: "Views, charts, and filtering tools in the Log Analysis section."
+order: 4
+---
+
+## Overview
+
+The Log Analysis dashboard provides an at-a-glance summary of all imported server log data. Access it from the **Log Analysis** section in the left sidebar.
+
+## Summary Cards
+
+The top of the dashboard shows headline metrics:
+
+- **Total requests** — all log entries imported
+- **Bot requests** — total automated traffic
+- **Human requests** — browser-based traffic
+- **Bot percentage** — what fraction of all traffic is automated
+- **Unique URLs** — distinct URLs requested
+
+## Time Series Chart
+
+A line chart showing requests over time (hourly, daily, or weekly). Toggle between:
+
+- Total requests
+- Bot requests only
+- Human requests only
+- Specific bot type (e.g., show only Googlebot activity)
+
+Use the time range selector to zoom in on specific periods.
+
+## Bot Breakdown Chart
+
+A bar or pie chart showing traffic distribution by bot category:
+
+- Search engines
+- AI crawlers
+- SEO tools
+- Social media fetchers
+- Human users
+- Unknown bots
+
+Hover over any segment to see the exact count and percentage.
+
+## Top Pages Table
+
+The most frequently requested URLs, with request counts, bot/human split, and status code breakdown. Click any URL to see its full time series and per-bot breakdown.
+
+## Filter Panel
+
+All dashboard views respond to the filter panel on the left:
+
+- **Date range** — filter to any date range within the imported log data
+- **Bot type** — show data for all bots or a specific category/crawler
+- **Status code** — filter to only 200s, only 404s, etc.
+- **URL pattern** — focus on a specific section of the site (e.g., `/blog/`, `/products/`)
+
+## Data Storage
+
+All log analysis data is stored locally alongside your crawl data in the Crawlix SQLite database. Nothing is uploaded to Crawlix servers.

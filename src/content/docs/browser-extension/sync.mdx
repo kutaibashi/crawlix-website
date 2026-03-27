@@ -1,0 +1,49 @@
+---
+title: "Syncing with Desktop"
+description: "Send Quick Audit results to Crawlix Desktop for full SEO analysis."
+order: 3
+---
+
+## Overview
+
+Quick Audit can connect to the Crawlix desktop app running on the same machine, allowing you to send pages from your browser to the desktop app for deeper analysis.
+
+**Requires Crawlix desktop app to be running with the local API enabled.**
+
+## Setup
+
+1. In the Crawlix desktop app: go to **Settings > API** and enable the local API (default port: 7332).
+2. In the Quick Audit extension: click the settings icon and confirm the connection URL is set to `http://localhost:7332`.
+
+## Sending a Page to Desktop
+
+1. While viewing a page you want to analyze more deeply, click the Quick Audit icon.
+2. Click **"Send to Desktop"** in the popup.
+3. Switch to the Crawlix desktop app — the page appears in the current session for full analysis.
+
+## What Happens in the Desktop App
+
+When a page is sent to the desktop:
+
+- Crawlix fetches and analyzes the page using the same full analysis pipeline as a crawl
+- All 100+ SEO checks run on that single page
+- The page appears in the Pages view and any issues appear in the Issues view
+- If JavaScript rendering is enabled in the desktop app, it's used for the sent page too
+
+## Connection Mechanism
+
+The connection between the extension and the desktop app uses `localhost` (port 7332 by default). All data stays on your machine — no data goes through any external server.
+
+## Changing the Port
+
+If port 7332 conflicts with another application:
+
+1. In the desktop app: change the API port in **Settings > API**.
+2. In the Quick Audit extension settings: update the connection URL to match.
+
+## Troubleshooting Connection Issues
+
+- Ensure the Crawlix desktop app is open and running.
+- Ensure the local API is enabled in Settings > API.
+- Check that no firewall is blocking localhost connections on the configured port.
+- Try the URL `http://localhost:7332` directly in your browser — you should see a JSON response from the Crawlix API.

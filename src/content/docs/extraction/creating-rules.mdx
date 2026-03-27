@@ -1,0 +1,37 @@
+---
+title: "Creating Rules"
+description: "Define extraction targets: text, HTML, or attribute values."
+order: 2
+---
+
+## Creating an Extraction Rule
+
+1. Go to **Settings > Custom Extraction > New Rule**.
+2. Give the rule a **name** — this becomes the column header in the Pages view and exports. Choose something descriptive (e.g., "Product Price", "Author", "SKU").
+3. Choose the **extraction method**: CSS, XPath, regex, JSON-LD, meta tag, or Open Graph.
+4. Enter the **selector or pattern** for the chosen method.
+5. Set the **extraction target**: text content, innerHTML, or a specific attribute.
+6. Optionally, add [transforms](/docs/extraction/transforms) and [validation rules](/docs/extraction/validation).
+7. Click **Save**.
+
+## Testing a Rule
+
+Before running a full crawl, you can test a rule on a specific URL:
+
+1. Enter a URL in the test field.
+2. Click **Test** — Crawlix fetches the page and shows the extracted value.
+3. Adjust the selector or method if needed.
+
+## Rules Run on Every Page
+
+Once saved, extraction rules run on every page during the next crawl. Results appear as extra columns in the Pages view.
+
+If a rule doesn't find a match on a page, the cell is empty. If you've set the field as **required**, an empty result will generate an issue in the Issues view.
+
+## Enabling and Disabling Rules
+
+Rules can be disabled without deleting them. Disabled rules don't run during crawls but retain their configuration for future use.
+
+## Multiple Rules
+
+You can create as many rules as needed. Each rule adds one column to the Pages view. A high number of rules may slightly increase crawl time due to the additional extraction work per page.

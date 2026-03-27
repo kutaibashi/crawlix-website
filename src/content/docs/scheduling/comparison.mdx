@@ -1,0 +1,53 @@
+---
+title: "Crawl Comparison"
+description: "Compare crawl results across sessions to track SEO changes over time."
+badge: "pro"
+order: 4
+---
+
+## Overview
+
+Crawl Comparison lets you see what changed between two crawl sessions: new issues, resolved issues, pages added, pages removed, and Core Web Vitals changes.
+
+**Requires Pro or Agency tier.**
+
+## Accessing Comparison
+
+1. Go to **History** in the left sidebar.
+2. Select two crawl sessions for the same site.
+3. Click **Compare Sessions**.
+
+## What the Comparison Shows
+
+### Issue Delta
+
+- **New issues** — issues that appear in the newer session but were not in the older session (regressions)
+- **Resolved issues** — issues present in the older session but not the newer one (improvements)
+- **Unchanged issues** — issues present in both sessions
+
+### Pages Added and Removed
+
+- **New pages** — URLs found in the newer session that weren't in the older session
+- **Removed pages** — URLs in the older session that weren't found in the newer session
+
+### Core Web Vitals Changes
+
+For pages present in both sessions:
+
+- Metrics that improved (e.g., LCP decreased from 3.2s to 2.4s)
+- Metrics that regressed (e.g., CLS increased)
+- Pages that crossed a threshold (moved from "poor" to "needs improvement", or from "needs improvement" to "good")
+
+## Filtering the Comparison
+
+- Filter by **issue category** to focus on a specific area (e.g., only Technical SEO changes)
+- Filter by **change type** (only regressions, only improvements)
+- Filter by **URL pattern** to focus on a specific section of the site
+- Filter by **CWV metric** to see only LCP or CLS changes
+
+## Use Cases
+
+- **Post-deployment regression check** — compare before and after a site deployment
+- **Monthly SEO reporting** — compare month-over-month to show client progress
+- **Measuring optimization results** — quantify the impact of your SEO work
+- **Incident investigation** — compare before and after a traffic drop to find what changed

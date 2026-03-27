@@ -1,0 +1,50 @@
+---
+title: "Enabling Mobile Crawling"
+description: "Viewport emulation, device presets, touch events, and mobile user agents."
+order: 1
+---
+
+## Overview
+
+Mobile Mode in Crawlix emulates a mobile device during crawling. When enabled, Crawlix renders pages at mobile viewport dimensions and sends a mobile user agent — this is how you audit the mobile version of a site.
+
+**Requires JavaScript rendering to be enabled.** Mobile simulation depends on the Puppeteer browser engine.
+
+## Enabling Mobile Mode
+
+1. Enable **JavaScript Rendering** in Settings > Crawl.
+2. Go to **Settings > Crawl > Mobile Mode** and toggle it on.
+3. Select a device preset or enter custom dimensions.
+
+## Device Presets
+
+| Device | Width | Height |
+|--------|-------|--------|
+| iPhone 14 | 390px | 844px |
+| Pixel 8 | 412px | 915px |
+| Custom | Any | Any |
+
+## What Gets Emulated
+
+When Mobile Mode is enabled:
+
+- **Viewport** — set to mobile dimensions
+- **Touch events** — enabled, so sites that detect touch input serve mobile-specific UI
+- **User agent** — automatically set to a mobile Chrome user agent string
+- **Device pixel ratio** — set to 2.0 for standard mobile presets (affects `srcset` image selection)
+
+## Why the Server May Serve Different Content
+
+Some sites serve different HTML to mobile vs desktop user agents:
+
+- Separate `m.example.com` subdomain
+- User agent detection serving different templates
+- Different images via `srcset` based on DPR
+
+With Mobile Mode enabled, Crawlix receives the same response a mobile user would.
+
+## Responsive Design vs Dynamic Serving
+
+For sites using pure responsive design (same HTML, different CSS breakpoints), Mobile Mode shows any differences in rendered layout but the underlying HTML is the same as desktop.
+
+For sites using dynamic serving (different HTML per device), Mobile Mode captures the actual mobile HTML that Google's mobile-first indexing uses.

@@ -1,0 +1,63 @@
+---
+title: "Data Retention"
+description: "Configure automatic cleanup policies to manage disk space."
+order: 3
+---
+
+## Why Set a Retention Policy?
+
+Every crawl session is stored locally. If you run daily scheduled crawls, the database grows continuously. Without a retention policy, this can consume significant disk space over time.
+
+Configuring a retention policy automates cleanup so you don't have to manage it manually.
+
+## Configuring Retention
+
+Go to **Settings > Data Management > Retention**.
+
+## Policy Options
+
+### Delete Sessions Older Than N Days
+
+Automatically remove crawl sessions that are older than a configured number of days.
+
+Examples:
+
+- 30 days — keep about one month of history
+- 90 days — keep a quarter of history
+- 365 days — keep one year of history
+
+### Keep Last N Sessions
+
+Automatically remove older sessions when the total count exceeds a limit.
+
+Examples:
+
+- Keep last 10 sessions — always have the 10 most recent crawls
+- Keep last 52 sessions — keep one year of weekly crawls
+
+### No Automatic Cleanup
+
+Keep all sessions indefinitely. You manage cleanup manually.
+
+## Manual Cleanup
+
+Delete specific sessions from the **History** view:
+
+1. Right-click any session.
+2. Click **Delete Session**.
+3. Confirm deletion.
+
+Deleted sessions cannot be recovered — export a `.crawlix` archive first if you want to keep the data.
+
+## Checking Disk Usage
+
+**Settings > Data Management** shows total database size and a breakdown by session. Use this to identify large sessions (e.g., a full crawl of a very large site) that are consuming disproportionate space.
+
+## Recommended Policy
+
+If you run scheduled crawls, use "Keep last N sessions":
+
+- Weekly crawls: keep last 52 sessions (one year)
+- Daily crawls: keep last 30 sessions (one month)
+
+Adjust based on how much historical comparison you need and your available disk space.

@@ -1,0 +1,45 @@
+---
+title: "System Requirements"
+description: "Minimum specifications to run Crawlix on Windows and Linux."
+order: 1
+---
+
+## Operating Systems
+
+Crawlix is a desktop application available for:
+
+- **Windows 10 or later** (64-bit) — fully supported
+- **Linux** — Ubuntu 20.04+ or any distribution compatible with AppImage, RPM, or DEB packages
+- **macOS** — coming soon (not yet available)
+
+## Hardware Requirements
+
+**Minimum:**
+
+- RAM: 4 GB
+- Disk space: 500 MB for the application itself, plus additional space for crawl data
+- CPU: any modern 64-bit processor
+
+**Recommended for large site crawls:**
+
+- RAM: 8 GB or more
+- Disk space: several GB available for storing crawl sessions over time
+- SSD recommended for faster database reads and writes
+
+## Crawl Data Storage
+
+Crawl data size depends on the number of pages crawled. A 10,000-page crawl typically uses 50–200 MB of disk space. If you run scheduled crawls regularly, configure a data retention policy to prevent unbounded disk growth. See [Data Retention](/docs/data/retention) for details.
+
+## Network
+
+An internet connection is required for:
+
+- License validation (one-time at activation)
+- Integration API calls when you connect Google Analytics, Search Console, or PageSpeed Insights
+- Crawling websites (obviously)
+
+Crawl data itself is never uploaded to Crawlix servers.
+
+## JavaScript Rendering
+
+When JavaScript rendering is enabled, Crawlix runs a headless Chromium browser internally. This uses significantly more RAM — 8 GB is strongly recommended for JS rendering crawls on larger sites.

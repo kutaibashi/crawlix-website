@@ -1,0 +1,46 @@
+---
+title: "Performance Optimization"
+description: "Speed up slow crawls, reduce memory usage, and handle large sites."
+order: 5
+---
+
+## Crawl Is Too Slow
+
+**Standard crawl is slow:**
+
+- Increase concurrent workers (up to 10) in Settings > Crawl.
+- Reduce crawl delay if you own the target server (lower than the default 350ms).
+- Check if robots.txt has a `Crawl-delay` directive limiting your speed.
+
+**JS rendering crawl is slow:**
+
+- Reduce concurrent workers to 2–3 (browser instances are memory-intensive).
+- Block images, fonts, and analytics scripts (see [Resource Blocking](/docs/js-rendering/resource-blocking)).
+- Use `domcontentloaded` wait strategy instead of `networkidle0` for pages that don't need full load.
+- Blocking analytics scripts alone can improve speed by 20–40%.
+
+## High CPU Usage
+
+**During JS rendering:** High CPU is expected — each browser instance is doing real rendering work. If CPU is at 100% and the machine is unresponsive, reduce workers.
+
+**During standard crawling:** High CPU is unusual. Check that another process isn't consuming resources. If issue persists, reduce workers to let the CPU breathe between requests.
+
+## High Memory Usage
+
+- Reduce concurrent workers — each worker (especially with JS rendering) uses RAM.
+- Reduce the memory limit threshold in Settings to trigger more frequent checkpoints.
+- Segment large crawls using URL include/exclude filters.
+- Disable screenshots (if enabled) — screenshots consume significant memory.
+
+## Large Site Strategies
+
+For sites with hundreds of thousands of pages:
+
+1. **Crawl sections separately** — use URL include patterns to crawl `/products/`, then `/blog/`, then `/support/` as separate sessions. Each stays within page limits.
+2. **Use scheduled crawls** — distribute monitoring across time rather than trying to crawl everything at once.
+3. **Set data retention policies** — with regular crawls, old sessions accumulate. Configure auto-cleanup to manage disk usage.
+4. **Increase workers gradually** — start with 5 workers, confirm the server can handle it, then increase.
+
+## Disk Space Running Low
+
+Go to **Settings > Data Management** to see how much space Crawlix is using. Delete old sessions you no longer need or configure a retention policy to automate cleanup.

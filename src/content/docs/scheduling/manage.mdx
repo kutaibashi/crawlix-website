@@ -1,0 +1,55 @@
+---
+title: "Managing Schedules"
+description: "View, edit, pause, and delete crawl schedules."
+badge: "pro"
+order: 3
+---
+
+## Schedules Overview
+
+View all your schedules at **Settings > Schedules**.
+
+**Requires Pro or Agency tier.**
+
+## Schedule List
+
+Each schedule in the list shows:
+
+- **Site** — the domain being crawled
+- **Frequency** — daily, weekly, or monthly
+- **Time** — when the crawl runs
+- **Last run** — date, time, and status of the most recent crawl (success, failed, skipped)
+- **Next run** — when the crawl is next scheduled to run
+- **Status** — enabled or disabled
+
+## Actions
+
+### Edit
+
+Change the schedule's frequency, run time, or crawl settings. Changes take effect on the next scheduled run.
+
+### Run Now
+
+Trigger an immediate crawl using the schedule's configured settings. Useful for:
+
+- Testing that the schedule is set up correctly
+- Running an out-of-cycle crawl without changing the regular schedule
+
+### Enable / Disable
+
+Toggle the schedule on or off without deleting it. Disabled schedules don't run but retain all their configuration.
+
+### Delete
+
+Permanently removes the schedule. Historical crawl data from previous runs of this schedule is preserved — it's not deleted along with the schedule.
+
+## Status Indicators
+
+- **Success** — last run completed without errors
+- **Partial** — last run completed but hit the page limit before finishing the full site
+- **Failed** — last run encountered an error (check the crawl session for details)
+- **Skipped** — the app was not running at the scheduled time
+
+## History
+
+Every run of a scheduled crawl creates a new crawl session in your History. You can review any past session and compare across runs.

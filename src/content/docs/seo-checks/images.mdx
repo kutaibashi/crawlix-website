@@ -1,0 +1,33 @@
+---
+title: "Image Optimization (10+ checks)"
+description: "Alt text, dimensions, lazy loading, file sizes, and generic filenames."
+order: 5
+---
+
+## Alt Text
+
+- **Missing alt attribute** — `<img>` tag with no `alt` attribute at all. This is both an SEO and accessibility issue.
+- **Empty alt text** — `<img alt="">` is valid for decorative images that don't need to be described. Crawlix distinguishes between missing and empty, as empty is intentional.
+- **Generic alt text** — alt values like "image", "photo", "picture", or the raw filename (e.g., "IMG_1234.jpg") provide no useful context.
+- **Alt text too long** — alt text over 125 characters is flagged. Concise descriptions are better.
+
+## Dimensions and CLS
+
+- **Missing width and height attributes** — images without explicit `width` and `height` attributes cause Cumulative Layout Shift (CLS) as the browser doesn't know how much space to reserve. This is a Core Web Vitals issue.
+
+## Lazy Loading
+
+- **Missing `loading="lazy"`** — images that appear below the fold and don't have the `loading="lazy"` attribute. Adding lazy loading reduces initial page load time and improves LCP.
+- **`loading="lazy"` on above-the-fold images** — hero images and other images visible on initial load should not use lazy loading, as it delays them unnecessarily.
+
+## File Size
+
+- **Large images** — images over a configurable size threshold (default 200 KB) are flagged. Large images slow page load and hurt LCP.
+
+## Filenames
+
+- **Generic filenames** — images with filenames like `IMG_1234.jpg`, `DSC_5678.jpg`, or `screenshot.png` don't convey any meaning to search engines. Descriptive filenames help with image search.
+
+## Oversized Images
+
+When JavaScript rendering is enabled, Crawlix can detect images displayed at a much smaller size than their actual dimensions. An image 3000×2000 pixels displayed at 300×200 is wasting bandwidth.

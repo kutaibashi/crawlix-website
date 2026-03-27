@@ -85,7 +85,7 @@ export const docSections: DocSection[] = [
       {
         title: 'Understanding the Dashboard',
         slug: 'getting-started/dashboard',
-        description: 'Navigate the 30+ views including Pages, Issues, Core Web Vitals, and Site Structure.',
+        description: 'Navigate the 25+ views including Pages, Issues, Core Web Vitals, and Site Structure.',
       },
       {
         title: 'Keyboard Shortcuts',
@@ -103,7 +103,7 @@ export const docSections: DocSection[] = [
       {
         title: 'Basic Settings',
         slug: 'configuration/basic-settings',
-        description: 'Max pages, crawl depth (default 10), concurrent workers (1-20), and request timeout.',
+        description: 'Max pages, crawl depth (default 10), concurrent workers (1-10), and request timeout.',
       },
       {
         title: 'Crawl Scope',
@@ -118,8 +118,7 @@ export const docSections: DocSection[] = [
       {
         title: 'User Agents',
         slug: 'configuration/user-agents',
-        description: 'Default Crawlix user agent and custom user agent configuration (Pro feature).',
-        badge: 'pro',
+        description: 'Default Crawlix user agent and custom user agent configuration.',
       },
       {
         title: 'URL Filtering',
@@ -196,37 +195,31 @@ export const docSections: DocSection[] = [
         title: 'Enabling JS Rendering',
         slug: 'js-rendering/enable',
         description: 'Toggle JavaScript rendering and configure Puppeteer-based browser engine.',
-        badge: 'pro',
       },
       {
         title: 'Wait Strategies',
         slug: 'js-rendering/wait-strategies',
         description: 'Load, DOMContentLoaded, networkidle0/2, and custom wait conditions.',
-        badge: 'pro',
       },
       {
         title: 'Resource Blocking',
         slug: 'js-rendering/resource-blocking',
         description: 'Block images, fonts, stylesheets, and specific scripts (analytics, ads) for speed.',
-        badge: 'pro',
       },
       {
         title: 'Lazy Loading Detection',
         slug: 'js-rendering/lazy-loading',
         description: 'Scroll-based detection, infinite scroll handling, and configurable scroll behavior.',
-        badge: 'pro',
       },
       {
         title: 'Mobile Simulation',
         slug: 'js-rendering/mobile',
         description: 'Viewport settings, device scale factor, and mobile-specific rendering.',
-        badge: 'pro',
       },
       {
         title: 'Debugging JS Issues',
         slug: 'js-rendering/debugging',
         description: 'Console capture, JS error logging, network request analysis, and screenshots.',
-        badge: 'pro',
       },
     ],
   },
@@ -254,7 +247,7 @@ export const docSections: DocSection[] = [
       {
         title: 'Historical Tracking',
         slug: 'core-web-vitals/history',
-        description: 'Track CWV changes over time with cwv_history storage.',
+        description: 'Compare CWV metrics across crawl sessions to track performance over time.',
       },
       {
         title: 'PageSpeed Insights Integration',
@@ -445,7 +438,7 @@ export const docSections: DocSection[] = [
       {
         title: 'AI Crawler Analysis',
         slug: 'ai-readiness/analysis',
-        description: 'Check robots.txt blocking for 13 AI crawlers: GPTBot, Google-Extended, ClaudeBot, and more.',
+        description: 'Check robots.txt blocking for 12 AI crawlers: GPTBot, Google-Extended, ClaudeBot, and more.',
       },
       {
         title: 'AI Bot Detection',
@@ -478,7 +471,7 @@ export const docSections: DocSection[] = [
       {
         title: 'Managing Devices',
         slug: 'licensing/devices',
-        description: 'Max activations: Free (1), Pro (3), Agency (5). Deactivate to free slots.',
+        description: 'Max activations: Free (1), Pro (1), Agency (5). Contact support to transfer.',
       },
       {
         title: 'Annual vs Perpetual',
@@ -583,10 +576,10 @@ export const docSections: DocSection[] = [
     description: 'Viewport emulation, tap targets, and mobile usability',
     icon: 'Gauge',
     articles: [
-      { title: 'Enabling Mobile Crawling', slug: 'mobile-crawling/enable', description: 'Viewport emulation (iPhone 14, Pixel 8), touch events, and mobile user agents.', badge: 'pro' as const },
-      { title: 'Mobile Usability Scoring', slug: 'mobile-crawling/usability', description: 'Tap target size, font readability, content viewport fit, and horizontal scroll detection.', badge: 'pro' as const },
-      { title: 'Network Throttling', slug: 'mobile-crawling/throttling', description: '3G/4G simulation for realistic mobile performance testing.', badge: 'pro' as const },
-      { title: 'Desktop vs Mobile Comparison', slug: 'mobile-crawling/comparison', description: 'Content diff between desktop and mobile rendering.', badge: 'pro' as const },
+      { title: 'Enabling Mobile Crawling', slug: 'mobile-crawling/enable', description: 'Viewport emulation (iPhone 14, Pixel 8), touch events, and mobile user agents.' },
+      { title: 'Mobile Usability Scoring', slug: 'mobile-crawling/usability', description: 'Tap target size, font readability, content viewport fit, and horizontal scroll detection.' },
+      { title: 'Network Throttling', slug: 'mobile-crawling/throttling', description: '3G/4G simulation for realistic mobile performance testing.' },
+      { title: 'Desktop vs Mobile Comparison', slug: 'mobile-crawling/comparison', description: 'Content diff between desktop and mobile rendering.' },
     ],
   },
 ];
@@ -594,7 +587,7 @@ export const docSections: DocSection[] = [
 // Popular/featured topics for quick access
 export const popularTopics = [
   { title: 'Your First Crawl', slug: 'getting-started/first-crawl' },
-  { title: 'JavaScript Rendering', slug: 'js-rendering/enable', badge: 'pro' as const },
+  { title: 'JavaScript Rendering', slug: 'js-rendering/enable' },
   { title: 'Core Web Vitals', slug: 'core-web-vitals/overview' },
   { title: 'PDF Reports', slug: 'exports/pdf', badge: 'pro' as const },
   { title: 'Custom Extraction', slug: 'extraction/methods' },
@@ -610,7 +603,7 @@ export const docsFaqs: FAQ[] = [
   },
   {
     question: 'Does Crawlix work with JavaScript websites?',
-    answer: 'Yes! Crawlix includes a full Puppeteer-based browser engine for JavaScript rendering (Pro feature). Configure wait strategies (networkidle, selector), block resources for speed, and detect lazy-loaded content.',
+    answer: 'Yes! Crawlix includes a full Puppeteer-based browser engine for JavaScript rendering on all tiers. Configure wait strategies (networkidle, selector), block resources for speed, and detect lazy-loaded content.',
     category: 'Features',
   },
   {
@@ -625,12 +618,12 @@ export const docsFaqs: FAQ[] = [
   },
   {
     question: 'Can I use Crawlix on multiple computers?',
-    answer: 'Free tier: 1 device. Pro: 3 devices. Agency: 5 devices. You can deactivate old devices to free up slots. If you need to transfer your license, contact support@crawlix.app.',
+    answer: 'Free and Pro tiers: 1 device each. Agency tier: 5 devices. If you need to transfer your license to a new device, contact support@crawlix.app.',
     category: 'Licensing',
   },
   {
     question: 'How do I connect Google Analytics?',
-    answer: 'Go to Settings > Integrations > Google Analytics 4. Click "Connect" to authorize via OAuth. Crawlix will sync sessions, pageviews, bounce rates, and traffic sources for the last 30 days (Pro feature).',
+    answer: 'Go to Settings > Integrations > Google Analytics 4. Click "Connect" to authorize via OAuth. Crawlix syncs traffic data including sessions, pageviews, and traffic sources (Pro feature).',
     category: 'Integrations',
   },
   {
@@ -640,7 +633,7 @@ export const docsFaqs: FAQ[] = [
   },
   {
     question: 'How do I crawl large websites efficiently?',
-    answer: 'Increase concurrent workers (up to 20), set appropriate crawl delays (350ms+ recommended), use include/exclude patterns to focus on important sections, and consider blocking unnecessary resources during JS rendering.',
+    answer: 'Increase concurrent workers (up to 10), set appropriate crawl delays (350ms+ recommended), use include/exclude patterns to focus on important sections, and consider blocking unnecessary resources during JS rendering.',
     category: 'Performance',
   },
 ];
@@ -655,7 +648,7 @@ export const crawlerDefaults = {
   batchSize: 50,
   checkpointInterval: 30000, // ms
   maxMemoryMB: 2048,
-  userAgent: 'Crawlix/2.0 (compatible; SEO Crawler; +https://crawlix.io/bot)',
+  userAgent: 'Crawlix/2.0 (compatible; SEO Crawler; +https://crawlix.app/bot)',
 };
 
 // AI crawlers analyzed

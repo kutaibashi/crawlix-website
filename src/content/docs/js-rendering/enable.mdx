@@ -1,0 +1,41 @@
+---
+title: "Enabling JS Rendering"
+description: "Toggle JavaScript rendering to crawl SPAs and dynamic content with Puppeteer."
+order: 1
+---
+
+## What Is JavaScript Rendering?
+
+JavaScript rendering lets Crawlix fully execute JavaScript on each page before extracting content. Instead of just fetching the raw HTML, Crawlix runs a headless Chromium browser (powered by Puppeteer) to render the page as a real browser would.
+
+**Available on all tiers** — Free, Pro, and Agency.
+
+## When Do You Need It?
+
+Enable JS rendering when:
+
+- The page content is blank or incomplete when you view source in your browser
+- The site is a Single Page Application (SPA) built with React, Vue, Angular, or similar
+- Navigation, headings, or product content is loaded via JavaScript after initial page load
+- Lazy-loaded content needs to be detected
+- You want to collect Core Web Vitals metrics
+
+Standard (non-JS) crawling is faster and sufficient for traditional server-rendered sites.
+
+## Enabling It
+
+Go to **Settings > Crawl > JavaScript Rendering** and toggle it on.
+
+## Performance Impact
+
+JS rendering is significantly slower than standard crawling because each page requires launching a browser instance, waiting for JavaScript to execute, and rendering the full page.
+
+Tips for faster JS rendering crawls:
+
+- Reduce concurrent workers to 2–3 (each worker runs a separate browser instance)
+- Enable resource blocking for images, fonts, and analytics scripts (see [Resource Blocking](/docs/js-rendering/resource-blocking))
+- Use the `domcontentloaded` wait strategy for mostly server-rendered pages
+
+## Memory Usage
+
+JS rendering uses considerably more RAM than standard crawling. If you have 4 GB of RAM, use 2 workers. With 8 GB or more, you can use up to 5 workers comfortably.

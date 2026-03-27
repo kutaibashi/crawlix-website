@@ -1,0 +1,87 @@
+---
+title: "Optimization Tips"
+description: "Control AI crawler access with robots.txt — allow, block, or selectively manage each bot."
+order: 3
+---
+
+## Default Behavior
+
+If your `robots.txt` doesn't mention any AI-specific bots (or has only a permissive `User-agent: *` rule), **all AI crawlers are allowed** by default.
+
+## Blocking All AI Crawlers
+
+To block all AI crawlers, add a `Disallow: /` rule for each user agent in your `robots.txt`:
+
+```
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+```
+
+## Blocking a Specific Crawler
+
+To block only one crawler (example: GPTBot):
+
+```
+User-agent: GPTBot
+Disallow: /
+```
+
+## Allowing Specific Paths Only
+
+To allow AI crawlers access only to certain sections:
+
+```
+User-agent: GPTBot
+Disallow: /
+Allow: /public-content/
+```
+
+## Allowing Everything for a Specific Bot
+
+To explicitly allow a specific bot even if a broader block is in place:
+
+```
+User-agent: GPTBot
+Allow: /
+```
+
+## Crawlix's Recommendations
+
+After analyzing your current `robots.txt`, Crawlix shows a recommended snippet based on a desired configuration you select (allow all, block all, or custom). You can copy this snippet and add it to your `robots.txt`.
+
+## Important Note
+
+`robots.txt` is a request, not an enforcement mechanism. Well-behaved bots (all major AI companies listed) respect it. Malicious scrapers do not.

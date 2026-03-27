@@ -37,19 +37,19 @@ export const prerender = true;
           <h1 class="text-3xl font-bold text-white sm:text-4xl lg:text-5xl leading-[1.15]">
             Crawlix Documentation
           </h1>
-          <p class="mt-4 text-lg text-slate-400">
+          <p class="mt-4 text-xl text-slate-300">
             Everything you need to master website auditing. From your first crawl to advanced automation and integrations.
           </p>
         </div>
 
-        <div class="mt-6 flex flex-wrap items-center gap-6 text-sm text-slate-500">
+        <div class="mt-6 flex flex-wrap items-center gap-6 text-base text-slate-400">
           <span><span class="text-white font-medium">{totalArticles}+</span> articles</span>
           <span><span class="text-white font-medium">{docSections.length}</span> topics</span>
           <span><span class="text-white font-medium">100+</span> SEO checks</span>
         </div>
 
         <div class="mt-8">
-          <a href="/download" class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors">
+          <a href="/download" class="inline-flex items-center gap-2 rounded-lg bg-[#22d3ee] px-6 py-3 font-semibold text-slate-900 hover:bg-[#67e8f9] transition-colors">
             <Download class="h-4 w-4" />
             Download Crawlix
           </a>
@@ -60,15 +60,15 @@ export const prerender = true;
     <!-- Popular Topics -->
     <section class="py-14 border-t border-slate-800/30">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <p class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Popular</p>
-        <div class="flex flex-wrap gap-x-1 gap-y-2 text-sm">
+        <p class="text-sm font-medium text-slate-400 uppercase tracking-wide mb-4">Popular</p>
+        <div class="flex flex-wrap gap-x-1 gap-y-2 text-base">
           {popularTopics.map((topic, i) => (
             <>
-              {i > 0 && <span class="text-slate-700 mx-1">&middot;</span>}
+              {i > 0 && <span class="text-slate-600 mx-1">&middot;</span>}
               <a href={`/docs/${topic.slug}`} class="text-cyan-400 hover:text-white transition-colors">
                 {topic.title}
               </a>
-              {topic.badge === 'pro' && <span class="text-slate-600 text-xs ml-0.5">(Pro)</span>}
+              {topic.badge === 'pro' && <span class="text-[#22d3ee]/60 text-sm ml-0.5">(Pro)</span>}
             </>
           ))}
         </div>
@@ -82,20 +82,20 @@ export const prerender = true;
 
         <div class="grid md:grid-cols-2 gap-x-12">
           {docSections.map((section) => {
-            const hasPro = section.articles.some(a => a.badge === 'pro');
-            const hasAgency = section.articles.some(a => a.badge === 'agency');
+            const hasPro = section.articles.every(a => a.badge === 'pro');
+            const hasAgency = section.articles.every(a => a.badge === 'agency');
 
             return (
               <a href={`/docs/${section.id}`} class="block py-4 border-t border-slate-800/30 group">
                 <div class="flex items-baseline gap-2">
-                  <h3 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                  <h3 class="text-base font-semibold text-white group-hover:text-cyan-400 transition-colors">
                     {section.title}
                   </h3>
-                  {hasPro && !hasAgency && <span class="text-xs text-violet-400">(Pro)</span>}
-                  {hasAgency && <span class="text-xs text-amber-400">(Agency)</span>}
-                  <span class="text-xs text-slate-500 ml-auto">{section.articles.length} articles</span>
+                  {hasPro && !hasAgency && <span class="text-xs text-[#22d3ee]">(Pro)</span>}
+                  {hasAgency && <span class="text-xs text-[#a78bfa]">(Agency)</span>}
+                  <span class="text-sm text-slate-400 ml-auto">{section.articles.length} articles</span>
                 </div>
-                <p class="text-sm text-slate-400 mt-1">{section.description}</p>
+                <p class="text-sm text-slate-300 mt-1">{section.description}</p>
               </a>
             );
           })}
@@ -107,7 +107,7 @@ export const prerender = true;
     <section class="py-14 border-t border-slate-800/30">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-bold text-white mb-1">Quick Reference</h2>
-        <p class="text-slate-400 mb-8">Default crawler settings</p>
+        <p class="text-slate-300 mb-8">Default crawler settings</p>
 
         <table class="w-full text-sm max-w-lg">
           <tbody>
@@ -116,15 +116,15 @@ export const prerender = true;
               <td colspan="2" class="pt-2 pb-2 text-slate-300 font-medium border-b border-slate-800/30">Page Limits</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Free tier</td>
+              <td class="py-2 text-slate-300">Free tier</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.maxPages.free}</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Pro tier</td>
+              <td class="py-2 text-slate-300">Pro tier</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.maxPages.pro.toLocaleString()}</td>
             </tr>
             <tr class="border-b border-slate-800/30">
-              <td class="py-2 text-slate-400">Agency tier</td>
+              <td class="py-2 text-slate-300">Agency tier</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.maxPages.agency}</td>
             </tr>
 
@@ -133,15 +133,15 @@ export const prerender = true;
               <td colspan="2" class="pt-6 pb-2 text-slate-300 font-medium border-b border-slate-800/30">Crawl Settings</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Max depth</td>
+              <td class="py-2 text-slate-300">Max depth</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.maxDepth}</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Concurrent workers</td>
+              <td class="py-2 text-slate-300">Concurrent workers</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.concurrentWorkers}</td>
             </tr>
             <tr class="border-b border-slate-800/30">
-              <td class="py-2 text-slate-400">Crawl delay</td>
+              <td class="py-2 text-slate-300">Crawl delay</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.crawlDelay}ms</td>
             </tr>
 
@@ -150,15 +150,15 @@ export const prerender = true;
               <td colspan="2" class="pt-6 pb-2 text-slate-300 font-medium border-b border-slate-800/30">Performance</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Timeout</td>
+              <td class="py-2 text-slate-300">Timeout</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.timeout / 1000}s</td>
             </tr>
             <tr class="border-b border-slate-800/20">
-              <td class="py-2 text-slate-400">Batch size</td>
+              <td class="py-2 text-slate-300">Batch size</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.batchSize}</td>
             </tr>
             <tr class="border-b border-slate-800/30">
-              <td class="py-2 text-slate-400">Max memory</td>
+              <td class="py-2 text-slate-300">Max memory</td>
               <td class="py-2 text-right font-mono text-white">{crawlerDefaults.maxMemoryMB}MB</td>
             </tr>
 
@@ -168,7 +168,7 @@ export const prerender = true;
             </tr>
             <tr>
               <td colspan="2" class="py-2">
-                <code class="text-xs text-slate-300 break-all">{crawlerDefaults.userAgent}</code>
+                <code class="text-sm text-slate-300 break-all">{crawlerDefaults.userAgent}</code>
               </td>
             </tr>
           </tbody>
@@ -186,10 +186,10 @@ export const prerender = true;
             <details class="group border-t border-slate-800/30">
               <summary class="flex items-center justify-between cursor-pointer py-5 text-white font-medium hover:text-cyan-400 transition-colors">
                 <span>{faq.question}</span>
-                <ChevronRight class="h-4 w-4 text-slate-600 shrink-0 ml-4 transition-transform group-open:rotate-90" />
+                <ChevronRight class="h-4 w-4 text-slate-500 shrink-0 ml-4 transition-transform group-open:rotate-90" />
               </summary>
               <div class="pb-5 -mt-1">
-                <p class="text-slate-400 leading-relaxed">{faq.answer}</p>
+                <p class="text-slate-300 leading-relaxed">{faq.answer}</p>
               </div>
             </details>
           ))}

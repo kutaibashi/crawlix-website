@@ -1,0 +1,53 @@
+---
+title: "Validation Rules"
+description: "Flag missing fields, invalid patterns, and out-of-range values as SEO issues."
+order: 4
+---
+
+## What Are Validation Rules?
+
+Validation rules check extracted values and generate Issues when they don't meet your criteria. This turns custom extraction into a quality assurance tool.
+
+Validation failures appear in the **Issues** view under the "Custom Extraction" category, with the same severity system (Error, Warning, Notice) as built-in SEO checks.
+
+## Available Validators
+
+### Required
+
+Flag pages where the extracted field is missing or empty.
+
+Use case: every product page should have a price. Flag any product page where the price is missing.
+
+### Regex Match
+
+Validate that the extracted value matches a specific pattern.
+
+Examples:
+
+- SKU format: `^[A-Z]{2}-[0-9]{4}$` — ensures SKUs follow the format `AB-1234`
+- Phone number: `^\+?[0-9\s\-()]{7,20}$`
+- ISO date: `^\d{4}-\d{2}-\d{2}$`
+
+Pages where the value doesn't match are flagged.
+
+### Min/Max Length
+
+Flag values that are too short or too long.
+
+Use case: product descriptions should be between 50 and 500 characters.
+
+### Type Check (Numeric)
+
+Validate that the extracted value is a valid number. Useful for price fields after applying the `number` transform.
+
+## Severity
+
+Set the severity of validation failures:
+
+- **Error** — critical data quality issue
+- **Warning** — should be reviewed
+- **Notice** — informational
+
+## Accessing Validation Results
+
+Go to **Issues > Custom Extraction** to see all pages with validation failures. Click any issue to see which pages are affected and what value was extracted (or that no value was found).

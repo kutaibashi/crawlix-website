@@ -1,0 +1,46 @@
+---
+title: "Importing Server Logs"
+description: "Import Apache, Nginx, and Cloudflare log files for SEO bot analysis."
+order: 1
+---
+
+## Supported Formats
+
+Crawlix supports the following server log formats:
+
+- **Apache Combined Log Format** — the standard `%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"` format
+- **Nginx access logs** — standard combined format logs
+- **Cloudflare JSON logs** — JSON export format from Cloudflare's Logpush service
+
+Crawlix auto-detects the format from the file contents — you don't need to specify it manually.
+
+## How to Import
+
+1. Go to **Settings > Log Analysis > Import Logs**.
+2. Click **Choose File** and select your log file (`.log`, `.txt`, `.json`, or `.gz` compressed).
+3. Optionally, set a **date range filter** to import only entries within a specific date range.
+4. Click **Import**.
+
+Parsing may take several minutes for files over 1 GB.
+
+## Multiple Files
+
+You can import multiple log files to build a complete picture. This is useful when:
+
+- Your logs are split by day or week
+- You have multiple web servers, each generating separate log files
+- You're combining logs from a CDN with logs from your origin server
+
+Import each file separately — Crawlix combines all imported entries in the Log Analysis view.
+
+## Compressed Files
+
+Crawlix can import gzip-compressed log files (`.gz`) directly without manual decompression.
+
+## Date Range Filtering
+
+For large log files, importing a date range significantly reduces processing time. For example, to analyze the past 30 days of bot activity, filter to only import entries from the last 30 days.
+
+## After Importing
+
+Navigate to the **Log Analysis** dashboard to view bot detection results, URL hit aggregation, and time series data.

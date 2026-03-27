@@ -1,0 +1,46 @@
+---
+title: "URL Hit Aggregation"
+description: "Per-URL stats: total hits, bot vs human requests, and status code breakdown."
+order: 3
+---
+
+## URL Hit Statistics
+
+The URL Hits view aggregates log entries by URL and shows:
+
+| Column | Description |
+|--------|-------------|
+| URL | The requested path |
+| Total requests | All requests to this URL across the log period |
+| Bot requests | Requests from classified bots |
+| Human requests | Requests from browser user agents |
+| 2xx count | Successful responses |
+| 3xx count | Redirect responses |
+| 4xx count | Client error responses (404, 403, etc.) |
+| 5xx count | Server error responses |
+
+## Sorting and Filtering
+
+Sort the URL Hits table by any column:
+
+- **Most crawled** — sort by total requests to find URLs bots visit most
+- **Most 404s** — sort by 4xx count to find broken URLs being requested
+- **Most server errors** — sort by 5xx count to find reliability issues
+
+Filter by:
+
+- **Date range** — focus on a specific period
+- **Bot type** — show only Googlebot requests, only AI crawler requests, etc.
+- **Status code** — show only URLs returning 404, or only successful URLs
+
+## Combining with Crawl Data
+
+Log analysis data is most powerful when combined with crawl data:
+
+- **Heavily crawled pages with SEO issues** — pages that bots visit frequently but that have technical problems
+- **404 URLs with traffic** — URLs that don't exist but are being requested (from external links or old bookmarks)
+- **Crawl budget analysis** — compare Googlebot's crawl distribution against your site's internal link structure
+
+## Export
+
+Export the URL hits data to CSV from **File > Export > Log Analysis CSV**.

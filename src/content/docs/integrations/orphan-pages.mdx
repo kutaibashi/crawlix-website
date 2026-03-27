@@ -1,0 +1,47 @@
+---
+title: "Orphan Pages Analysis"
+description: "Find pages with no inbound internal links using GA4 and GSC traffic data."
+badge: "pro"
+order: 4
+---
+
+## What Are Orphan Pages?
+
+An orphan page is a page that exists on your site but has **no inbound internal links** — no other page on your site links to it.
+
+Search engines discover new pages primarily by following links. An orphan page may still be indexed (via sitemap, external links, or direct URL), but it doesn't benefit from your internal link structure. This can limit its ability to rank.
+
+**Requires Pro or Agency tier, with at least one of GA4 or GSC connected.**
+
+## How Crawlix Finds Orphan Pages
+
+Crawlix combines two data sources:
+
+1. **Crawl data** — the complete link graph discovered during the crawl, showing which pages link to which
+2. **Traffic data** — from Google Analytics 4 and/or Google Search Console
+
+Pages that appear in traffic data but have no inbound internal links in the crawl are flagged as orphan pages.
+
+## Categories
+
+Crawlix groups orphan pages into three categories based on traffic:
+
+- **High-traffic orphans** — pages receiving significant traffic but no internal links. These are the highest priority to fix — they're valuable pages that your site isn't supporting.
+- **Low-traffic orphans** — pages with some traffic but no internal links. Review and decide whether to link or consolidate.
+- **Zero-traffic orphans** — pages with no traffic and no internal links. Consider whether these pages should exist at all.
+
+## Viewing Orphan Pages
+
+The Orphan Pages analysis is available in the dedicated **Orphan Pages** view in the dashboard (when both a crawl and an integration are active).
+
+## Fixing Orphan Pages
+
+For high-priority orphans:
+
+1. Identify relevant pages on your site that should logically link to the orphan page
+2. Add internal links from those pages to the orphan
+3. Consider adding the orphan to your main navigation or sitemap
+
+## Exporting
+
+Export the orphan pages list to CSV for prioritization and action planning.

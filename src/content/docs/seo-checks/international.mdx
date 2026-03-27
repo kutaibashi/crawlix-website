@@ -1,0 +1,52 @@
+---
+title: "International SEO"
+description: "Hreflang validation, x-default, return tags, and language code checks."
+order: 9
+---
+
+## What Is Hreflang?
+
+Hreflang tags tell search engines which version of a page to show users based on their language and region. They prevent duplicate content issues between multilingual or multi-regional pages.
+
+Hreflang can be implemented in:
+
+- The `<head>` of each page: `<link rel="alternate" hreflang="en" href="...">`
+- The XML sitemap
+- HTTP headers (for non-HTML content)
+
+Crawlix checks all three methods.
+
+## Checks Performed
+
+### Missing Hreflang
+
+Pages that appear to be multilingual (similar content detected on pages with different language codes in the URL or `lang` attribute) but have no hreflang tags.
+
+### Missing x-default
+
+The `x-default` hreflang value indicates the fallback page for users who don't match any specific language. Missing `x-default` is flagged when other hreflang values are present.
+
+### Non-Self-Referencing Hreflang
+
+Each page should include a hreflang tag pointing to itself. A page that references other language versions but not itself is missing the self-referencing tag.
+
+### Invalid Language Codes
+
+Hreflang values must use BCP 47 format:
+
+- Correct: `en`, `en-US`, `fr`, `zh-Hant`
+- Incorrect: `en_US` (underscore instead of hyphen), `english`, `ENG`
+
+Crawlix flags invalid language codes.
+
+### Return Tags Missing
+
+Hreflang must be reciprocal. If Page A has `hreflang="fr"` pointing to Page B, then Page B must have a hreflang tag pointing back to Page A. Missing return tags are flagged.
+
+### Orphaned Hreflang References
+
+A page referenced in another page's hreflang set but not found in the crawl. This can happen when a language version is removed without updating the hreflang tags on other versions.
+
+### Hreflang Pointing to Non-Indexable Pages
+
+Hreflang tags pointing to pages with `noindex`, redirect, or 4xx/5xx errors are flagged, as search engines will not use these as valid alternates.

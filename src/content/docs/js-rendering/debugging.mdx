@@ -1,0 +1,48 @@
+---
+title: "Debugging JS Issues"
+description: "Console capture, JS error logging, network requests, and screenshots for diagnosing rendering problems."
+order: 6
+---
+
+## Where to Find Debug Information
+
+When JavaScript rendering is enabled, Crawlix captures additional diagnostic data per page. Find it in the **page detail view** under the **Rendering** tab.
+
+## Console Output
+
+Crawlix captures all browser console messages generated while the page loads:
+
+- `console.error()` messages
+- `console.warn()` messages
+- Unhandled promise rejections
+
+This helps identify JavaScript errors that may prevent content from rendering correctly.
+
+## JavaScript Error Log
+
+Unhandled JavaScript errors (uncaught exceptions) are logged separately. If a page's main script throws an error during initialization, the content may be incomplete. Check this log when a page appears blank or partially rendered in the crawl.
+
+## Network Request Log
+
+Every network request made during page load is recorded:
+
+- Request URL and method
+- HTTP status code
+- Response time
+- Resource type (script, image, XHR, fetch, etc.)
+
+Use this to identify failed API calls that prevent content from loading, or to understand which third-party scripts are slowing down the page.
+
+## Screenshot Capture
+
+Crawlix can take a screenshot of the rendered page. This is the most direct way to verify what the page looks like after JavaScript execution.
+
+Enable screenshot capture in **Settings > Crawl > JavaScript Rendering > Capture Screenshots**. Screenshots are stored per page and viewable in the page detail view.
+
+## Common Debugging Scenarios
+
+**Page content is empty:** Check the console log for errors. Switch wait strategy to `networkidle0`. Review the network log for failed API calls.
+
+**Page content is incomplete:** The wait strategy may be triggering too early. Switch to `networkidle0` or add a custom selector wait for a content-specific element.
+
+**Crawl is very slow:** Check the network log for long-running requests. Enable resource blocking for images, fonts, and analytics.

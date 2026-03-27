@@ -1,0 +1,47 @@
+---
+title: "AI Bot Detection"
+description: "Understand which AI companies can access your content and what it means."
+order: 2
+---
+
+## What AI Bot Detection Shows
+
+Crawlix groups the 12 tracked AI crawlers by company, showing you which AI companies currently have access to your content based on your `robots.txt` configuration.
+
+## Groupings by Company
+
+| Company | Bots |
+|---------|------|
+| OpenAI | GPTBot |
+| Google | Google-Extended |
+| Anthropic | anthropic-ai, ClaudeBot |
+| ByteDance | Bytespider |
+| Amazon | Amazonbot |
+| Meta | FacebookBot |
+| Apple | Applebot-Extended |
+| Perplexity AI | PerplexityBot |
+| You.com | YouBot |
+| Common Crawl | CCBot |
+| Cohere | cohere-ai |
+
+Note that some companies use multiple bots. For example, Anthropic uses both `anthropic-ai` and `ClaudeBot`. Blocking one but not the other means the company still has partial access.
+
+## Why This Matters for Publishers
+
+Understanding which AI companies can crawl your content is important for:
+
+- **AI training data decisions** — some publishers don't want their content used to train AI models
+- **AI-generated answer monitoring** — knowing which AI services may cite your content
+- **Licensing and attribution** — some AI companies have licensing programs for content publishers
+
+## Access Status
+
+For each company, Crawlix shows:
+
+- **Fully allowed** — all the company's bots are permitted
+- **Fully blocked** — all the company's bots are blocked
+- **Partially blocked** — some of the company's bots are blocked but others are allowed
+
+## Making Changes
+
+See [Optimization Tips](/docs/ai-readiness/optimization) for how to update your `robots.txt` to change access for specific AI crawlers.

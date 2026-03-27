@@ -1,0 +1,31 @@
+---
+title: "Lazy Loading Detection"
+description: "Scroll-based content detection, infinite scroll handling, and lazy-loaded images."
+order: 4
+---
+
+## What Is Lazy Loading?
+
+Lazy loading is a technique where content (images, components, API-fetched data) is only loaded when it enters the viewport — i.e., when the user scrolls to it.
+
+This is great for performance but can be a challenge for crawlers that don't scroll.
+
+## How Crawlix Handles It
+
+When JavaScript rendering is enabled, Crawlix can simulate scrolling to trigger lazy-loaded content. Configure this in **Settings > Crawl > JavaScript Rendering > Lazy Loading**.
+
+## Scroll Configuration
+
+- **Number of scroll steps** — how many times Crawlix scrolls down the page. Each scroll moves the viewport down by one screen height.
+- **Delay between scrolls** — how long to wait after each scroll before scrolling again (default: 300ms). Increase this if the site makes API calls in response to scrolling.
+- **Maximum scrolls** — caps the number of scrolls to avoid infinite scroll pages running forever (default: 10 steps).
+
+## Infinite Scroll
+
+For pages with infinite scroll (news feeds, social timelines, product category pages), Crawlix will scroll up to the configured maximum. Set a reasonable limit (e.g., 5 scrolls) to balance completeness with crawl time.
+
+## Image Lazy Loading
+
+Images with `loading="lazy"` are detected and included in the image analysis even without scroll simulation — Crawlix checks their `alt` text, dimensions, and other attributes from the HTML, regardless of whether they've been loaded in the viewport.
+
+Scroll simulation is most valuable for content loaded dynamically via JavaScript in response to scroll events (infinite scroll, intersection observer-based content).
