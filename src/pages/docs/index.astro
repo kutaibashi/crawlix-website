@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
-import { ChevronRight, Download, ArrowRight } from '@lucide/astro';
+import { ChevronRight, Download } from '@lucide/astro';
 import {
   docSections,
   popularTopics,
@@ -27,7 +27,7 @@ export const prerender = true;
     <!-- Hero -->
     <section class="relative pt-32 pb-12 overflow-hidden" style="background: radial-gradient(ellipse 60% 50% at 50% 40%, #0c2340, #040c1e);">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <nav class="flex items-center gap-2 text-sm text-slate-600 mb-8">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-slate-600 mb-8">
           <a href="/" class="hover:text-slate-400 transition-colors">Home</a>
           <ChevronRight class="h-3 w-3" />
           <span class="text-slate-400">Docs</span>
