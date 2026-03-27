@@ -50,7 +50,7 @@ export const quickStartSteps: QuickStart[] = [
   {
     step: 4,
     title: 'Start crawling',
-    description: 'Click "Start Crawl" and watch real-time progress. Crawlix runs 97+ SEO checks on every page in parallel.',
+    description: 'Click "Start Crawl" and watch real-time progress. Crawlix runs 100+ SEO checks on every page in parallel.',
   },
   {
     step: 5,
@@ -135,7 +135,7 @@ export const docSections: DocSection[] = [
   },
   {
     id: 'seo-checks',
-    title: 'SEO Checks (97+)',
+    title: 'SEO Checks (100+)',
     description: 'All technical, content, and accessibility audits',
     icon: 'Search',
     articles: [
@@ -554,16 +554,51 @@ export const docSections: DocSection[] = [
       },
     ],
   },
+  {
+    id: 'log-analysis',
+    title: 'Log Analysis',
+    description: 'Parse server logs for SEO insights and bot activity',
+    icon: 'BarChart',
+    articles: [
+      { title: 'Importing Server Logs', slug: 'log-analysis/importing', description: 'Upload Apache Combined, Nginx, Cloudflare JSON formats with auto-detection.' },
+      { title: 'Bot Detection & Analysis', slug: 'log-analysis/bot-detection', description: 'Classify crawlers (Googlebot, Bingbot, AI bots) and analyze traffic breakdown.' },
+      { title: 'URL Hit Aggregation', slug: 'log-analysis/url-hits', description: 'Per-URL stats: total hits, bot vs human, status code distribution.' },
+      { title: 'Log Analysis Dashboard', slug: 'log-analysis/dashboard', description: 'Views and filtering in the desktop app.' },
+    ],
+  },
+  {
+    id: 'browser-extension',
+    title: 'Browser Extension',
+    description: 'Quick Audit: instant page analysis from your browser',
+    icon: 'Zap',
+    articles: [
+      { title: 'Installing Quick Audit', slug: 'browser-extension/install', description: 'Chrome extension setup and permissions.' },
+      { title: 'Instant Page Analysis', slug: 'browser-extension/analysis', description: 'On-page SEO checks, meta tags, schema detection, and link counts.' },
+      { title: 'Syncing with Desktop', slug: 'browser-extension/sync', description: 'Send Quick Audit results to Crawlix Desktop via localhost API.' },
+    ],
+  },
+  {
+    id: 'mobile-crawling',
+    title: 'Mobile Crawling',
+    description: 'Viewport emulation, tap targets, and mobile usability',
+    icon: 'Gauge',
+    articles: [
+      { title: 'Enabling Mobile Crawling', slug: 'mobile-crawling/enable', description: 'Viewport emulation (iPhone 14, Pixel 8), touch events, and mobile user agents.', badge: 'pro' as const },
+      { title: 'Mobile Usability Scoring', slug: 'mobile-crawling/usability', description: 'Tap target size, font readability, content viewport fit, and horizontal scroll detection.', badge: 'pro' as const },
+      { title: 'Network Throttling', slug: 'mobile-crawling/throttling', description: '3G/4G simulation for realistic mobile performance testing.', badge: 'pro' as const },
+      { title: 'Desktop vs Mobile Comparison', slug: 'mobile-crawling/comparison', description: 'Content diff between desktop and mobile rendering.', badge: 'pro' as const },
+    ],
+  },
 ];
 
 // Popular/featured topics for quick access
 export const popularTopics = [
-  { title: 'Your First Crawl', slug: 'getting-started/first-crawl', icon: 'Play' },
-  { title: 'JavaScript Rendering', slug: 'js-rendering/enable', icon: 'Code', badge: 'pro' as const },
-  { title: 'Core Web Vitals', slug: 'core-web-vitals/overview', icon: 'Gauge' },
-  { title: 'Export PDF Reports', slug: 'exports/pdf', icon: 'FileText', badge: 'pro' as const },
-  { title: 'Custom Extraction', slug: 'extraction/methods', icon: 'FileCode' },
-  { title: 'Connect Google Analytics', slug: 'integrations/google-analytics', icon: 'BarChart', badge: 'pro' as const },
+  { title: 'Your First Crawl', slug: 'getting-started/first-crawl' },
+  { title: 'JavaScript Rendering', slug: 'js-rendering/enable', badge: 'pro' as const },
+  { title: 'Core Web Vitals', slug: 'core-web-vitals/overview' },
+  { title: 'PDF Reports', slug: 'exports/pdf', badge: 'pro' as const },
+  { title: 'Custom Extraction', slug: 'extraction/methods' },
+  { title: 'Google Analytics', slug: 'integrations/google-analytics', badge: 'pro' as const },
 ];
 
 // FAQ for documentation - real answers
@@ -585,12 +620,12 @@ export const docsFaqs: FAQ[] = [
   },
   {
     question: 'What SEO checks does Crawlix perform?',
-    answer: 'Crawlix runs 97+ checks across 9 categories: Technical SEO (status codes, canonicals, redirects), On-Page (titles, meta, headings), Content (readability, word count), Links, Images, Structured Data, Security, Accessibility (WCAG), and International SEO (hreflang).',
+    answer: 'Crawlix runs 100+ checks across 9 categories: Technical SEO (status codes, canonicals, redirects), On-Page (titles, meta, headings), Content (readability, word count), Links, Images, Structured Data, Security, Accessibility (WCAG), and International SEO (hreflang).',
     category: 'Features',
   },
   {
     question: 'Can I use Crawlix on multiple computers?',
-    answer: 'Each license is permanently bound to one device (Free and Pro tiers). Agency tier allows 5 devices for team use. If you need to transfer your license to a new device, contact support@crawlix.app.',
+    answer: 'Free tier: 1 device. Pro: 3 devices. Agency: 5 devices. You can deactivate old devices to free up slots. If you need to transfer your license, contact support@crawlix.app.',
     category: 'Licensing',
   },
   {
@@ -639,12 +674,3 @@ export const aiCrawlers = [
   { name: 'cohere-ai', company: 'Cohere' },
 ];
 
-// View names in the app
-export const dashboardViews = [
-  'Dashboard', 'Pages', 'Issues', 'Core Web Vitals', 'Images', 'Links',
-  'Internal Links', 'Accessibility', 'Security', 'Schema', 'Content',
-  'Redirect Chains', 'Canonicals', 'Hreflang', 'Duplicates', 'Crawl Depth',
-  'Sitemap Validation', 'Site Structure', 'Orphan Pages', 'Indexability',
-  'Mobile', 'Resources', 'Compare', 'Export', 'Extraction', 'Scheduled Crawls',
-  'Saved Websites', 'Log Analysis', 'Crawl History', 'Settings', 'AI Analysis',
-];
